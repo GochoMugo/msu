@@ -8,7 +8,7 @@ MSU_LIB=${BIN}/msu-lib
 MSU_EXE=${BIN}/msu
 
 echo "⇒ changing to /tmp"
-cd /tmp
+pushd /tmp
 
 echo "⇒ cloning repo for source code"
 rm -fr ${CLONE_DIR}
@@ -23,6 +23,9 @@ echo ${PATH} | grep ${BIN} > /dev/null || {
   echo "    !! you may need to restart your terminal !!"
 }
 
+echo "⇒ changing to repo directory"
+cd ${CLONE_DIR}
+
 echo "⇒ copying library"
 mkdir -p ${MSU_LIB}
 cp -r lib/ ${MSU_LIB}
@@ -31,7 +34,7 @@ echo "⇒ copying executable"
 cp msu.sh ${MSU_EXE}
 
 echo "⇒ changing to previous directory"
-cd -
+popd
 
 echo "⇒ finished"
 
