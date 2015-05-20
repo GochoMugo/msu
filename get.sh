@@ -11,6 +11,7 @@ echo "⇒ changing to /tmp"
 cd /tmp
 
 echo "⇒ cloning repo for source code"
+rm -fr ${CLONE_DIR}
 git clone ${GIT_URL} ${CLONE_DIR}
 
 echo "⇒ checking if ${BIN} is in path"
@@ -28,6 +29,9 @@ cp -r lib/ ${MSU_LIB}
 
 echo "⇒ copying executable"
 cp msu.sh ${MSU_EXE}
+
+echo "⇒ changing to previous directory"
+cd -
 
 echo "⇒ finished"
 
