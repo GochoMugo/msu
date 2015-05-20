@@ -35,6 +35,9 @@ case ${1} in
   "require" )
     msu_require ${2}
   ;;
+  "upgrade" )
+    wget -qO- http://git.io/vTE0s | bash
+  ;;
   * )
     # do nothing. we might be sourced
   ;;
