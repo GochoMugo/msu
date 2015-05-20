@@ -28,7 +28,7 @@ cd ${CLONE_DIR}
 
 echo "⇒ copying library"
 mkdir -p ${MSU_LIB}
-cp -r lib/ ${MSU_LIB}
+cp -r lib/* ${MSU_LIB}
 
 echo "⇒ copying executable"
 cp msu.sh ${MSU_EXE}
