@@ -47,6 +47,8 @@ case ${1} in
     echo "    -- | run      run a module function"
     echo "    upgrade       uprgade to the latest version"
     echo "    help          show help information"
+    echo "    version       show version information"
+    echo
   ;;
   "version" )
     echo "msu v${MSU_VERSION}"
