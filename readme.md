@@ -12,5 +12,4 @@
 
 ## license
 
-Copyright © 2015 GochoMugo
-
+Copyright © 2015 GochoMugo <mugo@forfuture.co.ke>
