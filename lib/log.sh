@@ -9,12 +9,11 @@ msu_require colors
 #  ${2} what color to use. 0 - info(blue), 1- success(green),
 #    2 - error(red)
 #  ${LOG_TITLE} for setting title of logging
-msu_log() {
+log() {
   local color=${COLOR_BLUE}
   [ ${2} ] && {
     [ ${2} -eq 1 ] && color=${COLOR_GREEN}
     [ ${2} -eq 2 ] && color=${COLOR_RED}
   }
-  echo -e "${COLOR_WHITE}${LOG_TITLE=log}: ${color}${1}${COLOR_RESET}"
+  echo -e "${COLOR_WHITE}${LOG_TITLE:-log}: ${color}${1}${COLOR_RESET}"
 }
-

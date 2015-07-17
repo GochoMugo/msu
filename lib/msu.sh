@@ -9,11 +9,11 @@ MSU_AUTHOR_EMAIL=mugo@forfuture.co.ke
 
 
 # module variables
-LIB="${PWD}/$(dirname ${BASH_SOURCE[0]})" # directory holding our library
+export MSU_LIB="$(dirname ${BASH_SOURCE[0]})" # directory holding our library
 
 
 # modules
-source ${LIB}/core.sh
+source ${MSU_LIB}/core.sh
 
 
 # parse command line arguments
