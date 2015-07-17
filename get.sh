@@ -9,6 +9,7 @@ BASHRC=~/.bashrc
 MSU_LIB=${BIN}/msu-lib
 MSU_EXE=${BIN}/msu
 MARKER=" >>>"
+VERSION=
 
 echo "${MARKER} changing to /tmp"
 pushd /tmp
@@ -28,6 +29,9 @@ echo ${PATH} | grep ${BIN} > /dev/null || {
 
 echo "${MARKER} changing to repo directory"
 cd ${CLONE_DIR}
+
+echo "${MARKER} generating metadata"
+echo "MSU_VERSION=$(git rev-parse HEAD)" >> lib/metadata.sh
 
 echo "${MARKER} copying library"
 mkdir -p ${MSU_LIB}

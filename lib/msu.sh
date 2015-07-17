@@ -3,21 +3,14 @@
 # Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
 
 
-# metadata
-MSU_AUTHOR_NAME=GochoMugo
-MSU_AUTHOR_EMAIL=mugo@forfuture.co.ke
-MSU_VERSION=0.0.0
-
-
-# module variables
-
 [ -L ${BASH_SOURCE[0]} ] && EXE=$(readlink $(which msu)) # using symbolic link
 [ ${EXE} ] || EXE=${BASH_SOURCE[0]} # file executed directly
 export MSU_LIB="$(dirname ${EXE})" # directory holding our library
 
 
 # modules
-source ${MSU_LIB}/core.sh
+source ${MSU_LIB}/core.sh # so LOW-LEVEL
+msu_require metadata
 
 
 # parse command line arguments
@@ -51,7 +44,7 @@ case ${1} in
     echo
   ;;
   "version" )
-    echo "msu v${MSU_VERSION}"
+    echo "msu v${MSU_VERSION:-?}"
   ;;
   * )
     # do nothing. we might be sourced
