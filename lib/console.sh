@@ -21,17 +21,17 @@ function write() {
 
 # normal logging
 function log() {
-  write ${1} 0
+  write ${1:-""} 0
 }
 
 
 # success logging
 function success() {
-  write ${1} 1
+  write ${1:-""} 1
 }
 
 
 # error logging
 function error() {
-  write ${1} 2
+  write ${1:-""} 2
 }
