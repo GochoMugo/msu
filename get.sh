@@ -34,7 +34,7 @@ mkdir -p ${MSU_LIB}
 cp -r lib/* ${MSU_LIB}
 
 echo "${MARKER} linking executable"
-rm ${MSU_EXE}
+rm -f ${MSU_EXE}
 ln -sf ${MSU_LIB}/msu.sh ${MSU_EXE}
 
 echo "${MARKER} changing to previous directory"
