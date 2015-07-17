@@ -38,8 +38,8 @@ rm -f ${MSU_EXE}
 ln -sf ${MSU_LIB}/msu.sh ${MSU_EXE}
 
 echo "${MARKER} will load aliases automatically"
-loader="[ -s "${EXE}" ] && . "$EXE" aliases"
-cat ${BASHRC} | grep ${loader} > /dev/null || {
+loader="[ -s "${MSU_EXE}" ] && . "${MSU_EXE}" aliases"
+cat ${BASHRC} | grep "${loader}" > /dev/null || {
   echo "" >> ${BASHRC}
   echo "# loading aliases from msu"  >> ${BASHRC}
   echo ${loader} >> ${BASHRC}
