@@ -4,11 +4,14 @@
 
 
 msu_require console
+msu_require fs
 
 
 # mod vars
 NODE_HOME=~/node_modules
 NODE_BIN=${NODE_HOME}/.bin
+NODE_TRACK=~/.node_modules
+
 
 # creates symbolic links for node_modules
 # ${1} - name of the module
@@ -67,12 +70,12 @@ gln() {
 gtrack() {
   pkgs="$@"
   [[ -z ${pkgs} ]] && pkgs="$(ls ${NODE_HOME} | tr '\n' ' ')"
-  touch ~/.node_modules
+  touch ${NODE_TRACK}
   for pkg in ${pkgs}
   do
-    cat ~/.node_modules | grep -e "^$pkg$" > /dev/null
+    cat ${NODE_TRACK} | grep -e "^$pkg$" > /dev/null
     [ $? -ne 0 ] && {
-      echo "${pkg}" >> ~/.node_modules
+      append ${NODE_TRACK} "${pkg}"
       tick ${pkg}
     } || {
       cross "${pkg} (already tracked)"
