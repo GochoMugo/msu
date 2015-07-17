@@ -44,7 +44,7 @@ case ${1} in
     echo
   ;;
   "version" )
-    echo "msu v${MSU_VERSION:-?}"
+    echo "version ${MSU_VERSION:-?}"
   ;;
   * )
     # do nothing. we might be sourced
