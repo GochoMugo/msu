@@ -9,7 +9,10 @@ MSU_AUTHOR_EMAIL=mugo@forfuture.co.ke
 
 
 # module variables
-export MSU_LIB="$(dirname ${BASH_SOURCE[0]})" # directory holding our library
+
+[ -L ${BASH_SOURCE[0]} ] && EXE=$(readlink $(which msu)) # using symbolic link
+[ ${EXE} ] || EXE=${BASH_SOURCE[0]} # file executed directly
+export MSU_LIB="$(dirname ${EXE})" # directory holding our library
 
 
 # modules
