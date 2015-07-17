@@ -2,41 +2,19 @@
 #
 # Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
 
+
 # metadata
 MSU_AUTHOR_NAME=GochoMugo
 MSU_AUTHOR_EMAIL=mugo@forfuture.co.ke
 
-# mod vars
-MSU_REQUIRE_LOCK=
 
-# determine root (dir holding this dir)
-[ ! -e msu.sh ] && {
-  ROOT=$(dirname $(which msu))
-  LIB=${ROOT}/msu-lib
-} || {
-  ROOT=.
-  LIB=${ROOT}/lib
-}
+# module variables
+LIB="${PWD}/$(dirname ${BASH_SOURCE[0]})" # directory holding our library
 
-# loads all utils
-msu_load() {
-  ls ${LIB} | xargs source
-}
 
-# require a module
-msu_require() {
-  echo ${MSU_REQUIRE_LOCK} | grep -E :${1}: || {
-    source ${LIB}/${1}.sh
-    MSU_REQUIRE_LOCK=:${1}:${MSU_REQUIRE_LOCK}
-  }
-}
+# modules
+source ${LIB}/core.sh
 
-msu_run() {
-  local module=$(echo ${1} | grep -Eo ".*\." | grep -Eo "[a-Z0-9]+")
-  local func=$(echo ${1} | grep -Eo "\..*" | cut -b 2- )
-  msu_require ${module}
-  msu_${func} ${@:2}
-}
 
 # parse command line arguments
 case ${1} in
@@ -54,7 +32,7 @@ case ${1} in
   ;;
   "help" )
     echo
-    echo " msu by ${MSU_AUTHOR_NAME} <${MSU_AUTHOR_EMAIL}"
+    echo " msu by ${MSU_AUTHOR_NAME} <${MSU_AUTHOR_EMAIL}>"
     echo
     echo " Available Commands:"
     echo "    load          loads the whole library"
@@ -67,4 +45,3 @@ case ${1} in
     # do nothing. we might be sourced
   ;;
 esac
-
