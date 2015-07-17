@@ -6,6 +6,7 @@
 # metadata
 MSU_AUTHOR_NAME=GochoMugo
 MSU_AUTHOR_EMAIL=mugo@forfuture.co.ke
+MSU_VERSION=0.0.0
 
 
 # module variables
@@ -21,6 +22,9 @@ source ${MSU_LIB}/core.sh
 
 # parse command line arguments
 case ${1} in
+  "aliases" )
+    source ${MSU_LIB}/aliases.sh
+  ;;
   "load" )
     msu_load
   ;;
@@ -43,6 +47,9 @@ case ${1} in
     echo "    -- | run      run a module function"
     echo "    upgrade       uprgade to the latest version"
     echo "    help          show help information"
+  ;;
+  "version" )
+    echo "msu v${MSU_VERSION}"
   ;;
   * )
     # do nothing. we might be sourced
