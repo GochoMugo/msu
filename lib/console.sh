@@ -2,7 +2,7 @@
 #
 # Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
 
-msu_require colors
+msu_require format
 
 # writes to console with colors
 #  ${1}  message to write to console
@@ -10,12 +10,12 @@ msu_require colors
 #    2 - error(red)
 #  ${LOG_TITLE} for setting title of logging
 function write() {
-  local color=${COLOR_BLUE}
+  local color=${clr_blue}
   [ ${2} ] && {
-    [ ${2} -eq 1 ] && color=${COLOR_GREEN}
-    [ ${2} -eq 2 ] && color=${COLOR_RED}
+    [ ${2} -eq 1 ] && color=${clr_green}
+    [ ${2} -eq 2 ] && color=${clr_red}
   }
-  echo -e "${COLOR_WHITE}${LOG_TITLE:-log}: ${color}${1}${COLOR_RESET}"
+  echo -e "${clr_white}${LOG_TITLE:-log}: ${color}${1}${clr_reset}"
 }
 
 
