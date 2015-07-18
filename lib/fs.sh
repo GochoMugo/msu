@@ -66,8 +66,10 @@ function joindirs() {
 
 
 # append to file (handles symlinks well)
+# ${1} - path of the file
+# ${2} - string to write
 function append() {
   touch ${1}
   local realpath=$(readlink -f ${1})
-  echo ${1} >> ${realpath}
+  echo ${2} >> ${realpath}
 }
