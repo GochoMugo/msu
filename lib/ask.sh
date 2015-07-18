@@ -2,17 +2,17 @@
 #
 # Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
 
-msu_require colors
+
+# modules
+msu_require format
+
 
 # asks user a question
 #
-# ${1}  question to ask user
-# ${2}  any value - be silent. Use global variable ${ANSWER},
-#   Otherwise echo ${answer}
-msu_ask() {
-  echo -e -n "    ${COLOR_WHITE}${1}${COLOR_RESET} "
+# ${1} question to ask user
+function ask() {
+  echo -e -n "    ${clr_white}${1}${clr_reset} "
   read ANSWER
-  [ ${2} ] && return || echo ${ANSWER}
 }
 
 
@@ -20,7 +20,7 @@ msu_ask() {
 # ${1} question to ask
 # ${2} default answer
 # return 0 (yes), 1 (no)
-msu_ask_bool() {
+function yes_no() {
   local show="y|N"
   local exit_code=1
   case ${2} in
@@ -41,4 +41,3 @@ msu_ask_bool() {
   esac
   return ${exit_code}
 }
-
