@@ -54,3 +54,8 @@ function tick() {
 function cross() {
   write_text "${sym_cross} ${1}" 2
 }
+
+# list
+function list() {
+  write_text "${sym_arrow_right} ${1}" 0
+}
