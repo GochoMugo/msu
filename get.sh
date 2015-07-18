@@ -31,7 +31,10 @@ echo "${MARKER} changing to repo directory"
 cd ${CLONE_DIR}
 
 echo "${MARKER} generating metadata"
-echo "MSU_VERSION=$(git rev-parse HEAD)" >> lib/metadata.sh
+MSU_BUILD_HASH=$(git rev-parse HEAD)
+MSU_BUILD_DATE=$(git show -s --format=%ci ${MSU_BUILD_HASH})
+echo "MSU_BUILD_HASH=${MSU_BUILD_HASH}" >> lib/metadata.sh
+echo "MSU_BUILD_DATE=${MSU_BUILD_DATE}" >> lib/metadata.sh
 
 echo "${MARKER} copying library"
 mkdir -p ${MSU_LIB}

@@ -48,7 +48,9 @@ case ${1} in
     echo
   ;;
   "version" )
-    echo "version ${MSU_VERSION:-?}"
+    echo "  version   ${MSU_VERSION}"
+    echo "  build     ${MSU_BUILD_HASH:-?}"
+    echo "  date      ${MSU_BUILD_DATE:-?}"
   ;;
   * )
     # do nothing. we might be sourced
