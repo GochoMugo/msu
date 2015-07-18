@@ -4,7 +4,11 @@
 
 
 [ -L ${BASH_SOURCE[0]} ] && EXE=$(readlink $(which msu)) # using symbolic link
-[ ${EXE} ] || EXE=${BASH_SOURCE[0]} # file executed directly
+[ ${EXE} ] || {
+  EXE=${BASH_SOURCE[0]} # file executed directly
+  EXE=$(echo ${EXE} | cut -b 3-)
+  EXE=${PWD}/${EXE}
+}
 export MSU_LIB="$(dirname ${EXE})" # directory holding our library
 
 
