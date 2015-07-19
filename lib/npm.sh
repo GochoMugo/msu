@@ -25,9 +25,9 @@ function ln_mod() {
     [ -d ${NODE_HOME}/${pkg} ] && {
       rm -rf $PWD/node_modules/${pkg}
       ln -sf ${NODE_HOME}/${pkg} $PWD/node_modules/${pkg}
-      tick ${pkg}
+      tick "${pkg}: linked"
     } || {
-      cross ${pkg}
+      cross "${pkg}: missing"
     }
   done
 }
@@ -41,9 +41,9 @@ function ln_bin() {
     [ -x ${NODE_BIN}/${pkg} ] && {
       rm -rf node_modules/.bin/$pkg
       ln -fs ${NODE_BIN}/$pkg node_modules/.bin/$pkg
-      tick ${pkg}
+      tick "${pkg}: linked"
     } || {
-      cross ${pkg}
+      cross "${pkg}: missing"
     }
   done
 }
@@ -56,7 +56,15 @@ function g() {
   do
     npm install ${pkg}
   done
-  gtrack "$@" > /dev/null
+  for pkg in "$@"
+  do
+    [ -d ${NODE_HOME}/${pkg} ] && {
+      tick "${pkg}: installed"
+      gtrack ${pkg}
+    } || {
+      cross "${pkg}: could not be installed"
+    }
+  done
   popd
 }
 
@@ -78,9 +86,9 @@ function gtrack() {
     cat ${NODE_TRACK} | grep -e "^$pkg$" > /dev/null
     [ $? -ne 0 ] && {
       append ${NODE_TRACK} "${pkg}"
-      tick ${pkg}
+      tick "${pkg}: tracked"
     } || {
-      cross "${pkg} (already tracked)"
+      tick "${pkg} (already tracked)"
     }
   done
 }
