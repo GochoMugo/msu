@@ -41,12 +41,12 @@ case ${1} in
     echo " msu by ${MSU_AUTHOR_NAME} <${MSU_AUTHOR_EMAIL}>"
     echo
     echo " Available Commands:"
-    echo "    l | load          loads the whole library"
-    echo "    r | require       require a library module"
-    echo "    - | run           run a module function"
-    echo "    u | upgrade       upgrade to the latest version"
-    echo "    h | help          show this help information"
-    echo "    v | version       show version information"
+    echo "    l | load              load the whole library"
+    echo "    r | require <mod>     require the library module <mod>"
+    echo "    - | run <mod>.<func>  run the function <func> in module <mod>"
+    echo "    u | upgrade           upgrade to the latest version"
+    echo "    h | help              show this help information"
+    echo "    v | version           show version information"
     echo
   ;;
   "v" | "version" )
