@@ -11,14 +11,6 @@ msu_require console
 TRASH_DIR=/tmp/trash
 
 
-# creating a directory and moving into it
-# ${1} - name of the new directory
-function mkd() {
-  mkdir -p ${1}
-  cd ${1}
-}
-
-
 # safely removing files
 # note that these files are destroyed when temp files are cleaned up
 function trash() {

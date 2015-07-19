@@ -5,7 +5,6 @@
 
 # fs
 alias fs.join="msu run fs.joindirs"
-alias fs.mkd="msu run fs.mkd"
 alias fs.trash="msu run fs.trash"
 alias fs.untrash="msu run fs.untrash"
 
