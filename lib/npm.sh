@@ -3,6 +3,7 @@
 # Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
 
 
+# modules
 msu_require console
 msu_require fs
 
@@ -16,7 +17,7 @@ NODE_TRACK=~/.node_modules
 
 # creates symbolic links for node_modules
 # ${1} - name of the module
-ln() {
+function ln_mod() {
   [ ${PWD} == ${HOME} ] && return # dont link if in $HOME
   mkdir -p node_modules # ensure node_modules/ exists
   for pkg in "$@"
@@ -33,7 +34,7 @@ ln() {
 
 
 # linking an node module executable in a node_modules/ in cwd
-ln_bin() {
+function ln_bin() {
   mkdir -p node_modules/.bin/
   for pkg in "$@"
   do
@@ -49,7 +50,7 @@ ln_bin() {
 
 
 # installing a node module in my top-most node_modules directory
-g() {
+function g() {
   pushd ~
   for pkg in "$@"
   do
@@ -61,14 +62,14 @@ g() {
 
 
 # install node module globally* and link too
-gln() {
+function gln() {
   g "$@"
   ln "$@"
 }
 
 
 # track globally installed node modules
-gtrack() {
+function gtrack() {
   pkgs="$@"
   [[ -z ${pkgs} ]] && pkgs="$(ls ${NODE_HOME} | tr '\n' ' ')"
   touch ${NODE_TRACK}
@@ -86,7 +87,7 @@ gtrack() {
 
 
 # restore globally installed node modules from ~/.node_modules
-grestore() {
+function grestore() {
   pkgs="$(cat ~/.node_modules | tr '\n' ' ')"
   pushd ~
   for pkg in ${pkgs}
@@ -99,7 +100,7 @@ grestore() {
 
 
 # removing a globally installed node module
-gremove() {
+function gremove() {
   pushd ~
   for pkg in "$@"
   do
@@ -114,7 +115,7 @@ gremove() {
 
 
 # updates my top-most (global) node_modules
-gupdate() {
+function gupdate() {
   pushd ~
   ls node_modules | xargs -I{} npm install {}
   popd
@@ -122,7 +123,7 @@ gupdate() {
 
 
 # check if node module is installed globally
-ginstalled() {
+function ginstalled() {
   for pkg in "$@"
   do
     [ -d ${NODE_HOME}/${pkg} ] && {
