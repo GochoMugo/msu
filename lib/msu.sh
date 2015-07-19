@@ -29,7 +29,9 @@ case ${1} in
     msu_require ${2}
   ;;
   "u" | "upgrade" )
-    wget -qO- http://git.io/vTE0s | bash
+    LIB=$(dirname ${MSU_LIB})
+    BIN=$(dirname $(which msu))
+    wget -qO- http://git.io/vTE0s | LIB=${LIB} BIN=${BIN} bash
   ;;
   "-" | "run" )
     msu_run ${@:2}
