@@ -3,13 +3,14 @@
 set -e
 
 GIT_URL=https://github.com/GochoMugo/msu.git
-BIN=${HOME}/bin
 CLONE_DIR=msu
 BASHRC=~/.bashrc
-MSU_LIB=${BIN}/msu-lib
+BIN=${BIN:-${HOME}/bin}
+LIB=${LIB:-${BIN}}
+MSU_LIB=${LIB}/msu-lib
 MSU_EXE=${BIN}/msu
 MARKER=" >>>"
-VERSION=
+
 
 echo "${MARKER} changing to /tmp"
 pushd /tmp
@@ -20,11 +21,10 @@ git clone ${GIT_URL} ${CLONE_DIR}
 
 echo "${MARKER} checking if ${BIN} is in path"
 echo ${PATH} | grep ${BIN} > /dev/null || {
-  echo "⇒ ${BIN} not in path. Adding it"
+  echo "${MARKER} ${BIN} not in path. Adding it to ${BASHRC}. You need to restart your terminal for this to take effect!"
   echo "" >> ${BASHRC}
   echo "# added by msu" >> ${BASHRC}
   echo "export PATH=${BIN}:\${PATH}" >> ${BASHRC}
-  echo "    !! you may need to restart your terminal !!"
 }
 
 echo "${MARKER} changing to repo directory"
