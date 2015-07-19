@@ -17,7 +17,7 @@ pushd /tmp
 
 echo "${MARKER} cloning repo for source code"
 rm -fr ${CLONE_DIR}
-git clone ${GIT_URL} ${CLONE_DIR}
+git clone --depth=1 ${GIT_URL} ${CLONE_DIR}
 
 echo "${MARKER} checking if ${BIN} is in path"
 echo ${PATH} | grep ${BIN} > /dev/null || {
