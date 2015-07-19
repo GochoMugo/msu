@@ -10,6 +10,11 @@ alias fs.trash="msu run fs.trash"
 alias fs.untrash="msu run fs.untrash"
 
 
+# net
+alias net.ch="msu run net.check"
+alias net.dl="msu run net.download"
+
+
 # npm
 alias npm.g="msu run npm.g"
 alias npm.ginstalled="msu run npm.ginstalled"
