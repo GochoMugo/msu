@@ -3,9 +3,6 @@
 #
 
 
-set -e
-
-
 # we expect the the executable exports a variable MSU_LIB whose
 # value is the path to the library holding this and other modules
 
