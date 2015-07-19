@@ -19,40 +19,40 @@ msu_require metadata
 
 # parse command line arguments
 case ${1} in
-  "aliases" )
+  "a" | "aliases" )
     source ${MSU_LIB}/aliases.sh
   ;;
-  "load" )
+  "l" | "load" )
     msu_load
   ;;
-  "require" )
+  "r" | "require" )
     msu_require ${2}
   ;;
-  "upgrade" )
+  "u" | "upgrade" )
     wget -qO- http://git.io/vTE0s | bash
   ;;
-  "--" | "run" )
+  "-" | "run" )
     msu_run ${@:2}
   ;;
-  "help" )
+  "h" | "help" )
     echo
     echo " msu by ${MSU_AUTHOR_NAME} <${MSU_AUTHOR_EMAIL}>"
     echo
     echo " Available Commands:"
-    echo "    load          loads the whole library"
-    echo "    require       require a library module"
-    echo "    -- | run      run a module function"
-    echo "    upgrade       uprgade to the latest version"
-    echo "    help          show help information"
-    echo "    version       show version information"
+    echo "    l | load          loads the whole library"
+    echo "    r | require       require a library module"
+    echo "    - | run           run a module function"
+    echo "    u | upgrade       upgrade to the latest version"
+    echo "    h | help          show this help information"
+    echo "    v | version       show version information"
     echo
   ;;
-  "version" )
+  "v" | "version" )
     echo "  version   ${MSU_VERSION}"
     echo "  build     ${MSU_BUILD_HASH:-?}"
     echo "  date      ${MSU_BUILD_DATE:-?}"
   ;;
   * )
-    # do nothing. we might be sourced
+    # do nothing
   ;;
 esac
