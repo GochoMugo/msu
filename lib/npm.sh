@@ -8,6 +8,7 @@ msu_require fs
 
 
 # mod vars
+DEPS="npm"
 NODE_HOME=~/node_modules
 NODE_BIN=${NODE_HOME}/.bin
 NODE_TRACK=~/.node_modules

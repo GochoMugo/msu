@@ -8,6 +8,7 @@ msu_require console
 
 
 # module variables
+DEPS="wget"
 DL_FILE=".msu.download"
 
 
