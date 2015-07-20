@@ -6,8 +6,8 @@ GIT_URL=https://github.com/GochoMugo/msu.git
 CLONE_DIR=msu
 BASHRC=~/.bashrc
 BIN=${BIN:-${HOME}/bin}
-LIB=${LIB:-${BIN}}
-MSU_LIB=${LIB}/msu-lib
+LIB=${LIB:-${HOME}/lib}
+MSU_LIB=${LIB}/msu
 MSU_EXE=${BIN}/msu
 MARKER=" >>>"
 
@@ -37,10 +37,14 @@ echo "MSU_BUILD_HASH=${MSU_BUILD_HASH}" >> lib/metadata.sh
 echo "MSU_BUILD_DATE='${MSU_BUILD_DATE}'" >> lib/metadata.sh
 
 echo "${MARKER} copying library"
+[ ${MSU_EXE} == ${MSU_LIB} ] && {
+  MSU_LIB=${MSU_LIB}-lib
+}
 mkdir -p ${MSU_LIB}
 cp -r lib/* ${MSU_LIB}
 
 echo "${MARKER} linking executable"
+mkdir -p ${MSU_EXE}
 rm -f ${MSU_EXE}
 ln -sf ${MSU_LIB}/msu.sh ${MSU_EXE}
 
