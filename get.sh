@@ -3,7 +3,7 @@
 set -e
 
 GIT_URL=https://github.com/GochoMugo/msu.git
-BUILD=
+BUILD=${BUILD:-""}
 CLONE_DIR=msu
 MARKER=" >>>"
 
