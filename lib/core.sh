@@ -49,3 +49,11 @@ function msu_run() {
   msu_require ${module}
   ${func} ${@:2}
 }
+
+
+# upgrade myself
+function msu_upgrade() {
+  LIB=$(dirname ${MSU_LIB})
+  BIN=$(dirname $(which msu))
+  wget -qO- http://git.io/vTE0s | LIB=${LIB} BIN=${BIN} bash
+}
