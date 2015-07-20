@@ -3,7 +3,7 @@
 
 > my shell utils
 
-[![Travis](https://img.shields.io/travis/GochoMugo/msu.svg?style=flat-square)](https://travis-ci.org/GochoMugo/msu)
+[![Terminal Lover](https://img.shields.io/badge/terminal-lover-red.svg?style=flat-square)](https://github.com/GochoMugo) [![Travis](https://img.shields.io/travis/GochoMugo/msu.svg?style=flat-square)](https://travis-ci.org/GochoMugo/msu)
 
 
 ## installation:
