@@ -3,6 +3,9 @@
 
 > my shell utils
 
+[![Travis](https://img.shields.io/travis/GochoMugo/msu.svg?style=flat-square)](https://travis-ci.org/GochoMugo/msu)
+
+
 ## installation:
 
 ```bash
@@ -14,4 +17,6 @@ More [installation instructions](https://github.com/GochoMugo/msu/tree/master/do
 
 ## license
 
-Copyright © 2015 GochoMugo <mugo@forfuture.co.ke>
+__The MIT License (MIT)__
+
+Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
