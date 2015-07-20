@@ -9,7 +9,7 @@ test:
 	make clean
 
 deps:
-	git clone https://github.com/sstephenson/bats.git bats
+	git clone --depth=1 https://github.com/sstephenson/bats.git bats
 
 clean:
 	rm -rf _TEST_* npm-debug.log
