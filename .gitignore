@@ -1,3 +1,5 @@
 # for local testing/trials
 try.sh
 
+# test harness
+bats/
