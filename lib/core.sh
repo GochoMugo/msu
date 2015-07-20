@@ -25,27 +25,20 @@ function msu__check_deps() {
 # require a module
 function msu_require() {
   echo ${MSU_REQUIRE_LOCK} | grep -E :${1}: > /dev/null || {
-    source ${MSU_LIB}/${1}.sh
+    source ${MSU_LIB}/${1}.sh > /dev/null 2>&1 || {
+      echo "error: require failed to load module ${1}"
+      exit 1
+    }
     msu__check_deps
     MSU_REQUIRE_LOCK=:${1}:${MSU_REQUIRE_LOCK}
   }
 }
 
 
-# load all modules
-function msu_load() {
-  mods=$(ls ${MSU_LIB} | grep -Eo "^[a-Z]*")
-  for mod in ${mods}
-  do
-    msu_require ${mod}
-  done
-}
-
-
 # run a single function
 function msu_run() {
-  local module=$(echo ${1} | grep -Eo ".*\." | grep -Eo "[a-Z0-9]+")
-  local func=$(echo ${1} | grep -Eo "\..*" | cut -b 2- )
+  local module=$(echo ${1} | grep -Eo ".*\." | grep -Eo "[^.]+")
+  local func=$(echo ${1} | grep -Eo "\..*" | cut -b 2-)
   msu_require ${module}
   ${func} ${@:2}
 }

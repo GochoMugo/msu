@@ -22,9 +22,6 @@ case ${1} in
   "a" | "aliases" )
     source ${MSU_LIB}/aliases.sh
   ;;
-  "l" | "load" )
-    msu_load
-  ;;
   "r" | "require" )
     msu_require ${2}
   ;;
@@ -39,7 +36,6 @@ case ${1} in
     echo " msu by ${MSU_AUTHOR_NAME} <${MSU_AUTHOR_EMAIL}>"
     echo
     echo " Available Commands:"
-    echo "    l | load              load the whole library"
     echo "    r | require <mod>     require the library module <mod>"
     echo "    - | run <mod>.<func>  run the function <func> in module <mod>"
     echo "    u | upgrade           upgrade to the latest version"
