@@ -23,7 +23,7 @@ fi
 
 echo "${MARKER} running installation script"
 cd ${CLONE_DIR}
-. ./install.sh
+LIB=${LIB} BIN=${BIN} ./install.sh
 cd ..
 
 popd > /dev/null

@@ -22,23 +22,24 @@ echo ${PATH} | grep ${BIN} > /dev/null || {
 }
 
 
-echo "${MARKER} generating metadata"
-MSU_BUILD_HASH=$(git rev-parse HEAD)
-MSU_BUILD_DATE=$(git show -s --format=%ci ${MSU_BUILD_HASH})
-echo "MSU_BUILD_HASH=${MSU_BUILD_HASH}" >> lib/metadata.sh
-echo "MSU_BUILD_DATE='${MSU_BUILD_DATE}'" >> lib/metadata.sh
-
-
 echo "${MARKER} copying library"
 [ ${MSU_EXE} == ${MSU_LIB} ] && {
   MSU_LIB=${MSU_LIB}-lib
 }
+rm -rf ${MSU_LIB}
 mkdir -p ${MSU_LIB}
 cp -r lib/* ${MSU_LIB}
 
 
+echo "${MARKER} generating metadata"
+MSU_BUILD_HASH=$(git rev-parse HEAD)
+MSU_BUILD_DATE=$(git show -s --format=%ci ${MSU_BUILD_HASH})
+echo "MSU_BUILD_HASH=${MSU_BUILD_HASH}" >> ${MSU_LIB}/metadata.sh
+echo "MSU_BUILD_DATE='${MSU_BUILD_DATE}'" >> ${MSU_LIB}/metadata.sh
+
+
 echo "${MARKER} linking executable"
-mkdir -p ${MSU_EXE}
+mkdir -p $(dirname ${MSU_EXE})
 rm -f ${MSU_EXE}
 ln -sf ${MSU_LIB}/msu.sh ${MSU_EXE}
 
