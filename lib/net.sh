@@ -40,7 +40,16 @@ function check() {
 function download() {
   local name=${1}
   local url=${2}
-  local data=$(cat ${DL_FILE})
+  local data=""
+
+  # we require a name
+  if [ ! ${2} ] ; then
+    error "we require a name"
+    return 1
+  fi
+
+  # read tracking file, if it exists
+  [ -e ${DL_FILE} ] && data=$(cat ${DL_FILE})
 
   if [ ${url} ] ; then # new download
     track ${name} ${url}
