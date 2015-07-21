@@ -1,6 +1,6 @@
 # for local testing/trials
 try.sh
-lib/tmp_*.sh
+lib/tmp_
 
 # test harness
 bats/

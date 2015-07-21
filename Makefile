@@ -12,6 +12,6 @@ deps:
 	git clone --depth=1 https://github.com/sstephenson/bats.git bats
 
 clean:
-	rm -rf _TEST_* npm-debug.log
+	rm -rf lib/tmp_* npm-debug.log
 
 .PHONY: deps test clean

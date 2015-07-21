@@ -17,7 +17,7 @@ function setup() {
 
 
 function teardown() {
-  rm -f lib/tmp_*.sh
+  rm -rf lib/tmp_*
 }
 
 
@@ -60,10 +60,22 @@ function teardown() {
 }
 
 
+@test "\`require' loads scripts in nested directories" {
+  tmp_dir=lib/tmp_nest/another/one/
+  tmp_mod=${tmp_dir}/sample.sh
+  mkdir -p ${tmp_dir}
+  echo "" > ${tmp_mod}
+  run msu_require tmp_nest.another.one.sample
+  echo "${output}"
+  [ "${status}" -eq 0 ]
+}
+
+
 @test "\`run' runs a function in a module" {
   tmp_mod=lib/tmp_run.sh
   echo -e "function hey() { \n echo \${1} \n }" > ${tmp_mod}
   run msu_run tmp_run.hey gocho
+  echo ${output}
   [ "${status}" -eq 0 ]
   echo ${output} | grep "gocho"
 }
