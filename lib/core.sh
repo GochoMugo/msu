@@ -9,6 +9,7 @@
 
 # mod vars
 MSU_REQUIRE_LOCK= # lock to ensure we dont source an already-sourced file
+MSU_EXTERNAL_LIB=${MSU_EXTERNAL_LIB:-${HOME}/.msu}
 
 
 # check dependencies

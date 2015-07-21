@@ -11,6 +11,8 @@ MSU_LIB=${PWD}/lib
 
 function setup() {
   MSU_REQUIRE_LOCK=""
+  MSU_EXTERNAL_LIB_OLD=${MSU_EXTERNAL_LIB}
+  MSU_EXTERNAL_LIB=${MSU_EXTERNAL_LIB_OLD}
 }
 
 
@@ -69,4 +71,19 @@ function teardown() {
 
 @test "\`upgrade' runs upgrade" {
   skip
+}
+
+
+@test "defaults to \${HOME}/.msu if \${MSU_EXTERNAL_LIB} is not set" {
+  unset MSU_EXTERNAL_LIB
+  source lib/core.sh
+  [ ${MSU_EXTERNAL_LIB} == "${HOME}/.msu" ]
+}
+
+
+@test "uses the environment variable \${MSU_EXTERNAL_LIB} if set" {
+  local libpath=${BATS_TMPDIR}/var-testing
+  MSU_EXTERNAL_LIB=${libpath}
+  . lib/core.sh
+  [ ${MSU_EXTERNAL_LIB} == ${libpath} ]
 }
