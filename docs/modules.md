@@ -20,13 +20,13 @@ On installation, these modules are placed at `${MSU_EXTERNAL_LIB}`, which by def
 A valid module can be:
   * a single script, say `sample.sh`
   * a directory with many scripts, say
-    ```
-    my-module/
+```
+my-module/
+|-- script.sh
+`-- inner-dir
     |-- script.sh
-    `-- inner-dir
-        |-- script.sh
-        `-- another-script.sh
-    ```
+    `-- another-script.sh
+```
 
 > Nested directories are allowed.
 
