@@ -25,22 +25,33 @@ case ${1} in
   "r" | "require" )
     msu_require ${2}
   ;;
-  "u" | "upgrade" )
-    msu_upgrade
-  ;;
   "-" | "run" )
     msu_run ${@:2}
+  ;;
+  "i" | "install" )
+    msu_install ${@:2}
+  ;;
+  "u" | "uninstall" )
+    msu_uninstall ${@:2}
+  ;;
+  "up" | "upgrade" )
+    msu_upgrade
   ;;
   "h" | "help" )
     echo
     echo " msu by ${MSU_AUTHOR_NAME} <${MSU_AUTHOR_EMAIL}>"
     echo
     echo " Available Commands:"
-    echo "    r | require <mod>     require the library module <mod>"
-    echo "    - | run <mod>.<func>  run the function <func> in module <mod>"
-    echo "    u | upgrade           upgrade to the latest version"
-    echo "    h | help              show this help information"
-    echo "    v | version           show version information"
+    echo "    r  | require <mod>       require the library module <mod>"
+    echo "    -  | run <mod>.<func>    run the function <func> in module <mod>"
+    echo "    i  | install <mod>...    install the module(s) <mod>..."
+    echo "    u  | uninstall <mod>...  uninstall the module(s) <mod>..."
+    echo "    up | upgrade             upgrade to the latest version"
+    echo "    h  | help                show this help information"
+    echo "    v  | version             show version information"
+    echo
+    echo " See https://github.com/GochoMugo/msu/issues for bug reporting"
+    echo " and feature requests"
     echo
   ;;
   "v" | "version" )

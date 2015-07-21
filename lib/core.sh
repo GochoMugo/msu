@@ -27,9 +27,13 @@ function msu__check_deps() {
 function msu_require() {
   echo ${MSU_REQUIRE_LOCK} | grep -E :${1}: > /dev/null || {
     local fullpath=$(echo ${1} | sed 's/\.*$//g' | sed 's/\./\//g')
+    # internal modules have precedence
     source ${MSU_LIB}/${fullpath}.sh > /dev/null 2>&1 || {
-      echo "error: require: failed to load module '${1}'"
-      exit 1
+      # external libs
+      source ${MSU_EXTERNAL_LIB}/${fullpath}.sh > /dev/null 2>&1 || {
+        echo "error: require: failed to load module '${1}'"
+        exit 1
+      }
     }
     msu__check_deps
     MSU_REQUIRE_LOCK=:${1}:${MSU_REQUIRE_LOCK}
@@ -51,4 +55,38 @@ function msu_upgrade() {
   LIB=$(dirname ${MSU_LIB})
   BIN=$(dirname $(which msu))
   wget -qO- http://git.io/vTE0s | LIB=${LIB} BIN=${BIN} bash
+}
+
+
+# install module(s)
+function msu_install() {
+  mkdir -p ${MSU_EXTERNAL_LIB}
+  for dir in "$@"
+  do
+    cp -r ${dir} ${MSU_EXTERNAL_LIB} > /dev/null
+    if [ $? ] ; then
+      echo "installed: ${dir}"
+    else
+      echo "error: install: could not install ${dir}"
+    fi
+  done
+}
+
+
+# uninstall module(s)
+function msu_uninstall() {
+  for dir in "$@"
+  do
+    path=${MSU_EXTERNAL_LIB}/${dir}
+    [ -e ${path} ] && {
+      rm -rf ${path} > /dev/null
+      if [ $? ] ; then
+        echo "uninstalled: ${dir}"
+      else
+        echo "error: uninstall: could not uninstall ${dir}"
+      fi
+    } || {
+      echo "not installed: ${dir}"
+    }
+  done
 }

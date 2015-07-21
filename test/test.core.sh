@@ -12,12 +12,29 @@ MSU_LIB=${PWD}/lib
 function setup() {
   MSU_REQUIRE_LOCK=""
   MSU_EXTERNAL_LIB_OLD=${MSU_EXTERNAL_LIB}
-  MSU_EXTERNAL_LIB=${MSU_EXTERNAL_LIB_OLD}
+  unset MSU_EXTERNAL_LIB
+  source lib/core.sh
 }
 
 
 function teardown() {
   rm -rf lib/tmp_*
+  MSU_EXTERNAL_LIB=${MSU_EXTERNAL_LIB_OLD}
+}
+
+
+@test "defaults to \${HOME}/.msu if \${MSU_EXTERNAL_LIB} is not set" {
+  unset MSU_EXTERNAL_LIB
+  source lib/core.sh
+  [ ${MSU_EXTERNAL_LIB} == "${HOME}/.msu" ]
+}
+
+
+@test "uses the environment variable \${MSU_EXTERNAL_LIB} if set" {
+  local libpath=${BATS_TMPDIR}/var-testing
+  MSU_EXTERNAL_LIB=${libpath}
+  . lib/core.sh
+  [ ${MSU_EXTERNAL_LIB} == ${libpath} ]
 }
 
 
@@ -66,8 +83,18 @@ function teardown() {
   mkdir -p ${tmp_dir}
   echo "" > ${tmp_mod}
   run msu_require tmp_nest.another.one.sample
-  echo "${output}"
   [ "${status}" -eq 0 ]
+}
+
+
+@test "\`require' loads external modules" {
+  tmp_dir=~/.msu/gocho-msu-test/
+  tmp_mod=${tmp_dir}/sample.sh
+  mkdir -p ${tmp_dir}
+  echo "" > ${tmp_mod}
+  run msu_require gocho-msu-test.sample
+  [ "${status}" -eq 0 ]
+  rm -r ${tmp_dir}
 }
 
 
@@ -86,16 +113,28 @@ function teardown() {
 }
 
 
-@test "defaults to \${HOME}/.msu if \${MSU_EXTERNAL_LIB} is not set" {
-  unset MSU_EXTERNAL_LIB
+@test "\`install' installs one or more modules" {
+  MSU_EXTERNAL_LIB=${BATS_TMPDIR}/install
   source lib/core.sh
-  [ ${MSU_EXTERNAL_LIB} == "${HOME}/.msu" ]
+  mod1="${BATS_TMPDIR}/mod1"
+  mod2="${BATS_TMPDIR}/mod2"
+  mkdir -p ${mod1} ${mod2}
+  rm -rf "${MSU_EXTERNAL_LIB}/mod1" "${MSU_EXTERNAL_LIB}/mod2"
+  run msu_install ${mod1} ${mod2}
+  [ "${status}" -eq 0 ]
+  echo ${output} | grep "installed"
+  [ -d ${MSU_EXTERNAL_LIB}/mod1 ]
+  [ -d ${MSU_EXTERNAL_LIB}/mod2 ]
 }
 
 
-@test "uses the environment variable \${MSU_EXTERNAL_LIB} if set" {
-  local libpath=${BATS_TMPDIR}/var-testing
-  MSU_EXTERNAL_LIB=${libpath}
-  . lib/core.sh
-  [ ${MSU_EXTERNAL_LIB} == ${libpath} ]
+@test "\`uninstall' uninstalls one or more modules" {
+  MSU_EXTERNAL_LIB=${BATS_TMPDIR}/uninstall
+  source lib/core.sh
+  mkdir -p ${MSU_EXTERNAL_LIB}/mod1 ${MSU_EXTERNAL_LIB}/mod2
+  run msu_uninstall mod1 mod2
+  [ "${status}" -eq 0 ]
+  echo ${output} | grep "uninstalled"
+  [ ! -d ${MSU_EXTERNAL_LIB}/mod1 ]
+  [ ! -d ${MSU_EXTERNAL_LIB}/mod2 ]
 }
