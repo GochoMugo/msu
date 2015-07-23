@@ -3,6 +3,7 @@
 #
 
 
+MSU_LIB=$PWD/lib
 source lib/core.sh
 source lib/core_utils.sh
 source lib/format.sh
