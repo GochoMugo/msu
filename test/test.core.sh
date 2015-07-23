@@ -106,35 +106,3 @@ function teardown() {
   [ "${status}" -eq 0 ]
   echo ${output} | grep "gocho"
 }
-
-
-@test "\`upgrade' runs upgrade" {
-  skip
-}
-
-
-@test "\`install' installs one or more modules" {
-  MSU_EXTERNAL_LIB=${BATS_TMPDIR}/install
-  source lib/core.sh
-  mod1="${BATS_TMPDIR}/mod1"
-  mod2="${BATS_TMPDIR}/mod2"
-  mkdir -p ${mod1} ${mod2}
-  rm -rf "${MSU_EXTERNAL_LIB}/mod1" "${MSU_EXTERNAL_LIB}/mod2"
-  run msu_install ${mod1} ${mod2}
-  [ "${status}" -eq 0 ]
-  echo ${output} | grep "installed"
-  [ -d ${MSU_EXTERNAL_LIB}/mod1 ]
-  [ -d ${MSU_EXTERNAL_LIB}/mod2 ]
-}
-
-
-@test "\`uninstall' uninstalls one or more modules" {
-  MSU_EXTERNAL_LIB=${BATS_TMPDIR}/uninstall
-  source lib/core.sh
-  mkdir -p ${MSU_EXTERNAL_LIB}/mod1 ${MSU_EXTERNAL_LIB}/mod2
-  run msu_uninstall mod1 mod2
-  [ "${status}" -eq 0 ]
-  echo ${output} | grep "uninstalled"
-  [ ! -d ${MSU_EXTERNAL_LIB}/mod1 ]
-  [ ! -d ${MSU_EXTERNAL_LIB}/mod2 ]
-}

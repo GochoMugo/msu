@@ -9,7 +9,7 @@
 
 # mod vars
 MSU_REQUIRE_LOCK= # lock to ensure we dont source an already-sourced file
-MSU_EXTERNAL_LIB=${MSU_EXTERNAL_LIB:-${HOME}/.msu}
+export MSU_EXTERNAL_LIB=${MSU_EXTERNAL_LIB:-${HOME}/.msu}
 
 
 # check dependencies
@@ -47,46 +47,4 @@ function msu_run() {
   local func=$(echo ${1} | grep -Eo "\.[^.]+$" | cut -b 2-)
   msu_require ${module}
   ${func} ${@:2}
-}
-
-
-# upgrade myself
-function msu_upgrade() {
-  LIB=$(dirname ${MSU_LIB})
-  BIN=$(dirname $(which msu))
-  wget -qO- http://git.io/vTE0s | LIB=${LIB} BIN=${BIN} bash
-}
-
-
-# install module(s)
-function msu_install() {
-  mkdir -p ${MSU_EXTERNAL_LIB}
-  for dir in "$@"
-  do
-    cp -r ${dir} ${MSU_EXTERNAL_LIB} > /dev/null
-    if [ $? ] ; then
-      echo "installed: ${dir}"
-    else
-      echo "error: install: could not install ${dir}"
-    fi
-  done
-}
-
-
-# uninstall module(s)
-function msu_uninstall() {
-  for dir in "$@"
-  do
-    path=${MSU_EXTERNAL_LIB}/${dir}
-    [ -e ${path} ] && {
-      rm -rf ${path} > /dev/null
-      if [ $? ] ; then
-        echo "uninstalled: ${dir}"
-      else
-        echo "error: uninstall: could not uninstall ${dir}"
-      fi
-    } || {
-      echo "not installed: ${dir}"
-    }
-  done
 }

@@ -29,13 +29,13 @@ case ${1} in
     msu_run ${@:2}
   ;;
   "i" | "install" )
-    msu_install ${@:2}
+    msu_run core_utils.install ${@:2}
   ;;
   "u" | "uninstall" )
-    msu_uninstall ${@:2}
+    msu_run core_utils.uninstall ${@:2}
   ;;
   "up" | "upgrade" )
-    msu_upgrade
+    msu_run core_utils.upgrade
   ;;
   "h" | "help" )
     echo
