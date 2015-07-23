@@ -36,6 +36,14 @@ You can install external modules, by simple copying the module contents to the e
 ⇒ msu install my-module
 ```
 
+You can also install remote modules from github. For example if https://github.com/example/module-repo is a module you want to install:
+
+```bash
+⇒ msu install gh:example/module-repo
+```
+
+> Note the `gh:` part! It is **case-insensitive**!
+
 
 ## module name:
 

@@ -34,6 +34,17 @@ source lib/format.sh
 }
 
 
+@test "\`install' installs from github" {
+  MSU_EXTERNAL_LIB=${BATS_TMPDIR}/github
+  source lib/core_utils.sh
+  samplemodule="GH:GochoMugo/msu"
+  run install ${samplemodule}
+  [ "${status}" -eq 0 ]
+  echo ${output} | grep "${sym_tick}"
+  [ -d ${MSU_EXTERNAL_LIB}/msu ]
+}
+
+
 @test "\`uninstall' uninstalls one or more modules" {
   MSU_EXTERNAL_LIB=${BATS_TMPDIR}/uninstall
   source lib/core_utils.sh
