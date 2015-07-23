@@ -9,6 +9,7 @@ test:
 	make clean
 
 deps:
+	rm -rf bats/
 	git clone --depth=1 https://github.com/sstephenson/bats.git bats
 
 clean:
