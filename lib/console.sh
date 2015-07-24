@@ -45,17 +45,56 @@ function error() {
   write_text ${LOG_TITLE:-error} "${1:-""}" 2
 }
 
+
 # put a tick
 function tick() {
   write_text "${sym_tick} ${1}" 1
 }
+
 
 # put an x
 function cross() {
   write_text "${sym_cross} ${1}" 2
 }
 
+
 # list
 function list() {
   write_text "${sym_arrow_right} ${1}" 0
+}
+
+
+# asks user a question
+#
+# ${1} question to ask user
+function ask() {
+  echo -e -n "    ${clr_white}${1}${clr_reset} "
+  read ANSWER
+}
+
+
+# asks a yes or no question
+# ${1} question to ask
+# ${2} default answer
+# return 0 (yes), 1 (no)
+function yes_no() {
+  local show="y|N"
+  local exit_code=1
+  case ${2} in
+    "Y" | "y" )
+      show="Y|n"
+      exit_code=0
+    ;;
+  esac
+  question="${1} (${show})?"
+  ask "${question}" 0
+  case $ANSWER  in
+    "Y" | "y" )
+      exit_code=0
+    ;;
+    "N" | "n" )
+      exit_code=1
+    ;;
+  esac
+  return ${exit_code}
 }
