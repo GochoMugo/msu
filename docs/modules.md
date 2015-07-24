@@ -75,3 +75,10 @@ Examples:
   * `foo-bar.sh` - valid
   * `foo_bar.sh` - valid
   * `foo.bar.sh` - **invalid**
+
+
+## samples:
+
+> Send a **Pull Request** to get your module added here!
+
+* [Submarine](https://github.com/GochoMugo/submarine)
