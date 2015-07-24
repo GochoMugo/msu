@@ -15,6 +15,11 @@
 More [installation instructions](https://github.com/GochoMugo/msu/tree/master/docs/installation.md).
 
 
+## documentation:
+
+Documentation is placed in the [`docs/`](https://github.com/GochoMugo/msu/tree/master/docs/) directory.
+
+
 ## license
 
 __The MIT License (MIT)__

@@ -17,11 +17,15 @@ Anybody can install their own modules.
 
 On installation, these modules are placed at `${MSU_EXTERNAL_LIB}`, which by default is `${HOME}/.msu`.
 
+
+### structure
+
 A valid module can be:
   * a single script, say `sample.sh`
   * a directory with many scripts, say
 ```
 my-module/
+|-- aliases.sh  # place your aliases here
 |-- script.sh
 `-- inner-dir
     |-- script.sh
@@ -29,6 +33,8 @@ my-module/
 ```
 
 > Nested directories are allowed.
+
+### installing
 
 You can install external modules, by simple copying the module contents to the external library directory (`${MSU_EXTERNAL_LIB}`). Also, `msu install` can help.
 
@@ -45,13 +51,27 @@ You can also install remote modules from github. For example if https://github.c
 > Note the `gh:` part! It is **case-insensitive**!
 
 
+### aliases auto-loading
+
+If a module has an `aliases.sh` file in its root, it will get auto-loaded into the shell. `msu` has its own aliases that it adds **but** they can be overridden by modules as desired.
+
+**Conflicts** can happen when, say two modules both try to create an alias with the same name. `msu` has no way to detect this. The best way to avoid this is to use a short prefix in front of your aliases.
+
+Example:
+
+```sh
+alias dance='msu run my-module.dance'
+```
+
+
 ## module name:
 
 A valid module filename:
   * has the extension `.sh`
   * has no `.` (dot) except that preceding the extension
 
-* `foobar.sh` - valid
-* `foo-bar.sh` - valid
-* `foo_bar.sh` - valid
-* `foo.bar.sh` - **invalid**
+Examples:
+  * `foobar.sh` - valid
+  * `foo-bar.sh` - valid
+  * `foo_bar.sh` - valid
+  * `foo.bar.sh` - **invalid**

@@ -19,9 +19,6 @@ msu_require metadata
 
 # parse command line arguments
 case ${1} in
-  "a" | "aliases" )
-    source ${MSU_LIB}/aliases.sh
-  ;;
   "r" | "require" )
     msu_require ${2}
   ;;

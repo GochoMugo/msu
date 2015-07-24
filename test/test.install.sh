@@ -11,6 +11,7 @@ cp ~/.bashrc ~/.bashrc~ # backup
 
 function setup() {
   mv ~/.bashrc ${BASHRC_TMP}
+  touch ~/.bashrc
 }
 
 
@@ -69,7 +70,7 @@ function teardown() {
 
 @test "adds loader string for loading aliases" {
   ./install.sh
-  cat ~/.bashrc | grep -E "msu aliases"
+  cat ~/.bashrc | grep -E "msu/aliases.sh"
 }
 
 
