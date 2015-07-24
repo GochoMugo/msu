@@ -12,13 +12,13 @@ pushd /tmp > /dev/null
 echo "${MARKER} cloning repo"
 rm -fr ${CLONE_DIR}
 if [ ${BUILD} ] ; then
-  git clone ${GIT_URL} ${CLONE_DIR}
+  git clone --quiet ${GIT_URL} ${CLONE_DIR}
   cd ${CLONE_DIR}
   echo "${MARKER} checking out build ${BUILD}"
-  git checkout ${BUILD}
+  git checkout --quiet ${BUILD}
   cd ..
 else
-  git clone --depth=1 ${GIT_URL} ${CLONE_DIR}
+  git clone --depth=1 --quiet ${GIT_URL} ${CLONE_DIR}
 fi
 
 echo "${MARKER} running installation script"
