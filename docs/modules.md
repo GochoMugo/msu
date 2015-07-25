@@ -34,6 +34,18 @@ my-module/
 
 > Nested directories are allowed.
 
+
+### dependencies checking
+
+If a module defines the `${DEPS}` variable, `msu` will check if the dependencies are installed. Note that `msu` will **not error** if one or more of the dependencies are missing, it will just give a **warning** to the user. This is by design! ([more discussion on this is required](https://github.com/GochoMugo/msu/issues/2))
+
+Example:
+
+```bash
+DEPS="git node npm"
+```
+
+
 ### installing
 
 You can install external modules, by simple copying the module contents to the external library directory (`${MSU_EXTERNAL_LIB}`). Also, `msu install` can help.
@@ -42,10 +54,10 @@ You can install external modules, by simple copying the module contents to the e
 ⇒ msu install my-module
 ```
 
-You can also install remote modules from github. For example if https://github.com/example/module-repo is a module you want to install:
+You can also install remote modules from github, using shorthands. For example if https://github.com/GochoMugo/submarine is a module you want to install:
 
 ```bash
-⇒ msu install gh:example/module-repo
+⇒ msu install gh:GochoMugo/submarine
 ```
 
 > Note the `gh:` part! It is **case-insensitive**!
