@@ -7,6 +7,10 @@
 MSU_EXTERNAL_LIB=${MSU_EXTERNAL_LIB:-${HOME}/.msu}
 
 
+# general
+alias x="msu run"
+
+
 # fs
 alias fs.join="msu run fs.joindirs"
 alias fs.trash="msu run fs.trash"
