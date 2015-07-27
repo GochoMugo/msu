@@ -68,9 +68,47 @@ function list() {
 #
 # ${1} question to ask user
 # ${2} variable to assign the result to
+# ${3} clear/hidden (0-clear, 1-hidden)
+#
+# reference: http://stackoverflow.com/questions/1923435/how-do-i-echo-stars-when-reading-password-with-read
 function ask() {
+  local clear=0
+  [ ${3} ] && clear=${3}
   echo -e -n "    ${clr_white}${1}${clr_reset}  "
-  read ${2}
+  if [ ${clear} -eq 0 ]
+  then
+    read ${2}
+  else
+    #read -s ${2}
+    #echo
+    local password=
+    local prompt=
+    local charcount=
+    while IFS= read -p "$prompt" -r -s -n 1 char
+    do
+        if [[ ${char} == $'\0' ]]
+        then
+            break
+        fi
+        # Backspace
+        if [[ ${char} == $'\177' ]]
+        then
+          if [ ${charcount} -gt 0 ] ; then
+                charcount=$((charcount-1))
+                prompt=$'\b \b'
+                password="${password%?}"
+            else
+                prompt=''
+            fi
+        else
+            charcount=$((charcount+1))
+            prompt='*'
+            password="${password}${char}"
+        fi
+    done
+    eval ${2}=${password}
+    echo
+  fi
 }
 
 
