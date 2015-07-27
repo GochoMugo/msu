@@ -45,16 +45,21 @@ case ${1} in
     echo "    u  | uninstall <mod>...  uninstall the module(s) <mod>..."
     echo "    up | upgrade             upgrade to the latest version"
     echo "    h  | help                show this help information"
-    echo "    v  | version             show version information"
+    echo "    v  | version [mod]       show version information of module [mod] or msu itself"
     echo
     echo " See https://github.com/GochoMugo/msu/issues for bug reporting"
     echo " and feature requests"
     echo
   ;;
   "v" | "version" )
-    echo "  version   ${MSU_VERSION}"
-    echo "  build     ${MSU_BUILD_HASH:-?}"
-    echo "  date      ${MSU_BUILD_DATE:-?}"
+    if [ ${2} ]
+    then
+      msu_run core_utils.show_metadata ${2}
+    else
+      echo "  version   ${MSU_VERSION}"
+      echo "  build     ${MSU_BUILD_HASH:-?}"
+      echo "  date      ${MSU_BUILD_DATE:-?}"
+    fi
   ;;
   * )
     # do nothing
