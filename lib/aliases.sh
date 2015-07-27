@@ -35,4 +35,4 @@ fi
 
 # top-most aliases file
 [ -f ${MSU_EXTERNAL_LIB}/aliases.sh ] && source ${MSU_EXTERNAL_LIB}/aliases.sh
-echo
+echo > /dev/null
