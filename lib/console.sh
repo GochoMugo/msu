@@ -67,9 +67,10 @@ function list() {
 # asks user a question
 #
 # ${1} question to ask user
+# ${2} variable to assign the result to
 function ask() {
-  echo -e -n "    ${clr_white}${1}${clr_reset} "
-  read ANSWER
+  echo -e -n "    ${clr_white}${1}${clr_reset}  "
+  read ${2}
 }
 
 
@@ -79,6 +80,7 @@ function ask() {
 # return 0 (yes), 1 (no)
 function yes_no() {
   local show="y|N"
+  local answer=
   local exit_code=1
   case ${2} in
     "Y" | "y" )
@@ -87,8 +89,8 @@ function yes_no() {
     ;;
   esac
   question="${1} (${show})?"
-  ask "${question}" 0
-  case $ANSWER  in
+  ask "${question}" answer
+  case ${answer} in
     "Y" | "y" )
       exit_code=0
     ;;

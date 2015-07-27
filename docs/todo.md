@@ -12,7 +12,8 @@
 * [ ] small but comprehensive internal ibrary
 * [x] require internal/external modules
 * [ ] require modules using relative paths
-* [ ] error handling
+* [ ] load/unload aliases
+* [ ] error catching/handling
 * [ ] bash completion
 * [ ] add compatibility for other shell types e.g. zsh
 * [ ] add tests for other shell types
