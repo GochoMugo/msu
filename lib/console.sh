@@ -106,7 +106,7 @@ function ask() {
             password="${password}${char}"
         fi
     done
-    eval ${2}=${password}
+    eval ${2}=\${password}
     echo
   fi
 }
