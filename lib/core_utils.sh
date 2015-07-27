@@ -69,7 +69,7 @@ function install() {
 # generate metadata for an installed module
 function generate_metadata() {
   pushd ${MSU_EXTERNAL_LIB}/${1} > /dev/null
-  if [ ! -d .git ] || [ $(git rev-list --all --count > /dev/null 2>&1 || echo 0) -eq 0 ]
+  if [ ! -d .git ] || [ $(git rev-list --all --count 2> /dev/null || echo 0) -eq 0 ]
   then
     error "can not generate metadata without at least one git commit"
     return 1
