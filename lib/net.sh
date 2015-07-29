@@ -4,7 +4,7 @@
 
 
 # modules
-msu_require console
+msu_require "console"
 
 
 # module variables

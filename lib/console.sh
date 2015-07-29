@@ -2,7 +2,7 @@
 #
 # Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
 
-msu_require format
+msu_require "format"
 
 # writes to console with colors
 #  ${1}  message to write to console

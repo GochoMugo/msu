@@ -4,10 +4,11 @@
 
 
 # modules
-msu_require console
+msu_require "console"
 
 
 # module variables
+DEPS=
 TRASH_DIR=/tmp/trash
 
 

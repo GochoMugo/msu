@@ -7,15 +7,15 @@ msu_require "core_utils"
 
 Utilities that are important to the core.
 
-## `upgrade()`
+## upgrade()
 
 Upgrades `msu` itself.
 
-## `install([mod [, mod [, ...]]])`
+## install([mod [, mod [, ...]]])
 
 Install one or more modules.
 
 
-## `uninstall([mod [, mod [, ...]]])`
+## uninstall([mod [, mod [, ...]]])
 
 Uninstalls one or more modules.

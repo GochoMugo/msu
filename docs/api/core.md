@@ -4,17 +4,17 @@
 This module is **automatically** loaded into the module. It is readily available for use by modules.
 
 
-## `${MSU_LIB}`
+## ${MSU_LIB}
 
 An absolute path to the directory holding the `msu` library. It is mostly useful for internal modules.
 
 
-## `${MSU_EXTERNAL_LIB}`
+## ${MSU_EXTERNAL_LIB}
 
 An absolute path to the directory holding the `msu` external modules. Again, it is mostly useful for internal modules.
 
 
-## `msu_require()`
+## msu_require()
 
 Load a module.
 
@@ -24,7 +24,7 @@ Example:
 msu_require "console"
 ```
 
-## `msu_run()`
+## msu_run()
 
 Run a function in a module.
 
