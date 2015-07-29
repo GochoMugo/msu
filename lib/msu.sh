@@ -1,9 +1,10 @@
+#!/usr/bin/env bash
 # msu (my-shell-utils)
 #
 # Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
 
 
-[ -L ${BASH_SOURCE[0]} ] && EXE=$(readlink $(which msu)) # using symbolic link
+[ -L "${BASH_SOURCE[0]}" ] && EXE=$(readlink -f "${BASH_SOURCE[0]}") # using symbolic link
 [ ${EXE} ] || {
   EXE=${BASH_SOURCE[0]} # file executed directly
   EXE=$(echo ${EXE} | grep -Eo "[a-Z]{1}.*")
