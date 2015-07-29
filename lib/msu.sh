@@ -26,6 +26,9 @@ case ${1} in
   "-" | "run" )
     msu_run ${@:2}
   ;;
+  "x"  | "execute" )
+    source ${2}
+  ;;
   "i" | "install" )
     msu_run core_utils.install ${@:2}
   ;;
@@ -42,6 +45,7 @@ case ${1} in
     echo " Available Commands:"
     echo "    r  | require <mod>       require the library module <mod>"
     echo "    -  | run <mod>.<func>    run the function <func> in module <mod>"
+    echo "    x  | execute <filepath>  execute file at the path <filepath>"
     echo "    i  | install <mod>...    install the module(s) <mod>..."
     echo "    u  | uninstall <mod>...  uninstall the module(s) <mod>..."
     echo "    up | upgrade             upgrade to the latest version"
