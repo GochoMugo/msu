@@ -16,17 +16,17 @@ DL_FILE=".msu.download"
 # ${1} - name of download
 # ${2} - url of the download
 function track() {
-  echo "${1}=${2}" >> ${DL_FILE}
+  echo "${1}=${2}" >> "${DL_FILE}"
 }
 
 
 # check tracked downloads
 function check() {
-  if [ -f ${DL_FILE} ] ; then
-    local names=$(cat ${DL_FILE} | grep -Eo ".*=" | grep -Eo "[a-Z]*")
-    for name in ${names}
+  if [ -f "${DL_FILE}" ] ; then
+    local names=$(cat "${DL_FILE}" | grep -Eo ".*=" | grep -Eo "[a-Z]*")
+    for name in "${names}"
     do
-      list ${name}
+      list "${name}"
     done
   else
     cross "tracking file missing"
@@ -43,26 +43,34 @@ function download() {
   local data=""
 
   # we require a name
-  if [ ! ${2} ] ; then
+  if [ ! ${1} ] ; then
     error "we require a name"
     return 1
   fi
 
   # read tracking file, if it exists
-  [ -e ${DL_FILE} ] && data=$(cat ${DL_FILE})
+  [ -e "${DL_FILE}" ] && data=$(cat "${DL_FILE}")
 
-  if [ ${url} ] ; then # new download
-    track ${name} ${url}
-  elif [ ${name} ]; then # tracked download
-    url=$(echo ${data} | grep -E "${name}" | grep -Eo "=.*" | cut -b 2-)
+  if [ "${url}" ] ; then # new download
+    track "${name}" "${url}"
+  elif [ "${name}" ]; then # tracked download
+    url=$(echo "${data}" | grep -E "${name}" | grep -Eo "=.*" | cut -b 2-)
   fi
 
   # download
-  if [ ${url} ] ; then
-    wget -c ${url}
-    [ $? ] && echo ${data} | grep -Ev ${name} > ${DL_FILE}
+  if [ "${url}" ] ; then
+    wget -c "${url}" && {
+      echo "${data}" | grep -Ev ${name} > ${DL_FILE}
+      tick "${name}"
+    } || {
+      cross "${name} (could not download)"
+    }
   else
-    echo ${data} | grep -Eo "=.*" | cut -b 2- | xargs wget -c
-    [ $? ] && rm -rf ${DL_FILE}
+    echo "${data}" | grep -Eo "=.*" | cut -b 2- | xargs -I{} wget -c {} && {
+      rm -rf "${DL_FILE}"
+      success "done"
+    } || {
+      error "did not complete successfully"
+    }
   fi
 }
