@@ -5,12 +5,25 @@
 # Licensed under the MIT License
 
 test:
+	~/.cabal/bin/shellcheck *.sh lib/*.sh test/*.sh
 	./bats/bin/bats test/test.*.sh
 	make clean
 
-deps:
+
+deps: bats cabal  shellcheck
+
+bats:
 	rm -rf bats/
 	git clone --depth=1 https://github.com/sstephenson/bats.git bats
+
+cabal:
+	sudo apt-get update -qq
+	sudo apt-get install -y cabal-install
+	cabal update
+
+shellcheck:
+	git clone https://github.com/koalaman/shellcheck
+	cd shellcheck && cabal install
 
 clean:
 	rm -rf lib/tmp_* npm-debug.log
