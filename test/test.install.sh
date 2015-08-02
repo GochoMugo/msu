@@ -1,6 +1,5 @@
-#
+#!/usr/bin/env bats
 # tests against ./install.sh
-#
 
 
 BASHRC_TMP=~/.bashrc.msu
@@ -10,17 +9,17 @@ cp ~/.bashrc ~/.bashrc~ # backup
 
 
 function setup() {
-  mv ~/.bashrc ${BASHRC_TMP}
+  mv ~/.bashrc "${BASHRC_TMP}"
   touch ~/.bashrc
 }
 
 
 function teardown() {
   [ -e ~/bin/msu ]  && rm -rf ~/bin/msu
-  [ -e ${BIN}/msu ] && rm -rf ${BIN}/msu
+  [ -e "${BIN}/msu" ] && rm -rf "${BIN:-'.'}/msu"
   [ -d ~/lib/msu ]  && rm -rf ~/lib/msu
-  [ -d ${LIB}/msu ] && rm -rf ${LIB}/msu
-  mv ${BASHRC_TMP} ~/.bashrc
+  [ -d "${LIB}/msu" ] && rm -rf "${LIB:-'.'}/msu"
+  mv "${BASHRC_TMP}" ~/.bashrc
 }
 
 
@@ -30,33 +29,34 @@ function teardown() {
 
 
 @test "uses \${LIB} to prefix destination directory for library" {
-  local lib=${BATS_TMPDIR}/some-lib
-  rm -rf ${lib}/msu
-  LIB=${lib} ./install.sh
-  [ -d ${lib}/msu ]
+  local lib="${BATS_TMPDIR}/some-lib"
+  rm -rf "${lib}/msu"
+  LIB="${lib}" ./install.sh
+  [ -d "${lib}/msu" ]
 }
 
 
 @test "uses \${BIN} to prefix destination directory for executable" {
-  local bin=${BATS_TMPDIR}/some-bin
-  rm -rf ${bin}/msu
-  BIN=${bin} ./install.sh
-  [ -x ${bin}/msu ]
+  local bin="${BATS_TMPDIR}/some-bin"
+  rm -rf "${bin:-'.'}/msu"
+  BIN="${bin}" ./install.sh
+  [ -x "${bin}/msu" ]
 }
 
 
 @test "adds \${BIN} to ~/.bashrc if not in \${PATH}" {
-  local bin=${BATS_TMPDIR}/another-bin
-  BIN=${bin} ./install.sh
-  cat ~/.bashrc | grep "export PATH=${bin}:\${PATH}"
+  local bin="${BATS_TMPDIR:-'.'}/another-bin"
+  BIN="${bin}" ./install.sh
+  cat ~/.bashrc | grep "export PATH=\"${bin}\":\${PATH}"
 }
 
 
 @test "generates metadata" {
   ./install.sh
   local data=$(cat ~/lib/msu/metadata.sh)
-  echo ${data} | grep -E "MSU_BUILD_HASH=[a-z0-9]+"
-  echo ${data} | grep -E "MSU_BUILD_DATE=.+"
+  echo "${data}"
+  echo "${data}" | grep -E "MSU_BUILD_HASH='[a-z0-9]+'"
+  echo "${data}" | grep -E "MSU_BUILD_DATE='.+'"
 }
 
 
@@ -64,7 +64,7 @@ function teardown() {
   ./install.sh
   local realpath=$(readlink ~/bin/msu)
   [ -x ~/bin/msu ]
-  [ ${realpath} == "$(readlink -f ~/lib/msu/msu.sh)" ]
+  [ "${realpath}" == "$(readlink -f ~/lib/msu/msu.sh)" ]
 }
 
 

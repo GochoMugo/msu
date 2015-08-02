@@ -1,29 +1,28 @@
-#
+#!/usr/bin/env bats
 # tests against lib/msu.sh
-#
 
 
 @test "\`msu' exports \${MSU_LIB}" {
   . lib/msu.sh
-  [ ${MSU_LIB} ]
+  [ "${MSU_LIB}" ]
 }
 
 
 @test "\`msu' sets \${MSU_LIB} to library, if its a symbolic link" {
   ./install.sh
   . msu
-  [ ${MSU_LIB} == "$(readlink -f ~/lib/msu)" ]
+  [ "${MSU_LIB}" == "$(readlink -f ~/lib/msu)" ]
 }
 
 
 @test "\`msu' sets \${MSU_LIB} to library, if executed directly" {
   . ./lib/msu.sh
-  [ ${MSU_LIB} == "$(readlink -f ${PWD}/lib)" ]
+  [ "${MSU_LIB}" == "$(readlink -f ${PWD}/lib)" ]
 }
 
 
 @test "\`msu require' loads a module" {
-  [ ! $(command -v log) ]
+  [ ! "$(command -v log)" ]
   . msu require console
   command -v log
   command -v success

@@ -1,6 +1,5 @@
-#
+#!/usr/bin/env bats
 # tests against get.sh
-#
 
 
 function teardown() {
@@ -29,15 +28,15 @@ function teardown() {
 @test "clones to a depth of 1 by default" {
   cat get.sh | bash
   cd /tmp/msu
-  [ $(git rev-list HEAD --count) -eq 1 ]
+  [ "$(git rev-list HEAD --count)" -eq 1 ]
   cd ..
 }
 
 
 @test "clone for a certain build" {
   local hash="49b0104a2e962e6da5dac12f1860e7898505090c"
-  cat get.sh | BUILD=${hash} bash
+  cat get.sh | BUILD="${hash}" bash
   cd /tmp/msu
-  [ $(git rev-parse HEAD) == ${hash} ]
+  [ "$(git rev-parse HEAD)" == "${hash}" ]
   cd ..
 }

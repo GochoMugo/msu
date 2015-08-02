@@ -1,10 +1,11 @@
+#!/usr/bin/env bash
 # how you live with no aliases
 #
 # Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
 
 
 # external library
-MSU_EXTERNAL_LIB=${MSU_EXTERNAL_LIB:-${HOME}/.msu}
+MSU_EXTERNAL_LIB="${MSU_EXTERNAL_LIB:-${HOME}/.msu}"
 
 
 # general
@@ -23,13 +24,13 @@ alias net.dl="msu run net.download"
 
 
 # external module aliases
-if [ -d ${MSU_EXTERNAL_LIB} ]
+if [ -d "${MSU_EXTERNAL_LIB}" ]
 then
-  modules=$(ls ${MSU_EXTERNAL_LIB})
+  modules=$(ls "${MSU_EXTERNAL_LIB}")
   for module in ${modules}
   do
     alias_file=${MSU_EXTERNAL_LIB}/${module}/aliases.sh
-    [ -f ${alias_file} ] && source ${alias_file}
+    [ -f "${alias_file}" ] && source "${alias_file}"
   done
   unset alias_file
   unset module
@@ -38,5 +39,5 @@ fi
 
 
 # top-most aliases file
-[ -f ${MSU_EXTERNAL_LIB}/aliases.sh ] && source ${MSU_EXTERNAL_LIB}/aliases.sh
+[ -f "${MSU_EXTERNAL_LIB}/aliases.sh" ] && source "${MSU_EXTERNAL_LIB}/aliases.sh"
 echo > /dev/null

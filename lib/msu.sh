@@ -4,36 +4,40 @@
 # Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
 
 
+#set -e errexit
+
+
 [ -L "${BASH_SOURCE[0]}" ] && EXE=$(readlink -f "${BASH_SOURCE[0]}") # using symbolic link
-[ ${EXE} ] || {
-  EXE=${BASH_SOURCE[0]} # file executed directly
-  EXE=$(echo ${EXE} | grep -Eo "[a-Z]{1}.*")
-  EXE=${PWD}/${EXE}
+[ "${EXE}" ] || {
+  EXE="${BASH_SOURCE[0]}" # file executed directly
+  EXE=$(echo "${EXE}" | grep -Eo "[a-Z]{1}.*")
+  EXE="${PWD}/${EXE}"
 }
-export MSU_LIB="$(dirname ${EXE})" # directory holding our library
+MSU_LIB=$(dirname "${EXE}") # directory holding our library
+export MSU_LIB
 
 
 # modules
-source ${MSU_LIB}/core.sh # so LOW-LEVEL
-msu_require metadata
+source "${MSU_LIB}/core.sh" # so LOW-LEVEL
+msu_require "metadata"      # how you like me now?
 
 
 # parse command line arguments
-case ${1} in
+case "${1:-''}" in
   "r" | "require" )
-    msu_require ${2}
+    msu_require "${2:-''}"
   ;;
   "-" | "run" )
-    msu_run ${@:2}
+    msu_run "${@:2}"
   ;;
   "x"  | "execute" )
-    source ${2}
+    msu_execute "${2:-''}"
   ;;
   "i" | "install" )
-    msu_run core_utils.install ${@:2}
+    msu_run core_utils.install "${@:2}"
   ;;
   "u" | "uninstall" )
-    msu_run core_utils.uninstall ${@:2}
+    msu_run core_utils.uninstall "${@:2}"
   ;;
   "up" | "upgrade" )
     msu_run core_utils.upgrade
@@ -57,9 +61,9 @@ case ${1} in
     echo
   ;;
   "v" | "version" )
-    if [ ${2} ]
+    if [ "${2}" ]
     then
-      msu_run core_utils.show_metadata ${2}
+      msu_run core_utils.show_metadata "${2}"
     else
       echo "  version   ${MSU_VERSION}"
       echo "  build     ${MSU_BUILD_HASH:-?}"

@@ -5,7 +5,7 @@
 # Licensed under the MIT License
 
 test:
-	~/.cabal/bin/shellcheck *.sh lib/*.sh test/*.sh
+	~/.cabal/bin/shellcheck ./*.sh lib/*.sh 
 	./bats/bin/bats test/test.*.sh
 	make clean
 
