@@ -2,20 +2,17 @@
 # tests against lib/aliases.sh
 
 
-MSU_EXTERNAL_LIB="${BATS_TMPDIR:-'/tmp'}/test-aliases"
+MSU_EXTERNAL_LIB="${BATS_TMPDIR:-/tmp}/test-aliases"
 
 
 function setup() {
   # shellcheck disable=SC2015
   mkdir -p "${MSU_EXTERNAL_LIB}"
-  alias fs.join && unalias fs.join || true
-  alias net.dl && unalias net.dl || true
-  alias humansshouldriseup && unalias humansshouldriseup || true
 }
 
 
 function teardown() {
-  rm -rf "${MSU_EXTERNAL_LIB:-'/tmp'}/*"
+  rm -rf "${MSU_EXTERNAL_LIB:-/tmp}/*"
 }
 
 
@@ -36,11 +33,11 @@ function teardown() {
 
 
 @test "\${MSU_EXTERNAL_LIB}/aliases.sh overides all" {
-  alias_override="${MSU_EXTERNAL_LIB}/aliases.sh"
+  local alias_override="${MSU_EXTERNAL_LIB}/aliases.sh"
   local mod="${MSU_EXTERNAL_LIB}/overide"
   mkdir -p "${mod}"
-  echo "alias humansshouldriseup='echo override'" > "${alias_override}"
-  echo "alias humansshouldriseup='echo external'" > "${mod}/aliases.sh"
+  echo "alias bedaring='echo override'" > "${alias_override}"
+  echo "alias bedaring='echo external'" > "${mod}/aliases.sh"
   . lib/aliases.sh
-  alias humansshouldriseup | grep "override"
+  alias bedaring | grep "override"
 }

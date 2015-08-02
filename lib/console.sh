@@ -8,22 +8,23 @@ msu_require "format"
 
 
 # writes to console with colors
-#  ${1}  message to write to console
-#  ${2} what color to use. 0 - info(blue), 1- success(green),
-#    2 - error(red)
-#  ${LOG_TITLE} for setting title of logging
+#  ${1}  title of the message
+#  ${2}  message to write to console
+#  ${3}  what color to use. 0 - info(blue), 1- success(green),
+#        2 - error(red). Defaults to "0"
+#  ${4}  file to write to. Defaults to "/dev/stdout"
 function write_text() {
   local title
   local text
   local color_index
+  local output
+  local outfile
   text=${2}
-  color_index=${3}
-  if [ "$3" ]
+  color_index=${3:-0}
+  outfile=${4:-"/dev/stdout"}
+  if [ "${1}" ]
   then
     title="${clr_white:-''}${1}: "
-  else
-    text="${1}"
-    color_index="${2}"
   fi
   local color=${clr_blue:-''}
   case "${color_index}" in
@@ -34,49 +35,50 @@ function write_text() {
       color=${clr_red:-''}
     ;;
   esac
-  echo -e "${title}${color}${text}${clr_reset:-''}"
+  output="${title}${color}${text}${clr_reset:-''}"
+  echo -e "${output}" >> "${outfile}"
 }
 
 
 # normal logging
 # ${@} text
 function log() {
-  write_text "${LOG_TITLE:-log} ${*}" 0
+  write_text "${LOG_TITLE:-log}" "${*}" 0
 }
 
 
 # success logging
 # ${@} text
 function success() {
-  write_text "${LOG_TITLE:-success} ${*}" 1
+  write_text "${LOG_TITLE:-success}" "${*}" 1
 }
 
 
 # error logging
 # ${@} text
 function error() {
-  write_text "${LOG_TITLE:-error} ${*}" 2
+  write_text "${LOG_TITLE:-error}" "${*}" 2 "/dev/stderr"
 }
 
 
 # put a tick
 # ${@} text
 function tick() {
-  write_text "${sym_tick:-tick} ${*}" 1
+  write_text "" "${sym_tick:-tick} ${*}" 1
 }
 
 
 # put an x
 # ${@} text
 function cross() {
-  write_text "${sym_cross:-cross} ${*}" 2
+  write_text "" "${sym_cross:-cross} ${*}" 2
 }
 
 
 # list
 # ${@} text
 function list() {
-  write_text "${sym_arrow_right:-list} ${*}" 0
+  write_text "" "${sym_arrow_right:-list} ${*}" 0
 }
 
 
