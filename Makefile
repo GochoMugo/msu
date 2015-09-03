@@ -5,12 +5,11 @@
 # Licensed under the MIT License
 
 test:
-	~/.cabal/bin/shellcheck ./*.sh lib/*.sh 
+	~/.cabal/bin/shellcheck ./*.sh lib/*.sh
 	./bats/bin/bats test/test.*.sh
 	make clean
 
-
-deps: bats cabal  shellcheck
+deps: bats cabal shellcheck
 
 bats:
 	rm -rf bats/
@@ -18,12 +17,12 @@ bats:
 
 cabal:
 	sudo apt-get update -qq
-	sudo apt-get install -y cabal-install
-	cabal update
+	sudo apt-get install -y -qq cabal-install
+	cabal update --verbose=0 # ensure we do not bloat our logs
 
 shellcheck:
 	git clone https://github.com/koalaman/shellcheck
-	cd shellcheck && cabal install
+	cd shellcheck && cabal install --verbose=0
 
 clean:
 	rm -rf lib/tmp_* npm-debug.log
