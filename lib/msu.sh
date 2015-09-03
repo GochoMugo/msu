@@ -18,6 +18,7 @@ export MSU_LIB
 
 
 # modules
+# shellcheck source=lib/core.sh
 source "${MSU_LIB}/core.sh" # so LOW-LEVEL
 msu_require "metadata"      # how you like me now?
 

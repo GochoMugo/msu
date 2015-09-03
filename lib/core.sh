@@ -38,8 +38,10 @@ function msu_require() {
     local fullpath
     fullpath=$(echo "${1}" | sed 's/\.*$//g' | sed 's/\./\//g')
     # internal modules have precedence
+    # shellcheck source=/dev/null
     source "${MSU_LIB}/${fullpath}.sh" > /dev/null 2>&1 || {
       # external libs
+      # shellcheck source=/dev/null
       source "${MSU_EXTERNAL_LIB}/${fullpath}.sh" > /dev/null 2>&1 || {
         echo "error: require: failed to load module '$(echo "${1}" | sed 's/\.$//g')'"
         exit 1
@@ -68,5 +70,6 @@ function msu_run() {
 
 # execute a file
 function msu_execute() {
+  # shellcheck source=/dev/null
   source "${1}"
 }

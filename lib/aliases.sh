@@ -30,6 +30,7 @@ then
   for module in ${modules}
   do
     alias_file=${MSU_EXTERNAL_LIB}/${module}/aliases.sh
+    # shellcheck source=/dev/null
     [ -f "${alias_file}" ] && source "${alias_file}"
   done
   unset alias_file
@@ -39,5 +40,6 @@ fi
 
 
 # top-most aliases file
+# shellcheck source=/dev/null
 [ -f "${MSU_EXTERNAL_LIB}/aliases.sh" ] && source "${MSU_EXTERNAL_LIB}/aliases.sh"
 echo > /dev/null
