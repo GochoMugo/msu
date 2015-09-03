@@ -9,7 +9,7 @@ msu_require "format"
 
 # module variables
 {
-  # shellcheck disable=2034 
+  # shellcheck disable=2034
   DEPS="git"
 }
 
@@ -58,6 +58,9 @@ function install() {
       popd > /dev/null
     else
       # simple copying
+      # for faster development, we may be in a module's repo and want to
+      # install it without leaving the directory (or using $PWD)
+      if [ "${dir}" == "." ] ; then dir="${PWD}" ; fi
       module_name="$(basename "${dir}")"
       rm -rf "${MSU_EXTERNAL_LIB:-'.'}/${module_name}"
       cp -rf "${dir}" "${MSU_EXTERNAL_LIB}" > /dev/null
