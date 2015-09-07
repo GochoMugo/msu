@@ -11,7 +11,7 @@
 ## installation:
 
 ```bash
-⇒ wget -qO- http://git.io/vTE0s | bash
+⇒ wget -qO- https://git.io/vTE0s | bash
 ⇒ msu help
 ```
 

@@ -8,7 +8,7 @@ There are different ways of installing `msu`.
 1. **automated install**
 
   ```bash
-  ⇒ wget -qO- http://git.io/vTE0s | bash
+  ⇒ wget -qO- https://git.io/vTE0s | bash
   ```
 
   This downloads the `get.sh` script in the repo and runs it using **bash**. It's easier and faster.
@@ -51,7 +51,7 @@ By default, the latest build of `msu` is downloaded and installed. To install a 
 As an example, *(using all variables. you can use one or more variables)*
 
 ```bash
-⇒ wget -qO- http://git.io/vTE0s | LIB=/usr/lib BIN=/usr/bin/ BUILD=9482e161c974bc0cebf823fc0fe8a3caed14a8a0 bash # automated install
+⇒ wget -qO- https://git.io/vTE0s | LIB=/usr/lib BIN=/usr/bin/ BUILD=9482e161c974bc0cebf823fc0fe8a3caed14a8a0 bash # automated install
 ⇒ LIB=/usr/lib BIN=/usr/bin/ ./install.sh # manual install
 ```
 
