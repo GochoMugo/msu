@@ -22,8 +22,27 @@ There are different ways of installing `msu`.
   ```
 
   You clone this repo and run the `install.sh` script. This method is preferable if you will be hacking on `msu`.
+  
+  **zip download install without file archiver/compression software**
+  
+  ```bash
+  ⇒ wget "https://github.com/GochoMugo/msu/archive/master.zip"
+  ⇒ unzip msu-master.zip -d destination_folder
+  ⇒ ./install.sh
+  ```
 
-
+ **zip download install with 7-zip file archiver/high compression software**
+ 
+ ```bash
+ ⇒ wget "https://github.com/GochoMugo/msu/archive/master.zip"
+ ⇒ sudo apt-get install p7zip-full
+ ⇒ 7z l msu-master.zip
+ ⇒ 7z x msu-master.zip
+  ⇒ ./install.sh
+  ```
+  
+  7zip is preferred here due to its high compression ratio capabilities you can use any other software you prefer.
+ 
 ## default setup:
 
 The **default** setup installs the library at `${HOME}/lib` and the executable at `${HOME}/bin`.
