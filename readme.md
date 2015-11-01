@@ -3,7 +3,7 @@
 
 > A small Shell framework that makes writing bash scripts less sucky
 
-[![Terminal Lover](https://img.shields.io/badge/terminal-lover-red.svg?style=flat-square)](https://github.com/GochoMugo) [![Travis](https://img.shields.io/travis/GochoMugo/msu.svg?style=flat-square)](https://travis-ci.org/GochoMugo/msu)
+[![Terminal Lover](https://img.shields.io/badge/terminal-lover-blue?style=flat-square)](https://github.com/GochoMugo) [![Travis](https://img.shields.io/travis/GochoMugo/msu.svg?style=flat-square)](https://travis-ci.org/GochoMugo/msu)
 
 * [An Introductory Post on `msu`](https://gochomugo.github.io/musings/msu-introduction/)!
 
