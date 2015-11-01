@@ -21,10 +21,11 @@ cabal:
 	cabal update --verbose=0 # ensure we do not bloat our logs
 
 shellcheck:
-	git clone https://github.com/koalaman/shellcheck
+	rm -rf shellcheck/
+	git clone --depth=1 https://github.com/koalaman/shellcheck shellcheck
 	cd shellcheck && cabal install --verbose=0
 
 clean:
 	rm -rf lib/tmp_* npm-debug.log
 
-.PHONY: deps test clean
+.PHONY: deps bats cabal shellcheck test clean
