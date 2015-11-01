@@ -26,3 +26,8 @@ Uninstalls one or more modules.
 
 Return `0` if `command` is available on the system. Otherwise, return non-zero status code.
 
+
+## is_superuser()
+
+Return `0` if we are running as superuser/root. Otherwise, return `1`.
+

@@ -113,3 +113,9 @@ function new_mod() {
   ! has_command "gochomugo"  # last time i checked i didn't create the program.
 }
 
+
+@test "\`is_superuser' checks if script is run as superuser" {
+  ! is_superuser
+  sudo ./lib/msu.sh - core_utils.is_superuser
+}
+
