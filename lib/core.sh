@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# The Core functionalities
+# The Core
 
 
-# we expect the the executable exports a variable MSU_LIB whose
+# we expect the executable exports a variable $MSU_LIB whose
 # value is the path to the library holding this and other modules
 if [ ! "${MSU_LIB}" ]
 then
@@ -11,9 +11,9 @@ fi
 
 
 # mod vars
-MSU_REQUIRE_LOCK='' # lock to ensure we dont source an already-sourced file
+MSU_REQUIRE_LOCK='' # lock to ensure we don't source an already-sourced file
 MSU_EXTERNAL_LIB="${MSU_EXTERNAL_LIB:-${HOME}/.msu}"
-export MSU_EXTERNAL_LIB 
+export MSU_EXTERNAL_LIB
 
 
 # check dependencies
@@ -67,6 +67,7 @@ function msu_run() {
     echo "error: run: can not find function '${func}'"
   fi
 }
+
 
 # execute a file
 function msu_execute() {
