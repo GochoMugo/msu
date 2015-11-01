@@ -4,6 +4,7 @@ lib/tmp_
 
 # test harness
 bats/
+shellcheck/
 
 # swap/tmp files from vim
 *.swp
