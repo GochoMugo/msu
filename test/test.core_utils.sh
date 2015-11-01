@@ -1,5 +1,5 @@
 #!/usr/bin/env bats
-# tests against ./lib/core.sh
+# tests against ./lib/core_utils.sh
 
 
 MSU_LIB="${PWD}"/lib
@@ -106,3 +106,10 @@ function new_mod() {
   echo "${output}" | grep "build" # build hash
   echo "${output}" | grep "date" # date
 }
+
+
+@test "\`has_command' checks if command is available" {
+  has_command "cat"          # I can be almost certain that `cat` is available.
+  ! has_command "gochomugo"  # last time i checked i didn't create the program.
+}
+

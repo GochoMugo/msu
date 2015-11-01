@@ -133,3 +133,10 @@ function uninstall() {
     fi
   done
 }
+
+
+# checking if command is available on the system.
+# ${1} - command to check for.
+function has_command() {
+  command -v "${1}" > /dev/null 2>&1
+}
