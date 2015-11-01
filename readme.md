@@ -6,7 +6,7 @@
 [![Terminal Lover](https://img.shields.io/badge/terminal-lover-blue.svg?style=flat-square)](https://github.com/GochoMugo) [![Travis](https://img.shields.io/travis/GochoMugo/msu.svg?style=flat-square)](https://travis-ci.org/GochoMugo/msu)
 
 * [An Introductory Post on `msu`](https://gochomugo.github.io/musings/msu-introduction/)!
-
+* [Project Principles](#principles)
 
 ## features:
 
@@ -47,6 +47,14 @@ Documentation is placed in the [`docs/`](https://github.com/GochoMugo/msu/tree/m
 * [installation](https://github.com/GochoMugo/msu/tree/master/docs/installation.md)
 * [modules](https://github.com/GochoMugo/msu/tree/master/docs/modules.md)
 * [API](https://github.com/GochoMugo/msu/tree/master/docs/api.md)
+
+
+<a name="principles"></a>
+## principles:
+
+1. **Little added complexity.** `msu` should **not** warrant the user to learn scripting all over again. An existing script should be converted into a module with less effort.
+1. **Minimal**. `msu` core should be as little as possible. How? Use common algorithms and data structures. Avoid doing something too fancy.
+1. **Highly configurable**. Using environment variables and command-line switches, it should be configurable in all its operations, including installation.
 
 
 ## license:
