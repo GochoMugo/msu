@@ -8,6 +8,26 @@
 * [An Introductory Post on `msu`](https://gochomugo.github.io/musings/msu-introduction/)!
 
 
+## features:
+
+> **`msu` wishlist**
+
+* [x] automated/manual installation
+* [x] self upgrade
+* [x] install/uninstall local modules
+* [x] install module from github
+* [x] loading aliases from internal/external modules
+* [x] handle external module metadata
+* [x] small but comprehensive internal library
+* [x] require internal/external modules
+* [ ] require modules using relative paths
+* [ ] load/unload aliases
+* [ ] error catching/handling
+* [ ] bash completion
+* [ ] add compatibility for other shell types e.g. zsh
+* [ ] add tests for other shell types
+
+
 ## installation:
 
 ```bash
@@ -24,7 +44,7 @@ More [installation instructions](https://github.com/GochoMugo/msu/tree/master/do
 
 Documentation is placed in the [`docs/`](https://github.com/GochoMugo/msu/tree/master/docs/) directory:
 
-* [features](https://github.com/GochoMugo/msu/tree/master/docs/todo.md)
+* [installation](https://github.com/GochoMugo/msu/tree/master/docs/installation.md)
 * [modules](https://github.com/GochoMugo/msu/tree/master/docs/modules.md)
 * [API](https://github.com/GochoMugo/msu/tree/master/docs/api.md)
 
