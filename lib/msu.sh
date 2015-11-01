@@ -23,6 +23,16 @@ source "${MSU_LIB}/core.sh" # so LOW-LEVEL
 msu_require "metadata"      # how you like me now?
 
 
+# warn user, if we are running as root/superuser.
+msu_run core_utils.is_superuser && {
+  echo
+  echo " !!         you are running as SUPERUSER        !! "
+  echo " !! with much power, comes great responsibility !! "
+  echo " !!           you have been WARNED!             !! "
+  echo
+}
+
+
 # parse command line arguments
 case "${1:-''}" in
   "r" | "require" )
