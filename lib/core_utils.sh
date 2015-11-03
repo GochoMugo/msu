@@ -147,3 +147,47 @@ function is_superuser() {
   [[ "$(id -u)" == "0" ]]
 }
 
+
+# listing installed modules.
+# ${1} - toggle option e.g. '-i', '--internal', '-e', '--external'
+function list_modules() {
+  local internal
+  local external
+  internal=true
+  external=true
+
+  # processing switch
+  case "${1}" in
+    "-i" | "--internal" )
+      external=false
+      ;;
+    "-e" | "--external" )
+      internal=false
+      ;;
+  esac
+
+  # output function.
+  function output() {
+    for mod in ${1}
+    do
+      # ignore "aliases.sh"
+      if [[ "${mod}" != "aliases.sh" ]]
+      then
+        list "${mod//\.sh/}"
+      fi
+    done
+  }
+
+  # list internal modules, if allowed
+  [[ "${internal}" == "true" ]] && {
+    echo -e "\n${clr_white}internal modules${clr_reset}"
+    output "$(ls "${MSU_LIB}")"
+  }
+
+  # list external modules, if allowed
+  [[ "${external}" == "true" ]] && {
+    echo -e "\n${clr_white}external modules${clr_reset}"
+    output "$(ls "${MSU_EXTERNAL_LIB}")"
+  }
+}
+

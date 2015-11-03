@@ -119,3 +119,21 @@ function new_mod() {
   sudo ./lib/msu.sh - core_utils.is_superuser
 }
 
+
+@test "\`list_modules' lists installed modules" {
+  MSU_EXTERNAL_LIB="${BATS_TMPDIR}/list-modules"
+  local sample_module="${BATS_TMPDIR}/a-stupid-module-ofcos"
+  source lib/core_utils.sh
+  new_mod "${sample_module}"
+  run install "${sample_module}"
+  run list_modules
+  echo "${output}" | grep "internal modules"
+  echo "${output}" | grep "console"
+  echo "${output}" | grep "external modules"
+  echo "${output}" | grep "a-stupid-module-ofcos"
+  run list_modules --internal
+  ! echo "${output}" | grep "external modules"
+  run list_modules --external
+  ! echo "${output}" | grep "internal modules"
+}
+

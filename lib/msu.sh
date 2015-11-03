@@ -53,6 +53,9 @@ case "${1:-''}" in
   "up" | "upgrade" )
     msu_run core_utils.upgrade
   ;;
+  "ls" | "list" )
+    msu_run core_utils.list_modules "${2}"
+  ;;
   "h" | "help" )
     echo
     echo " msu by ${MSU_AUTHOR_NAME} <${MSU_AUTHOR_EMAIL}>"
@@ -63,6 +66,7 @@ case "${1:-''}" in
     echo "    x  | execute <filepath>  execute file at the path <filepath>"
     echo "    i  | install <mod>...    install the module(s) <mod>..."
     echo "    u  | uninstall <mod>...  uninstall the module(s) <mod>..."
+    echo "    ls | list                list installed modules"
     echo "    up | upgrade             upgrade to the latest version"
     echo "    h  | help                show this help information"
     echo "    v  | version [mod]       show version information of module [mod] or msu itself"
