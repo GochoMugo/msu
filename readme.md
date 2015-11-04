@@ -7,25 +7,24 @@
 
 * [An Introductory Post on `msu`](https://gochomugo.github.io/musings/msu-introduction/)!
 * [Project Principles](#principles)
+* [Showcase of modules using `msu`][showcase]
+
 
 ## features:
 
 > **`msu` wishlist**
 
-* [x] automated/manual installation
+* [x] [automated/manual installation][installation]
+* [x] [small but comprehensive internal library](https://github.com/GochoMugo/msu/blob/master/docs/api.md)
+* [x] [support external modules][modules]
+* [x] [auto-loading aliases modules](https://github.com/GochoMugo/msu/blob/master/docs/modules.md#aliases-auto-loading)
+* [x] [install module from github](https://github.com/GochoMugo/msu/blob/master/docs/modules.md#installing)
+* [x] [highly tested](https://travis-ci.org/GochoMugo/msu)
 * [x] self upgrade
-* [x] install/uninstall local modules
-* [x] install module from github
-* [x] loading aliases from internal/external modules
-* [x] handle external module metadata
-* [x] small but comprehensive internal library
-* [x] require internal/external modules
-* [ ] require modules using relative paths
 * [ ] load/unload aliases
 * [ ] error catching/handling
 * [ ] bash completion
-* [ ] add compatibility for other shell types e.g. zsh
-* [ ] add tests for other shell types
+* [ ] compatibility for other shell types e.g. zsh
 
 
 ## installation:
@@ -37,16 +36,17 @@
 
 > Requires [`git`](http://git-scm.com/)
 
-More [installation instructions](https://github.com/GochoMugo/msu/tree/master/docs/installation.md).
+More [installation instructions][installation].
 
 
 ## documentation:
 
 Documentation is placed in the [`docs/`](https://github.com/GochoMugo/msu/tree/master/docs/) directory:
 
-* [installation](https://github.com/GochoMugo/msu/tree/master/docs/installation.md)
-* [modules](https://github.com/GochoMugo/msu/tree/master/docs/modules.md)
-* [API](https://github.com/GochoMugo/msu/tree/master/docs/api.md)
+* [installation][installation]
+* [modules][modules]
+* [API][api]
+* [Showcase][showcase]
 
 
 <a name="principles"></a>
@@ -54,11 +54,18 @@ Documentation is placed in the [`docs/`](https://github.com/GochoMugo/msu/tree/m
 
 1. **Little added complexity.** `msu` should **not** warrant the user to learn scripting all over again. An existing script should be converted into a module with less effort.
 1. **Minimal**. `msu` core should be as little as possible. How? Use common algorithms and data structures. Avoid doing something too fancy.
-1. **Highly configurable**. Using environment variables and command-line switches, it should be configurable in all its operations, including installation.
+1. **Highly configurable**. Using environment variables and command-line switches, `msu` should be configurable in all its operations, including installation.
 
 
 ## license:
 
 __The MIT License (MIT)__
 
-Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
+Copyright &copy; 2015 GochoMugo <mugo@forfuture.co.ke>
+
+
+[installation]:https://github.com/GochoMugo/msu/tree/master/docs/installation.md "msu installation"
+[modules]:https://github.com/GochoMugo/msu/tree/master/docs/modules.md "msu modules"
+[api]:https://github.com/GochoMugo/msu/tree/master/docs/api.md "msu API"
+[showcase]:https://github.com/GochoMugo/msu/blob/master/docs/showcase.md "showcase of modules using msu"
+

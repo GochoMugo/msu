@@ -72,7 +72,7 @@ If a module has an `aliases.sh` file in its root, it will get auto-loaded into t
 Example:
 
 ```sh
-alias dance='msu run my-module.dance'
+alias pr.dance='msu run my-module.dance'
 ```
 
 
@@ -87,12 +87,4 @@ Examples:
   * `foo-bar.sh` - valid
   * `foo_bar.sh` - valid
   * `foo.bar.sh` - **invalid**
-
-
-## samples:
-
-> Send a **Pull Request** to get your module added here!
-
-* [Submarine](https://github.com/GochoMugo/submarine): Some useful submarines (utilities) for a Node.js/Devops developer
-* [Proverb](https://github.com/GochoMugo/proverb): A command-line interface to [Programmer's Proverbs](https://github.com/AntJanus/programmers-proverbs)
 
