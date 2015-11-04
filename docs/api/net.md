@@ -17,7 +17,12 @@ Save the download with label `label` for downloading an asset at the url `url`. 
 
 Checks if the downloads with labels `label1`, `label2`, `...` are tracked.
 
+Alias: `net.ch`
+
 
 ## download(label, url)
 
 Downloads an asset at url `url` using the label `label` for tracking. Note that the file is **not** saved with the name `label`.
+
+Alias: `net.dl`
+
