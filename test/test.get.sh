@@ -40,3 +40,12 @@ function teardown() {
   [ "$(git rev-parse HEAD)" == "${hash}" ]
   cd ..
 }
+
+
+@test "download url resolves successfully" {
+  wget https://git.io/vTE0s -O _test_get.sh
+  real="$(cat get.sh)"
+  downloaded="$(cat _test_get.sh)"
+  [ "${real}" == "${downloaded}" ]
+}
+
