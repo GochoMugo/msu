@@ -14,6 +14,26 @@ MSU_EXE="${BIN}/msu"
 MARKER=" >>>"
 
 
+function check_deps() {
+  declare -A deps
+  deps["wget"]="self-upgrade, downloading files"
+  deps["git"]="self-upgrade, install modules from github"
+  deps["tput"]="formatting styles"
+
+  for dep in "${!deps[@]}"
+  do
+    command -v "${dep}" > /dev/null 2>&1 || {
+      echo "\`${dep}' is NOT available. It is required for: ${deps[${dep}]}" > /dev/stderr
+      exit 1
+    }
+  done
+}
+
+
+echo "${MARKER} checking if all dependencies are available"
+check_deps
+
+
 echo "${MARKER} checking if ${BIN} is in path"
 echo "${PATH}" | grep "${BIN}" > /dev/null || {
   echo "${MARKER} ${BIN} not in path. Adding it to ${BASHRC}. You need to restart your terminal for this to take effect!"
