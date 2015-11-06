@@ -26,6 +26,6 @@ shellcheck:
 	cd shellcheck && cabal install --verbose=0
 
 clean:
-	rm -rf lib/tmp_* npm-debug.log
+	rm -rf lib/tmp_* _test* npm-debug.log
 
 .PHONY: deps bats cabal shellcheck test clean
