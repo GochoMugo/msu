@@ -14,19 +14,18 @@ MSU_EXE="${BIN}/msu"
 MARKER=" >>>"
 
 
-function check_deps() {
-  declare -A deps
-  deps["wget"]="self-upgrade, downloading files"
-  deps["git"]="self-upgrade, install modules from github"
-  deps["tput"]="formatting styles"
+function check() {
+  command -v "${1}" > /dev/null 2>&1 || {
+    echo "\`${1}' is NOT available. It is required for: ${2}" > /dev/stderr
+    exit 1
+  }
+}
 
-  for dep in "${!deps[@]}"
-  do
-    command -v "${dep}" > /dev/null 2>&1 || {
-      echo "\`${dep}' is NOT available. It is required for: ${deps[${dep}]}" > /dev/stderr
-      exit 1
-    }
-  done
+
+function check_deps() {
+  check "wget" "self-upgrade, downloading files"
+  check "git" "self-upgrade, install modules from github"
+  check "tput" "formatting styles"
 }
 
 
