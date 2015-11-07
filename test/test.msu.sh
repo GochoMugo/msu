@@ -17,7 +17,7 @@
 
 @test "\`msu' sets \${MSU_LIB} to library, if executed directly" {
   . ./lib/msu.sh
-  [ "${MSU_LIB}" == "$(readlink -f ${PWD}/lib)" ]
+  [ "$(readlink -f ${MSU_LIB})" == "$(readlink -f ${PWD}/lib)" ]
 }
 
 
