@@ -10,7 +10,6 @@
 [ -L "${BASH_SOURCE[0]}" ] && EXE=$(readlink -f "${BASH_SOURCE[0]}") # using symbolic link
 [ "${EXE}" ] || {
   EXE="${BASH_SOURCE[0]}" # file executed directly
-  EXE=$(echo "${EXE}" | grep -Eo "[a-Z]{1}.*")
   EXE="${PWD}/${EXE}"
 }
 MSU_LIB=$(dirname "${EXE}") # directory holding our library
