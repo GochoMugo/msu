@@ -6,7 +6,9 @@
 # value is the path to the library holding this and other modules
 if [ ! "${MSU_LIB}" ]
 then
+  # without this path, we can not do anything! We should exit now!
   echo "error: core: library path not set '${MSU_LIB}'"
+  exit 1
 fi
 
 
