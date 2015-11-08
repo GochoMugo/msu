@@ -14,8 +14,7 @@ deps:
 	make cabal shellcheck
 
 cabal:
-	sudo apt-get update -qq
-	sudo apt-get install -y -qq cabal-install
+	./deps/install-cabal.sh
 	cabal update --verbose=0 # ensure we do not bloat our logs
 
 shellcheck:
