@@ -8,6 +8,7 @@
 * [An Introductory Post on `msu`](https://gochomugo.github.io/musings/msu-introduction/)!
 * [Project Principles](#principles)
 * [Showcase of modules using `msu`][showcase]
+* [Documentation](#documentation)
 
 
 ## features:
@@ -46,7 +47,8 @@ Documentation is placed in the [`docs/`](https://github.com/GochoMugo/msu/tree/m
 * [installation][installation]
 * [modules][modules]
 * [API][api]
-* [Showcase][showcase]
+* [showcase][showcase]
+* [hacking on msu][hacking]
 
 
 <a name="principles"></a>
@@ -68,4 +70,5 @@ Copyright &copy; 2015 GochoMugo <mugo@forfuture.co.ke>
 [modules]:https://github.com/GochoMugo/msu/tree/master/docs/modules.md "msu modules"
 [api]:https://github.com/GochoMugo/msu/tree/master/docs/api.md "msu API"
 [showcase]:https://github.com/GochoMugo/msu/blob/master/docs/showcase.md "showcase of modules using msu"
+[hacking]:https://github.com/GochoMugo/msu/blob/master/docs/hack.md "Hacking on msu"
 
