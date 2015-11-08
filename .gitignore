@@ -3,10 +3,6 @@ try.sh
 lib/tmp_
 _test*
 
-# test harness
-bats/
-shellcheck/
-
 # swap/tmp files from vim
 *.swp
 
