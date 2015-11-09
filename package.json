@@ -1,7 +1,7 @@
 {
   "name": "msu",
   "version": "0.0.0",
-  "description": " small Shell framework that makes writing bash scripts less sucky",
+  "description": "A small Shell framework that makes writing bash scripts less sucky",
   "homepage": "https://github.com/GochoMugo/msu",
   "bugs": {
     "url": "https://github.com/GochoMugo/msu/issues"
@@ -13,7 +13,7 @@
    },
   "author": {
     "name": "GochoMugo",
-    "email": "mugp@forfuture.co.ke",
+    "email": "mugo@forfuture.co.ke",
     "url": "https://gochomugo.github.io/"
   },
   "main": "lib/msu.sh",
