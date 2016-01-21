@@ -41,7 +41,7 @@ case "${1:-''}" in
     msu_run "${@:2}"
   ;;
   "x"  | "execute" )
-    msu_execute "${2:-''}"
+    msu_execute "${2:-''}" "${@:3}"
   ;;
   "i" | "install" )
     msu_run core_utils.install "${@:2}"
