@@ -45,6 +45,11 @@ source lib/format.sh
 }
 
 
+@test "\`install' installs from bitbucket" {
+  skip
+}
+
+
 @test "\`uninstall' uninstalls one or more modules" {
   MSU_EXTERNAL_LIB="${BATS_TMPDIR}/uninstall"
   source lib/core_utils.sh

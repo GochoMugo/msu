@@ -43,6 +43,9 @@ function install() {
         "gh" )
           url="https://github.com/${shorthand}.git"
         ;;
+        "bt" )
+          url="https://bitbucket.org/${shorthand}.git"
+        ;;
       esac
       rm -rf "${tmpdir}"
       mkdir -p "${tmpdir}"
