@@ -6,3 +6,9 @@ _test*
 # swap/tmp files from vim
 *.swp
 
+# generated manpages
+docs/man/**/*.1
+docs/man/**/*.3
+
+# release assets
+msu-*

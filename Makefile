@@ -30,6 +30,6 @@ release:
 	./lib/msu.sh execute release.sh
 
 clean:
-	rm -rf lib/tmp_* _test* npm-debug.log docs/man/**/*.1
+	rm -rf lib/tmp_* _test* npm-debug.log docs/man/**/*.1 docs/man/**/*.3 msu-*/
 
 .PHONY: deps cabal shellcheck test clean docs
