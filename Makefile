@@ -6,6 +6,7 @@
 test:
 	~/.cabal/bin/shellcheck ./*.sh lib/*.sh
 	./deps/bats/bin/bats test/test.*.sh
+	[ "$${RELEASE}" ] && bash test/misc/*.sh
 	make clean
 
 deps:
@@ -20,7 +21,15 @@ cabal:
 shellcheck:
 	cd deps/shellcheck && cabal install --verbose=0
 
-clean:
-	rm -rf lib/tmp_* _test* npm-debug.log
+build: docs
 
-.PHONY: deps cabal shellcheck test clean
+docs:
+	a2x --doctype manpage --format docs/man/man1/msu.1.txt
+
+release:
+	./lib/msu.sh execute release.sh
+
+clean:
+	rm -rf lib/tmp_* _test* npm-debug.log docs/man/**/*.1
+
+.PHONY: deps cabal shellcheck test clean docs
