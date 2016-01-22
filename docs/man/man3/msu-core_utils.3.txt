@@ -1,5 +1,5 @@
 MSU-CORE_UTILS(3)
-======
+=================
 :doctype: manpage
 
 

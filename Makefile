@@ -24,12 +24,18 @@ shellcheck:
 build: docs
 
 docs:
-	a2x --doctype manpage --format manpage docs/man/man1/*.1.txt
+	for file in $$(ls docs/man/**/*.txt) ; do \
+		a2x --doctype manpage --format manpage $${file} ; \
+	done
 
 release:
 	./lib/msu.sh execute release.sh
 
 clean:
-	rm -rf lib/tmp_* _test* npm-debug.log docs/man/**/*.1 docs/man/**/*.3 msu-*/
+	rm -rf lib/tmp_* _test* \
+		npm-debug.log \
+		docs/man/**/*.1 docs/man/**/*.3 \
+		docs/man/**/*.xml \
+		msu-*/
 
 .PHONY: deps cabal shellcheck test clean docs

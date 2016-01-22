@@ -1,5 +1,5 @@
 MSU-FS(3)
-======
+=========
 :doctype: manpage
 
 
@@ -28,7 +28,7 @@ DESCRIPTION
 
     Alias: fs.join
 
-*trash(['PATH'...])*::
+*trash(['PATH']...)*::
     Removes files (and directories) at paths 'PATH'.... These files, being
     placed in /tmp can be salvaged later using the 'untrash' function.
     However, the files will usually be removed on system startup when the
@@ -36,7 +36,7 @@ DESCRIPTION
 
     Alias: fs.trash
 
-*untrash(['PATH'...])*::
+*untrash(['PATH']...)*::
     Reverses trashing of files (and directories) that were originally
     trashed using the 'trash' function.
 

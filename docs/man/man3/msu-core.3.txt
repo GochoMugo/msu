@@ -1,5 +1,5 @@
 MSU-CORE(3)
-======
+===========
 :doctype: manpage
 
 
