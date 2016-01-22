@@ -19,7 +19,7 @@ function has() {
 # informing user, when we are unaware of how to install a dependency
 # ${1} - main command used to install packages in a distro
 function missing_stub() {
-  echo " ! Ensure you have the command 'a2x' installed"
+  echo " ! Ensure you have the commands 'a2x' and 'hub' installed"
   echo " ! If it's possible to install it using \'${1}\',"
   echo " !   open up an issue, or even better, send"
   echo " !   a pull request to the repo."

@@ -6,14 +6,19 @@
 
 ## dependencies:
 
-We are using [shellcheck](https://github.com/koalaman/shellcheck) and
-[bats](https://github.com/sstephenson/bats) to run our tests. To ensure
-reproducibility, we are using git submodules.
+We are using:
+
+* [shellcheck](https://github.com/koalaman/shellcheck) - static analysis
+* [bats](https://github.com/sstephenson/bats) - test runner
+* [a2x](http://linux.die.net/man/1/a2x) - asciidoc converter
+* [hub](http://hub.github.com/) - Github terminal client
+
+To ensure reproducibility, we are using git submodules.
 
 
 ## prepare environment:
 
-Installing the dependencies:
+Installing (some of) the dependencies:
 
 ```bash
 $ make deps
