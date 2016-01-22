@@ -1,0 +1,62 @@
+MSU-FS(3)
+======
+:doctype: manpage
+
+
+NAME
+----
+msu-fs - Functions for manipulating the file-system, usually common operations
+
+
+SYNOPSIS
+--------
+This module contains common tasks.
+
+    msu_require "fs"
+
+
+DESCRIPTION
+-----------
+*append('PATH', 'CONTENT')*::
+    Appends the content 'CONTENT' to the file at path 'PATH'. It resolves
+    symbolic links.
+
+*joindirs('DEST_DIR', 'DIR'...)*::
+    Joins the source directories 'DIR'... into destination directory
+    at the path 'DEST_DIR'. The directories are merged resulting in one
+    directory with all the contents from the source directories.
+
+    Alias: fs.join
+
+*trash(['PATH'...])*::
+    Removes files (and directories) at paths 'PATH'.... These files, being
+    placed in /tmp can be salvaged later using the 'untrash' function.
+    However, the files will usually be removed on system startup when the
+    /tmp directory is emptied.
+
+    Alias: fs.trash
+
+*untrash(['PATH'...])*::
+    Reverses trashing of files (and directories) that were originally
+    trashed using the 'trash' function.
+
+    Alias: fs.untrash
+
+
+RESOURCES
+---------
+Source code: https://github.com/GochoMugo/msu
+
+Issue tracker: https://github.com/GochoMugo/msu/issues
+
+
+AUTHOR
+------
+*msu* is developed and maintained by Gocho Mugo.
+
+
+COPYING
+-------
+THE MIT LICENSE (MIT)
+
+Copyright \(C) 2015-2016 Gocho Mugo <mugo@forfuture.co.ke>

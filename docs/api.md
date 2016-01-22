@@ -3,14 +3,10 @@
 
 > API documentation of internal modules
 
-* [introduction](api/introduction.md)
-* [core](api/core.md)
+This documentation is available in the manpages. To view the documentation,
+use:
 
----
-
-* [console](api/console.md)
-* [core_utils](api/core_utils.md)
-* [format](api/format.md)
-* [fs](api/fs.md)
-* [net](api/net.md)
+```bash
+$ man 3 msu
+```
 

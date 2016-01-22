@@ -26,6 +26,8 @@ The preferred way is to use the **OFFICIAL RELEASE**:
   ⇒ ./install.sh
   ```
 
+<hr/>
+
 The following methods use the master branch instead of offical releases. Also,
 the manpages are **not** installed in these cases. They include:
 
@@ -49,7 +51,7 @@ the manpages are **not** installed in these cases. They include:
   You clone this repo and run the `install.sh` script. This method is
   preferable if you will be hacking on the project.
 
-1. **zip download install
+1. **zip download install**
 
   ```bash
   ⇒ wget "https://github.com/GochoMugo/msu/archive/master.zip"

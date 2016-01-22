@@ -17,9 +17,9 @@
 
 * [x] [automated/manual installation][installation]
 * [x] [small but comprehensive internal library](https://github.com/GochoMugo/msu/blob/master/docs/api.md)
-* [x] [support external modules][modules]
-* [x] [auto-loading aliases modules](https://github.com/GochoMugo/msu/blob/master/docs/modules.md#aliases-auto-loading)
-* [x] [install module from github](https://github.com/GochoMugo/msu/blob/master/docs/modules.md#installing)
+* [x] support external modules
+* [x] auto-loading aliases modules
+* [x] install module from github/bitbucket
 * [x] [highly tested](https://travis-ci.org/GochoMugo/msu)
 * [x] self upgrade
 * [ ] load/unload aliases
@@ -38,7 +38,6 @@ See the [installation instructions][installation].
 Documentation is placed in the [`docs/`](https://github.com/GochoMugo/msu/tree/master/docs/) directory:
 
 * [installation][installation]
-* [modules][modules]
 * [API][api]
 * [showcase][showcase]
 * [hacking on msu][hacking]
@@ -60,7 +59,6 @@ Copyright &copy; 2015-2016 GochoMugo <mugo@forfuture.co.ke>
 
 
 [installation]:https://github.com/GochoMugo/msu/tree/master/docs/installation.md "msu installation"
-[modules]:https://github.com/GochoMugo/msu/tree/master/docs/modules.md "msu modules"
 [api]:https://github.com/GochoMugo/msu/tree/master/docs/api.md "msu API"
 [showcase]:https://github.com/GochoMugo/msu/blob/master/docs/showcase.md "showcase of modules using msu"
 [hacking]:https://github.com/GochoMugo/msu/blob/master/docs/hack.md "Hacking on msu"
