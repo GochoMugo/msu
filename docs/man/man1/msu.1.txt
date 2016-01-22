@@ -18,6 +18,8 @@ SYNOPSIS
 
 *msu* list ['SCOPE']
 
+*msu* upgrade ['VERSION']
+
 *msu* version ['MODULE']
 
 
@@ -87,9 +89,11 @@ COMMANDS
     as '-i'/'--internal' lists only internal modules while '-e'/'--external'
     lists only external modules.
 
-*up, upgrade*::
-    Upgrades msu to the latest version. This request hits the network by
-    cloning the original and up-to-date repo from 'github.com/GochoMugo/msu'.
+*up, upgrade* ['VERSION']::
+    Upgrades msu to the version 'VERSION', if passed. Otherwise upgrades
+    to the latest version.  If 'VERSION' equals 'HEAD', the master branch
+    is used directly. This request hits the network to check for new
+    versions and execute downloads if necessary.
 
 *h, help*::
     Shows basic help information, shortened for easier recap.
@@ -105,6 +109,14 @@ ENVIRONMENT VARIABLES
     Represents the path to the directory holding the external modules.
     It is where modules are installed to, with the 'install' and
     'install-many' commands. It defaults to `${HOME}/.msu`.
+
+
+CAVEATS
+-------
+The command *upgrade* uses python behind the covers to upgrade msu(1) to
+the latest version automatically (without specifying 'VERSION'). Therefore,
+the command python(1) must be available. Also these python packages need
+to be installed: requests, semver.
 
 
 RESOURCES

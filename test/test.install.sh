@@ -54,7 +54,11 @@ function teardown() {
 @test "generates metadata" {
   ./install.sh
   local data=$(cat ~/lib/msu/metadata.sh)
+  local path_regexp="'.+'"
   echo "${data}"
+  echo "${data}" | grep -E "MSU_INSTALL_LIB=${path_regexp}"
+  echo "${data}" | grep -E "MSU_INSTALL_EXE=${path_regexp}"
+  echo "${data}" | grep -E "MSU_INSTALL_MAN=${path_regexp}"
   echo "${data}" | grep -E "MSU_BUILD_HASH='[a-z0-9]+'"
   echo "${data}" | grep -E "MSU_BUILD_DATE='.+'"
 }
@@ -68,9 +72,9 @@ function teardown() {
 }
 
 
-@test "adds loader string for loading aliases" {
+@test "adds loader string for loading msu" {
   ./install.sh
-  cat ~/.bashrc | grep -E "msu/aliases.sh"
+  cat ~/.bashrc | grep -E ". msu require load"
 }
 
 

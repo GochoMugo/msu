@@ -12,6 +12,7 @@ LIB="${LIB:-${HOME}/lib}"
 MAN="${MAN:-${HOME}/share/man}"
 MSU_LIB="${LIB}/msu"
 MSU_EXE="${BIN}/msu"
+MSU_MAN="${MAN}"
 MARKER=" >>>"
 
 
@@ -54,13 +55,13 @@ mkdir -p "${MSU_LIB}"
 cp -r lib/* "${MSU_LIB}"
 
 
-echo "${MARKER} checking if ${MAN} is in \${MANPATH}"
-echo "${MANPATH}" | grep "${MAN}" > /dev/null || {
-  echo "${MARKER} ${MAN} not in manpath. Adding it to ${BASHRC}. You need to restart your terminal for this to take effect!"
+echo "${MARKER} checking if ${MSU_MAN} is in \${MANPATH}"
+echo "${MANPATH}" | grep "${MSU_MAN}" > /dev/null || {
+  echo "${MARKER} ${MSU_MAN} not in manpath. Adding it to ${BASHRC}. You need to restart your terminal for this to take effect!"
   {
     echo ""
     echo "# added by msu"
-    echo "export MANPATH=\"${MAN}\":\${MANPATH}"
+    echo "export MANPATH=\"${MSU_MAN}\":\${MANPATH}"
   } >> "${BASHRC}"
 }
 
@@ -74,8 +75,13 @@ cp -r docs/man/man1/*.1 "${MAN}/man1"
 echo "${MARKER} generating metadata"
 MSU_BUILD_HASH=$(git rev-parse HEAD)
 MSU_BUILD_DATE=$(git show -s --format=%ci "${MSU_BUILD_HASH}")
-echo "MSU_BUILD_HASH='${MSU_BUILD_HASH}'" >> "${MSU_LIB}"/metadata.sh
-echo "MSU_BUILD_DATE='${MSU_BUILD_DATE}'" >> "${MSU_LIB}"/metadata.sh
+{
+  echo "MSU_INSTALL_LIB='${MSU_LIB}'"
+  echo "MSU_INSTALL_EXE='${MSU_EXE}'"
+  echo "MSU_INSTALL_MAN='${MSU_MAN}'"
+  echo "MSU_BUILD_HASH='${MSU_BUILD_HASH}'"
+  echo "MSU_BUILD_DATE='${MSU_BUILD_DATE}'"
+} >> "${MSU_LIB}"/metadata.sh
 
 
 echo "${MARKER} linking executable"

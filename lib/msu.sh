@@ -56,7 +56,7 @@ case "${1:-''}" in
     msu_run core_utils.uninstall_from_list "${2}"
   ;;
   "up" | "upgrade" )
-    msu_run core_utils.upgrade
+    msu_run core_utils.upgrade "${2}"
   ;;
   "ls" | "list" )
     msu_run core_utils.list_modules "${2}"
@@ -69,6 +69,7 @@ case "${1:-''}" in
     echo "    msu require|install|uninstall <mod>..."
     echo "    msu execute|install-many|uninstall-many <path>"
     echo "    msu run <mod>.<func>"
+    echo "    msu upgrade [version]"
     echo "    msu version [mod]"
     echo
     echo " commands:"

@@ -5,6 +5,7 @@
 # modules
 msu_require "console"
 msu_require "format"
+msu_require "metadata"
 
 
 # module variables
@@ -16,9 +17,63 @@ msu_require "format"
 # upgrade myself
 function upgrade() {
   log "upgrading myself"
-  LIB=$(dirname "${MSU_LIB}")
-  BIN=$(dirname "$(which msu)")
-  wget -qO- http://git.io/vTE0s | LIB="${LIB}" BIN="${BIN}" bash
+  LIB=${MSU_INSTALL_LIB:-$(dirname "${MSU_LIB}")}
+  BIN=${MSU_INSTALL_BIN:-$(dirname "$(which msu)")}
+  MAN=${MSU_INSTALL_MAN}
+  if [ ! "${MAN}" ]
+  then
+    for path in ${MANPATH//\:/\n}
+    do
+      if [ -f "${path}/man1/msu.1" ]
+      then
+        MAN=${path}
+        break
+      fi
+    done
+  fi
+
+  if [ "${1}" ]
+  then
+    head=$(echo "${1}" | tr '[:upper:]' '[:lower:]')
+    case "${head}" in
+      "head" )
+        wget -qO- http://git.io/vTE0s | LIB="${LIB}" BIN="${BIN}" MAN="${MAN}" bash
+      ;;
+      * )
+        version="${1}"
+      ;;
+    esac
+    [ ! "${version}" ] && return
+  fi
+
+  # upgrade using tarball
+  pushd /tmp > /dev/null
+  [ ! "${version}" ] && {
+    version=$(python "${MSU_LIB}/get-latest-version.py" "${MSU_VERSION}")
+    status=$?
+    case "${status}" in
+      1 )
+        log "you have the latest version"
+      ;;
+      2 )
+        error "required python dependencies are missing"
+        echo "${version}"
+      ;;
+      3 )
+        error "network request error"
+        echo "${version}"
+      ;;
+    esac
+    [ "${status}" -ne 0 ] && exit ${status}
+  }
+  wget "https://github.com/GochoMugo/msu/releases/download/${version}/msu-${version}.tar.gz" -q > /dev/null
+  tar xvf "msu-${version}.tar.gz" > /dev/null 2>&1
+  cd "msu-${version}" || {
+    error "could not \`cd' into directory with extracted contents"
+    return 1
+  }
+  LIB="${LIB}" BIN="${BIN}" MAN="${MAN}" ./install.sh
+  popd > /dev/null
 }
 
 

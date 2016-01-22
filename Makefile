@@ -6,7 +6,7 @@
 test:
 	~/.cabal/bin/shellcheck ./*.sh lib/*.sh
 	./deps/bats/bin/bats test/test.*.sh
-	[ "$${RELEASE}" ] && bash test/misc/*.sh
+	[ "$${RELEASE}" ] && bash test/misc/*.sh || true
 	make clean
 
 deps:
