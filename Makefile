@@ -10,12 +10,12 @@ test:
 	make clean
 
 deps:
+	./deps/install-deps.sh
 	git submodule init
 	git submodule update
 	make cabal shellcheck
 
 cabal:
-	./deps/install-cabal.sh
 	cabal update --verbose=0 # ensure we do not bloat our logs
 
 shellcheck:
