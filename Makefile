@@ -24,7 +24,7 @@ shellcheck:
 build: docs
 
 docs:
-	a2x --doctype manpage --format docs/man/man1/msu.1.txt
+	a2x --doctype manpage --format manpage docs/man/man1/*.1.txt
 
 release:
 	./lib/msu.sh execute release.sh

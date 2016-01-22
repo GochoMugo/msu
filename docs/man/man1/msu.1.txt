@@ -74,7 +74,7 @@ COMMANDS
 
 *u, uninstall* 'MODULE'...::
     Uninstalls the module 'MODULE' by removing its contents from
-    \${MSU_EXTERNAL_LIB}.
+    `${MSU_EXTERNAL_LIB}`.
 
 *um, uninstall-many* 'PATH'::
     Uninstalls modules listed in a file at path 'PATH'. The list
@@ -94,16 +94,17 @@ COMMANDS
 *h, help*::
     Shows basic help information, shortened for easier recap.
 
-*v, version*::
-    Shows version information.
+*v, version* ['MODULE']::
+    Shows version information for the module 'MODULE', if passed. Otherwise
+    shows version information for msu itself.
 
 
 ENVIRONMENT VARIABLES
 ---------------------
-* \${MSU_EXTERNAL_LIB}::
+*`${MSU_EXTERNAL_LIB}`*::
     Represents the path to the directory holding the external modules.
-    It is where modules are installed to, with the *install* and
-    *install-many* commands. It defaults to '${HOME}/.msu'.
+    It is where modules are installed to, with the 'install' and
+    'install-many' commands. It defaults to `${HOME}/.msu`.
 
 
 RESOURCES

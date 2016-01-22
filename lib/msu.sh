@@ -84,7 +84,9 @@ case "${1:-''}" in
     echo "    h  | help           show this help information"
     echo "    v  | version        show version information of module [mod] or msu itself"
     echo
-    echo " See https://github.com/GochoMugo/msu/issues for bug reporting"
+    echo " for more help information, see msu(1)"
+    echo
+    echo " see https://github.com/GochoMugo/msu/issues for bug reporting"
     echo " and feature requests"
     echo
   ;;

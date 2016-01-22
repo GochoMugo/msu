@@ -10,8 +10,3 @@
 # loading aliases (into env)
 . msu require aliases
 
-
-# add path to our manpages to ${MANPATH}
-MANPATH="${MANPATH}:${MSU_LIB}/docs/man"
-export MANPATH
-

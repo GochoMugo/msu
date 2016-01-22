@@ -9,6 +9,7 @@ set -o nounset
 BASHRC="${HOME}/.bashrc"
 BIN="${BIN:-${HOME}/bin}"
 LIB="${LIB:-${HOME}/lib}"
+MAN="${MAN:-${HOME}/share/man}"
 MSU_LIB="${LIB}/msu"
 MSU_EXE="${BIN}/msu"
 MARKER=" >>>"
@@ -33,7 +34,7 @@ echo "${MARKER} checking if all dependencies are available"
 check_deps
 
 
-echo "${MARKER} checking if ${BIN} is in path"
+echo "${MARKER} checking if ${BIN} is in \${PATH}"
 echo "${PATH}" | grep "${BIN}" > /dev/null || {
   echo "${MARKER} ${BIN} not in path. Adding it to ${BASHRC}. You need to restart your terminal for this to take effect!"
   {
@@ -51,6 +52,23 @@ echo "${MARKER} copying library"
 rm -rf "${MSU_LIB}"
 mkdir -p "${MSU_LIB}"
 cp -r lib/* "${MSU_LIB}"
+
+
+echo "${MARKER} checking if ${MAN} is in \${MANPATH}"
+echo "${MANPATH}" | grep "${MAN}" > /dev/null || {
+  echo "${MARKER} ${MAN} not in manpath. Adding it to ${BASHRC}. You need to restart your terminal for this to take effect!"
+  {
+    echo ""
+    echo "# added by msu"
+    echo "export MANPATH=\"${MAN}\":\${MANPATH}"
+  } >> "${BASHRC}"
+}
+
+
+echo "${MARKER} copying manpages"
+mkdir -p "${MAN}/man1" "${MAN}/man3"
+cp -r docs/man/man1/*.1 "${MAN}/man1"
+#cp -r docs/man/man3/*.3 "${MAN}/man3"
 
 
 echo "${MARKER} generating metadata"
