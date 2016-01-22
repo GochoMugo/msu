@@ -1,0 +1,125 @@
+MSU(1)
+======
+:doctype: manpage
+
+
+NAME
+----
+msu - my shell utilities
+
+
+SYNOPSIS
+--------
+*msu* require|install|uninstall 'MODULE'...
+
+*msu* execute|install-many|uninstall-many 'PATH'
+
+*msu* run 'MODULE'.'FUNC'
+
+*msu* list ['SCOPE']
+
+*msu* version ['MODULE']
+
+
+DESCRIPTION
+-----------
+The msu(1) command adds useful utilities for use in your shell.
+*msu* stands for 'My' 'Shell' 'Utilities'.
+
+
+COMMANDS
+--------
+*r, require* 'MODULE'...::
+    Loads the module 'MODULE' into a new bash environment,
+    making the modules' functions and variables available. This
+    allows interacting with the low-level library functions directly.
+    This environment should 'sourced' into the current environment.
+
+    For example,
+
+    $ . msu require console net
+    $ success 'a success message'
+
+*-, run* 'MODULE'.'FUNC'::
+    Runs the function 'FUNC' in the module 'MODULE'. Any extra
+    arguments are passed to the function as is.
+
+    For example,
+
+    $ msu run console.success 'a success message'
+
+*x, execute* 'PATH'::
+    Executes the file at path 'PATH' by simply running the code
+    through bash, with the core library loaded before-hand. This
+    emulates the action of running a function with its body being
+    the contents of the file.
+
+*i, install* 'MODULE'...::
+    Installs the module 'MODULE' into the directory at ${MSU_EXTERNAL_LIB}.
+    The module can be located either locally or remotely. If remote,
+    a prefix shorthand is required to determine where to fetch the
+    module.
+
+    Available shorthands include:
+
+      gh: - from Github, e.g. 'gh:GochoMugo/transfer'
+      bt: - from Bitbucket, e.g. 'bt:GochoMugo/transfer'
+
+    The shorthands are case-insensitive.
+
+*im, install-many* 'PATH'::
+    Installs modules listed in a file at path 'PATH'. The list is a
+    simple array of module names, delimited with newlines. This is
+    useful in bootstrapping new machines.
+
+*u, uninstall* 'MODULE'...::
+    Uninstalls the module 'MODULE' by removing its contents from
+    \${MSU_EXTERNAL_LIB}.
+
+*um, uninstall-many* 'PATH'::
+    Uninstalls modules listed in a file at path 'PATH'. The list
+    is a simple array of module names, delimited with newlines. This
+    is useful in un-bootstrapping machines (as a reverse of
+    *install-many*).
+
+*ls, list ['SCOPE']*::
+    Lists either internal and external modules installed. Passing 'SCOPE'
+    as '-i'/'--internal' lists only internal modules while '-e'/'--external'
+    lists only external modules.
+
+*up, upgrade*::
+    Upgrades msu to the latest version. This request hits the network by
+    cloning the original and up-to-date repo from 'github.com/GochoMugo/msu'.
+
+*h, help*::
+    Shows basic help information, shortened for easier recap.
+
+*v, version*::
+    Shows version information.
+
+
+ENVIRONMENT VARIABLES
+---------------------
+* \${MSU_EXTERNAL_LIB}::
+    Represents the path to the directory holding the external modules.
+    It is where modules are installed to, with the *install* and
+    *install-many* commands. It defaults to '${HOME}/.msu'.
+
+
+RESOURCES
+---------
+Source code: https://github.com/GochoMugo/msu
+
+Issue tracker: https://github.com/GochoMugo/msu/issues
+
+
+AUTHOR
+------
+*msu* is developed and maintained by Gocho Mugo.
+
+
+COPYING
+-------
+THE MIT LICENSE (MIT)
+
+Copyright \(C) 2015-2016 Gocho Mugo
