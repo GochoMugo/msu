@@ -66,18 +66,19 @@ rm -f "${MSU_EXE}"
 ln -sf "${MSU_LIB}"/msu.sh "${MSU_EXE}"
 
 
-echo "${MARKER} will load aliases automatically"
-loader="[ -f \"${MSU_LIB}/aliases.sh\" ] && . \"${MSU_LIB}/aliases.sh\""
+echo "${MARKER} make bash load msu into environment on start"
+loader=". msu require load"
 grep "${loader}" "${BASHRC}" > /dev/null || {
   {
     echo ""
-    echo "# loading aliases from msu"
+    echo "# loading msu"
     echo "${loader}"
   } >> "${BASHRC}"
 }
 
 
 echo "${MARKER} finished installing"
+echo "${MARKER} !! Restart your terminal to load msu into environment"
 
 echo
 "${MSU_EXE}" version
