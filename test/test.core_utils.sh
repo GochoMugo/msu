@@ -95,7 +95,7 @@ function new_mod() {
   git config --local user.name  "GochoMugo"
   touch first
   git add first
-  git commit -m "init"
+  git commit -m "Init"
   popd > /dev/null
 }
 
