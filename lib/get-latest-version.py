@@ -14,8 +14,7 @@ except:
 
 # module variables
 version = sys.argv[1] if len(sys.argv) is 2 else "0.0.0"
-#url = "https://api.github.com/repos/GochoMugo/msu/releases/latest"
-url = "https://api.github.com/repos/Swatto/td/releases/latest"
+url = "https://api.github.com/repos/GochoMugo/msu/releases/latest"
 
 # make the API request
 r = requests.get(url)
