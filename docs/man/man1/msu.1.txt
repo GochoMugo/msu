@@ -22,6 +22,8 @@ SYNOPSIS
 
 *msu* version ['MODULE']
 
+*msu* help
+
 
 DESCRIPTION
 -----------
@@ -54,10 +56,12 @@ COMMANDS
     Executes the file at path 'PATH' by simply running the code
     through bash, with the core library loaded before-hand. This
     emulates the action of running a function with its body being
-    the contents of the file.
+    the contents of the file. This command should be considered
+    DANGEROUS as it is able to execute commands in a file without the
+    execution bit set.
 
 *i, install* 'MODULE'...::
-    Installs the module 'MODULE' into the directory at ${MSU_EXTERNAL_LIB}.
+    Installs the module 'MODULE' into the directory at `${MSU_EXTERNAL_LIB}`.
     The module can be located either locally or remotely. If remote,
     a prefix shorthand is required to determine where to fetch the
     module.
@@ -118,6 +122,11 @@ the latest version automatically (without specifying 'VERSION'). Therefore,
 the command python(1) must be available. Also these python packages need
 to be installed: requests, semver.
 
+The commands *install*, *install-many* and *upgrade* use git for
+cloning repositories and generating module metadata. Therefore, the
+command git(1) must be available.
+
+
 
 RESOURCES
 ---------
@@ -135,4 +144,4 @@ COPYING
 -------
 THE MIT LICENSE (MIT)
 
-Copyright \(C) 2015-2016 Gocho Mugo
+Copyright \(C) 2015-2016 Gocho Mugo <mugo@forfuture.co.ke>

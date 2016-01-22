@@ -30,14 +30,7 @@
 
 ## installation:
 
-```bash
-⇒ wget -qO- https://git.io/vTE0s | bash
-⇒ msu help
-```
-
-> Requires [`git`](http://git-scm.com/)
-
-More [installation instructions][installation].
+See the [installation instructions][installation].
 
 
 ## documentation:
@@ -63,7 +56,7 @@ Documentation is placed in the [`docs/`](https://github.com/GochoMugo/msu/tree/m
 
 __The MIT License (MIT)__
 
-Copyright &copy; 2015 GochoMugo <mugo@forfuture.co.ke>
+Copyright &copy; 2015-2016 GochoMugo <mugo@forfuture.co.ke>
 
 
 [installation]:https://github.com/GochoMugo/msu/tree/master/docs/installation.md "msu installation"
