@@ -57,7 +57,7 @@ function teardown() {
   local path_regexp="'.+'"
   echo "${data}"
   echo "${data}" | grep -E "MSU_INSTALL_LIB=${path_regexp}"
-  echo "${data}" | grep -E "MSU_INSTALL_EXE=${path_regexp}"
+  echo "${data}" | grep -E "MSU_INSTALL_BIN=${path_regexp}"
   echo "${data}" | grep -E "MSU_INSTALL_MAN=${path_regexp}"
   echo "${data}" | grep -E "MSU_BUILD_HASH='[a-z0-9]+'"
   echo "${data}" | grep -E "MSU_BUILD_DATE='.+'"

@@ -76,9 +76,9 @@ echo "${MARKER} generating metadata"
 MSU_BUILD_HASH=$(git rev-parse HEAD)
 MSU_BUILD_DATE=$(git show -s --format=%ci "${MSU_BUILD_HASH}")
 {
-  echo "MSU_INSTALL_LIB='${MSU_LIB}'"
-  echo "MSU_INSTALL_EXE='${MSU_EXE}'"
-  echo "MSU_INSTALL_MAN='${MSU_MAN}'"
+  echo "MSU_INSTALL_LIB='${LIB}'"
+  echo "MSU_INSTALL_BIN='${BIN}'"
+  echo "MSU_INSTALL_MAN='${MAN}'"
   echo "MSU_BUILD_HASH='${MSU_BUILD_HASH}'"
   echo "MSU_BUILD_DATE='${MSU_BUILD_DATE}'"
 } >> "${MSU_LIB}"/metadata.sh
