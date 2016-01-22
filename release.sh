@@ -7,7 +7,10 @@ msu_require "console"
 
 
 # module variables
-DEPS="hub"
+{
+  # shellcheck disable=SC2034
+  DEPS="hub"
+}
 RELEASE=""
 
 
