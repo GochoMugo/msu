@@ -138,6 +138,38 @@ function uninstall() {
 }
 
 
+# get to install/uninstall from a list
+# ${1} - install/uninstall function
+# ${2} - path to file
+function get_from_list() {
+  # ensure the file exists, otherwise the `cat` command will hang
+  if [ ! -f "${2}" ]
+  then
+    error "file does NOT exist"
+    return 1
+  fi
+  # read the list into a variable
+  local mods
+  mods="$(cat "${2}")"
+  for mod in ${mods}
+  do
+    ${1} "${mod}"
+  done
+}
+
+
+# install many
+function install_from_list() {
+  get_from_list install "${1}"
+}
+
+
+# uninstall many
+function uninstall_from_list() {
+  get_from_list uninstall "${1}"
+}
+
+
 # checking if command is available on the system.
 # ${1} - command to check for.
 function has_command() {

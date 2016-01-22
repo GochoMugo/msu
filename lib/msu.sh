@@ -46,8 +46,14 @@ case "${1:-''}" in
   "i" | "install" )
     msu_run core_utils.install "${@:2}"
   ;;
+  "im" | "install-many" )
+    msu_run core_utils.install_from_list "${2}"
+  ;;
   "u" | "uninstall" )
     msu_run core_utils.uninstall "${@:2}"
+  ;;
+  "um" | "uninstall-many" )
+    msu_run core_utils.uninstall_from_list "${2}"
   ;;
   "up" | "upgrade" )
     msu_run core_utils.upgrade
@@ -59,16 +65,24 @@ case "${1:-''}" in
     echo
     echo " msu by ${MSU_AUTHOR_NAME} <${MSU_AUTHOR_EMAIL}>"
     echo
-    echo " Available Commands:"
-    echo "    r  | require <mod>       require the library module <mod>"
-    echo "    -  | run <mod>.<func>    run the function <func> in module <mod>"
-    echo "    x  | execute <filepath>  execute file at the path <filepath>"
-    echo "    i  | install <mod>...    install the module(s) <mod>..."
-    echo "    u  | uninstall <mod>...  uninstall the module(s) <mod>..."
-    echo "    ls | list                list installed modules"
-    echo "    up | upgrade             upgrade to the latest version"
-    echo "    h  | help                show this help information"
-    echo "    v  | version [mod]       show version information of module [mod] or msu itself"
+    echo " usage:"
+    echo "    msu require|install|uninstall <mod>..."
+    echo "    msu execute|install-many|uninstall-many <path>"
+    echo "    msu run <mod>.<func>"
+    echo "    msu version [mod]"
+    echo
+    echo " commands:"
+    echo "    r  | require        require the library module <mod>"
+    echo "    -  | run            run the function <func> in module <mod>"
+    echo "    x  | execute        execute file at the path <path>"
+    echo "    i  | install        install the module(s) <mod>..."
+    echo "    im | install-many   install from module-list at path <path>"
+    echo "    u  | uninstall      uninstall the module(s) <mod>..."
+    echo "    um | uninstall-many uninstall from module-list at path <path>"
+    echo "    ls | list           list installed modules"
+    echo "    up | upgrade        upgrade to the latest version"
+    echo "    h  | help           show this help information"
+    echo "    v  | version        show version information of module [mod] or msu itself"
     echo
     echo " See https://github.com/GochoMugo/msu/issues for bug reporting"
     echo " and feature requests"

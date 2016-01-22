@@ -39,7 +39,6 @@ source lib/format.sh
   samplemodule="GH:GochoMugo/msu"
   run install "${samplemodule}"
   [ "${status}" -eq 0 ]
-  echo "${output}"
   echo "${output}" | grep "${sym_tick}"
   [ -d "${MSU_EXTERNAL_LIB}/msu" ]
 }
@@ -47,6 +46,18 @@ source lib/format.sh
 
 @test "\`install' installs from bitbucket" {
   skip
+}
+
+
+@test "\`install_from_list' installs from a list in a file" {
+  MSU_EXTERNAL_LIB="${BATS_TMPDIR}/install-many"
+  source lib/core_utils.sh
+  listpath="${BATS_TMPDIR}/list.install"
+  echo "GH:GochoMugo/msu" > ${listpath}
+  run install_from_list "${listpath}"
+  [ "${status}" -eq 0 ]
+  echo "${output}" | grep "${sym_tick}"
+  [ -d "${MSU_EXTERNAL_LIB}/msu" ]
 }
 
 
@@ -59,6 +70,19 @@ source lib/format.sh
   echo "${output}" | grep "${sym_tick}"
   [ ! -d "${MSU_EXTERNAL_LIB}/mod1" ]
   [ ! -d "${MSU_EXTERNAL_LIB}/mod2" ]
+}
+
+
+@test "\`uninstall_from_list' uninstall from a list in a file" {
+  MSU_EXTERNAL_LIB="${BATS_TMPDIR}/uninstall-many"
+  source lib/core_utils.sh
+  mkdir -p "${MSU_EXTERNAL_LIB}/mod1"
+  listpath="${BATS_TMPDIR}/list.uninstall"
+  echo "mod1" > ${listpath}
+  run uninstall_from_list ${listpath}
+  [ "${status}" -eq 0 ]
+  echo "${output}" | grep "${sym_tick}"
+  [ ! -d "${MSU_EXTERNAL_LIB}/mod1" ]
 }
 
 
