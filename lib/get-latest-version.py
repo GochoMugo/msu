@@ -17,15 +17,16 @@ version = sys.argv[1] if len(sys.argv) is 2 else "0.0.0"
 url = "https://api.github.com/repos/GochoMugo/msu/releases/latest"
 
 # make the API request
-r = requests.get(url)
-res = r.json()
-
-# ensure we made a successful request
 try:
-    r.raise_for_status()
+  r = requests.get(url)
+  # ensure we made a successful request
+  r.raise_for_status()
 except:
   # exit with status code (3) - request error
   sys.exit(3)
+
+# the response data
+res = r.json()
 
 # check if it is a new version
 new_version = res['tag_name'].lstrip('v')
