@@ -8,22 +8,16 @@ test: docs static-analysis unit-tests
 	make clean
 
 static-analysis: ./*.sh lib/*.sh
-	~/.cabal/bin/shellcheck $?
+	@echo "executing static analysis"
+	@PATH="${HOME}/.cabal/bin:${PATH}" shellcheck $?
 
 unit-tests: test/test.*.sh
 	./deps/bats/bin/bats $?
 
 deps:
 	./deps/install-deps.sh
-	git submodule init
-	git submodule update
-	make cabal shellcheck
-
-cabal:
-	cabal update --verbose=0 # ensure we do not bloat our logs
-
-shellcheck:
-	cd deps/shellcheck && cabal install --verbose=0
+	cabal update --verbose=0
+	cabal install shellcheck
 
 build: docs
 
@@ -42,4 +36,4 @@ clean:
 		docs/man/**/*.xml \
 		msu-*/
 
-.PHONY: deps cabal shellcheck test clean docs
+.PHONY: deps test clean docs

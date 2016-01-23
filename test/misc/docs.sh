@@ -4,9 +4,10 @@
 # Licensed under the MIT License
 
 # ensure manpages were created
-for txt in "$(ls docs/man/**/*.txt)"
+txts="$(ls docs/man/**/*.txt)"
+for txt in ${txts}
 do
-  manpage=$(echo "${txt}" | sed 's/\.txt//')
+  manpage="$(echo "${txt}" | sed 's/\.txt//')"
   [ -f "${manpage}" ] || {
     echo "ERROR: manpage missing: ${manpage} for ${txt}"
     exit 1

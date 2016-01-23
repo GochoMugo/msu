@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Installing dependencies, such as `cabal`, on different systems
+# Installing dependencies on different systems
 
 
 echo
-echo "  we are now installing \`cabal'"
+echo "  we are now installing dependencies"
 echo "  using \`sudo' where seems necessary"
 echo "  therefore, you might be prompted for your password"
 echo "  for root privileges to be effected."
@@ -28,7 +28,7 @@ function missing_stub() {
 # Debian-based distro
 has "apt-get" && {
   sudo apt-get update -qq
-  sudo apt-get install --no-install-recommends -qq -y cabal-install asciidoc libxml2-utils
+  sudo apt-get install -qq -y asciidoc cabal-install
   exit
 }
 
