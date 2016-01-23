@@ -2,5 +2,7 @@ sudo: required
 language: go
 go:
   - 1.3
-install: make deps
+install:
+  - make deps
+  - sed -i 's/^jobs:/-- jobs:/' ${HOME}/.cabal/config # see https://github.com/hvr/multi-ghc-travis/blob/master/README.md#known-issues
 script: make test
