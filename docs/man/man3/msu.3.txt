@@ -15,11 +15,11 @@ It documents the internal modules msu(1) ships with.
 
 Conventions used when documenting symbols:
 
-*`${VARIABLE}`::
+*`${VARIABLE}`*::
     Represents the variable with the name 'VARIABLE'. This is used for
     both bash and environment variables, such as `${MSU_EXTERNAL_LIB}`.
 
-*function_name(parameter1...)::
+*function_name(parameter1...)*::
     Represents the function with the name 'function_name' and formal
     parameters 'parameter1'.... Do remember that invoking the function
     is done by 'function_name "parameter 1"'.
@@ -29,27 +29,27 @@ DESCRIPTION
 -----------
 This documentation is on internal msu(3) modules. These modules include:
 
-core::
+*core*::
     The most low-level module in charge of getting msu get  off the ground.
     See *msu-core(3)*.
 
-core_utils::
+*core_utils*::
     Utilties that make msu more useful and manageable to use. These utilities
     help build up the msu ecosystem. See *msu-core_utils(3)*.
 
-console::
+*console*::
     Reading and writing to console/terminal. Function include logging and
     prompting user for input. They facilitate interaction between user and msu.
     See *msu-console(3)*.
 
-format::
+*format*::
     Formatting symbols useful in terminal output. Such symbols include ticks
     and arrows. See *msu-format(3)*.
 
-fs::
+*fs*::
     Functions for manipulating the file-system. See *msu-fs(3)*.
 
-net::
+*net*::
     Functions for interacting with the network for common tasks. See
     *msu-net(3)*.
 
