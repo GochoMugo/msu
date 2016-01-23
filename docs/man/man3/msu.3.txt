@@ -85,28 +85,29 @@ to install:
 
 Internal modules *always* take precedence over external modules.
 
-A valid module can be:
-  * a single script, say `sample.sh`
-  * a directory with many scripts, say
+A valid module can be a single script, say `sample.sh`, or a directory
+with many scripts, say
 
+....
 my-module/
 |-- aliases.sh  # place your aliases here
 |-- script.sh
 `-- inner-dir
     |-- script.sh
     `-- another-script.sh
+....
 
 'NOTE:' Nested directories are allowed.
 
-A valid module filename:
-  * has the extension `.sh`
-  * has no `.` (dot) except that preceding the extension
+A valid module filename has the extension *.sh* and has no *.* (dot)
+except that preceding the extension.
 
 Examples:
-  * `foobar.sh` - valid
-  * `foo-bar.sh` - valid
-  * `foo_bar.sh` - valid
-  * `foo.bar.sh` - **invalid**
+
+* `foobar.sh` - valid
+* `foo-bar.sh` - valid
+* `foo_bar.sh` - valid
+* `foo.bar.sh` - *invalid*
 
 
 DEPENDENCIES

@@ -28,7 +28,7 @@ The preferred way is to use the **OFFICIAL RELEASE**:
 
 <hr/>
 
-The following methods use the master branch instead of offical releases. Also,
+The following methods use the master branch instead of official releases. Also,
 the manpages are **not** installed in these cases. They include:
 
 1. **automated install**

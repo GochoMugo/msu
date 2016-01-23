@@ -88,7 +88,7 @@ COMMANDS
     is useful in un-bootstrapping machines (as a reverse of
     *install-many*).
 
-*ls, list ['SCOPE']*::
+*ls, list* ['SCOPE']::
     Lists either internal and external modules installed. Passing 'SCOPE'
     as '-i'/'--internal' lists only internal modules while '-e'/'--external'
     lists only external modules.

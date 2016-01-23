@@ -27,9 +27,24 @@ $ make deps
 
 ## running tests:
 
-Running static analysis and bash tests:
+Running tests fully:
 
 ```bash
 $ make test
 ```
 
+Some of the sub-parts of the testing can be invoked separately.
+
+```bash
+$ make static-analysis    # run static analysis
+$ make unit-tests         # run unit tests
+```
+
+
+## building docs:
+
+You can build the manpages using:
+
+```bash
+$ make docs
+```
