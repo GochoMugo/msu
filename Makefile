@@ -3,11 +3,15 @@
 # Copyright (c) 2015 Gocho Mugo <mugo@forfuture.co.ke>
 # Licensed under the MIT License
 
-test:
-	~/.cabal/bin/shellcheck ./*.sh lib/*.sh
-	./deps/bats/bin/bats test/test.*.sh
-	[ "$${RELEASE}" ] && bash test/misc/*.sh || true
+test: docs static-analysis unit-tests
+	bash test/misc/*.sh
 	make clean
+
+static-analysis: ./*.sh lib/*.sh
+	~/.cabal/bin/shellcheck $?
+
+unit-tests: test/test.*.sh
+	./deps/bats/bin/bats $?
 
 deps:
 	./deps/install-deps.sh

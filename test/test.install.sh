@@ -44,10 +44,28 @@ function teardown() {
 }
 
 
+@test "uses \${MAN} to set destination to manpages" {
+  local man="${BATS_TMPDIR}/some-man"
+  rm -rf "${man:-'.'}/man*"
+  MAN="${man}" ./install.sh
+  [ -d "${man}/man1" ]
+  [ -d "${man}/man3" ]
+  [ -f "${man}/man1/msu.1" ]
+  [ -f "${man}/man3/msu.3" ]
+}
+
+
 @test "adds \${BIN} to ~/.bashrc if not in \${PATH}" {
   local bin="${BATS_TMPDIR:-'.'}/another-bin"
   BIN="${bin}" ./install.sh
   cat ~/.bashrc | grep "export PATH=\"${bin}\":\${PATH}"
+}
+
+
+@test "adds \${MAN} to ~/.bashrc if not in \${MANPATH}" {
+  local man="${BATS_TMPDIR:-'.'}/another-man"
+  MAN="${man}" ./install.sh
+  cat ~/.bashrc | grep "export MANPATH=\"${man}\":\${MANPATH}"
 }
 
 
