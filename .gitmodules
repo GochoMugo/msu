@@ -1,6 +1,3 @@
 [submodule "deps/bats"]
 	path = deps/bats
 	url = https://github.com/sstephenson/bats.git
-[submodule "deps/shellcheck"]
-	path = deps/shellcheck
-	url = https://github.com/koalaman/shellcheck
