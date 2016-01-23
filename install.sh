@@ -69,7 +69,7 @@ echo "${MANPATH}" | grep "${MSU_MAN}" > /dev/null || {
 echo "${MARKER} copying manpages"
 mkdir -p "${MAN}/man1" "${MAN}/man3"
 cp -r docs/man/man1/*.1 "${MAN}/man1"
-#cp -r docs/man/man3/*.3 "${MAN}/man3"
+cp -r docs/man/man3/*.3 "${MAN}/man3"
 
 
 echo "${MARKER} generating metadata"
