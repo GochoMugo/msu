@@ -115,6 +115,21 @@ ENVIRONMENT VARIABLES
     'install-many' commands. It defaults to `${HOME}/.msu`.
 
 
+ALIASES
+-------
+On startup, aliases are loaded. Aliases added by msu are prefixed with
+'msu'. Remember any alias (including those added by msu itself) can be
+overridden. See msu(3) for more details on how aliases work.
+
+One of the most important aliases is *msu.reload*.
+
+*msu.reload*::
+    Reloads aliases from internal and external modules. This allows you to
+    load new aliases after installing modules.
+
+Other aliases are listed in man(3).
+
+
 CAVEATS
 -------
 The command *upgrade* uses python behind the covers to upgrade msu(1) to

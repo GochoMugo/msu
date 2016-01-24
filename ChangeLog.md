@@ -7,6 +7,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+* add the alias `msu.reload` for reloading aliases
+
+Changed:
+
+* prefix all aliases added by msu library with `msu`
+
+
 
 ## [0.0.0][0.0.0] - 24/01/2015
 

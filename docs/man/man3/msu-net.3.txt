@@ -24,13 +24,13 @@ DESCRIPTION
 *check(['LABEL'...])*::
     Checks if the downloads with the labels 'LABEL' are tracked.
 
-    Alias: 'net.ch'
+    Alias: 'msu.net.ch'
 
 *download('LABEL', 'URL')*::
     Downloads an asset at URL 'URL' and tracking it using the label 'LABEL'.
     Note that the file is not saved with the name 'LABEL'.
 
-    Alias: 'net.dl'
+    Alias: 'msu.net.dl'
 
 
 RESOURCES

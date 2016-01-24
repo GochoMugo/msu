@@ -26,7 +26,7 @@ DESCRIPTION
     at the path 'DEST_DIR'. The directories are merged resulting in one
     directory with all the contents from the source directories.
 
-    Alias: fs.join
+    Alias: msu.fs.join
 
 *trash(['PATH']...)*::
     Removes files (and directories) at paths 'PATH'.... These files, being
@@ -34,13 +34,13 @@ DESCRIPTION
     However, the files will usually be removed on system startup when the
     /tmp directory is emptied.
 
-    Alias: fs.trash
+    Alias: msu.fs.trash
 
 *untrash(['PATH']...)*::
     Reverses trashing of files (and directories) that were originally
     trashed using the 'trash' function.
 
-    Alias: fs.untrash
+    Alias: msu.fs.untrash
 
 
 RESOURCES

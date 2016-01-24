@@ -11,16 +11,19 @@ MSU_EXTERNAL_LIB="${MSU_EXTERNAL_LIB:-${HOME}/.msu}"
 # general
 alias x="msu run"
 
+# this allows reloading the aliases, useful after installing new
+# modules
+alias msu.reload=". msu require load"
 
 # fs
-alias fs.join="msu run fs.joindirs"
-alias fs.trash="msu run fs.trash"
-alias fs.untrash="msu run fs.untrash"
+alias msu.fs.join="msu run fs.joindirs"
+alias msu.fs.trash="msu run fs.trash"
+alias msu.fs.untrash="msu run fs.untrash"
 
 
 # net
-alias net.ch="msu run net.check"
-alias net.dl="msu run net.download"
+alias msu.net.ch="msu run net.check"
+alias msu.net.dl="msu run net.download"
 
 
 # external module aliases
