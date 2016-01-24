@@ -33,7 +33,7 @@ The msu(1) command adds useful utilities for use in your shell.
 
 COMMANDS
 --------
-*r, require* 'MODULE'...::
+*re, require* 'MODULE'...::
     Loads the module 'MODULE' into a new bash environment,
     making the modules' functions and variables available. This
     allows interacting with the low-level library functions directly.
@@ -44,7 +44,7 @@ COMMANDS
     $ . msu require console net
     $ success 'a success message'
 
-*-, run* 'MODULE'.'FUNC'::
+*r, run* 'MODULE'.'FUNC'::
     Runs the function 'FUNC' in the module 'MODULE'. Any extra
     arguments are passed to the function as is.
 

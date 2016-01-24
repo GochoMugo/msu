@@ -26,6 +26,7 @@
 * [ ] error catching/handling
 * [ ] bash completion
 * [ ] compatibility for other shell types e.g. zsh
+* [x] manpages
 
 
 ## installation:
@@ -35,7 +36,15 @@ See the [installation instructions][installation].
 
 ## documentation:
 
-Documentation is placed in the [`docs/`](https://github.com/GochoMugo/msu/tree/master/docs/) directory:
+You can always browse msu documentation using `man`:
+
+```bash
+$ man 1 msu       # command
+$ man 3 msu       # library
+```
+
+More documentation is placed in the
+[`docs/`](https://github.com/GochoMugo/msu/tree/master/docs/) directory:
 
 * [installation][installation]
 * [API][api]
