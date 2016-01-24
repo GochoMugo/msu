@@ -36,4 +36,4 @@ clean:
 		docs/man/**/*.xml \
 		msu-*/
 
-.PHONY: deps test clean docs
+.PHONY: deps test unit-tests static-analysis clean build docs release

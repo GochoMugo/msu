@@ -66,10 +66,13 @@ echo "${MANPATH}" | grep "${MSU_MAN}" > /dev/null || {
 }
 
 
-echo "${MARKER} copying manpages"
-mkdir -p "${MAN}/man1" "${MAN}/man3"
-cp -r docs/man/man1/*.1 "${MAN}/man1"
-cp -r docs/man/man3/*.3 "${MAN}/man3"
+if [ -f docs/man/man1/msu.1 ] && [ -f docs/man/man3/msu.3 ]
+then
+  echo "${MARKER} copying manpages"
+  mkdir -p "${MAN}/man1" "${MAN}/man3"
+  cp -r docs/man/man1/*.1 "${MAN}/man1" || true
+  cp -r docs/man/man3/*.3 "${MAN}/man3" || true
+fi
 
 
 echo "${MARKER} generating metadata"
