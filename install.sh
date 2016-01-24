@@ -66,6 +66,7 @@ echo "${MANPATH}" | grep "${MSU_MAN}" > /dev/null || {
 }
 
 
+# there are cases where manpages are not generated yet
 if [ -f docs/man/man1/msu.1 ] && [ -f docs/man/man3/msu.3 ]
 then
   echo "${MARKER} copying manpages"
@@ -75,15 +76,25 @@ then
 fi
 
 
-echo "${MARKER} generating metadata"
-MSU_BUILD_HASH=$(git rev-parse HEAD)
-MSU_BUILD_DATE=$(git show -s --format=%ci "${MSU_BUILD_HASH}")
+# tarballs do NOT ship with the .git directory
+# instead, the metadata is generated at release time
+if [ -d .git ]
+then
+  echo "${MARKER} generating metadata"
+  MSU_BUILD_HASH=$(git rev-parse HEAD)
+  MSU_BUILD_DATE=$(git show -s --format=%ci "${MSU_BUILD_HASH}")
+  {
+    echo "MSU_BUILD_HASH='${MSU_BUILD_HASH}'"
+    echo "MSU_BUILD_DATE='${MSU_BUILD_DATE}'"
+  } >> "${MSU_LIB}"/metadata.sh
+fi
+
+
+echo "${MARKER} storing installation configuration"
 {
   echo "MSU_INSTALL_LIB='${LIB}'"
   echo "MSU_INSTALL_BIN='${BIN}'"
   echo "MSU_INSTALL_MAN='${MAN}'"
-  echo "MSU_BUILD_HASH='${MSU_BUILD_HASH}'"
-  echo "MSU_BUILD_DATE='${MSU_BUILD_DATE}'"
 } >> "${MSU_LIB}"/metadata.sh
 
 

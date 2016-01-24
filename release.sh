@@ -28,12 +28,12 @@ RELEASE=${MSU_VERSION}
 export RELEASE
 
 
-log "building any raw files"
-make build
-
-
 log "run the tests"
 make test
+
+
+log "building any raw files"
+make build
 
 
 log "creating directory for releases"
@@ -45,8 +45,18 @@ mkdir "${RELEASE_DIR}"
 log "copying the contents of the working directory"
 # shellcheck disable=SC2010
 ls \
-  | grep -Ev "deps|get.sh|install.sh|Makefile|package.json|msu\-|release.sh|test" \
+  | grep -Ev "deps|get.sh|Makefile|package.json|msu\-|release.sh|test" \
   | xargs -I{} cp -rf {} "${RELEASE_DIR}/"
+rm "${RELEASE_DIR}"/docs/man/**/*.txt
+
+
+log "generating metadata"
+MSU_BUILD_HASH=$(git rev-parse HEAD)
+MSU_BUILD_DATE=$(git show -s --format=%ci "${MSU_BUILD_HASH}")
+{
+  echo "MSU_BUILD_HASH='${MSU_BUILD_HASH}'"
+  echo "MSU_BUILD_DATE='${MSU_BUILD_DATE}'"
+} >> "${RELEASE_DIR}"/lib/metadata.sh
 
 
 log "creating a tarball of the release"
