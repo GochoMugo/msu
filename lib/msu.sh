@@ -34,10 +34,10 @@ msu_run core_utils.is_superuser && {
 
 # parse command line arguments
 case "${1:-''}" in
-  "r" | "require" )
+  "re" | "require" )
     msu_require "${2:-''}"
   ;;
-  "-" | "run" )
+  "r" | "run" )
     msu_run "${@:2}"
   ;;
   "x"  | "execute" )
@@ -73,8 +73,8 @@ case "${1:-''}" in
     echo "    msu version [mod]"
     echo
     echo " commands:"
-    echo "    r  | require        require the library module <mod>"
-    echo "    -  | run            run the function <func> in module <mod>"
+    echo "    re | require        require the library module <mod>"
+    echo "    r  | run            run the function <func> in module <mod>"
     echo "    x  | execute        execute file at the path <path>"
     echo "    i  | install        install the module(s) <mod>..."
     echo "    im | install-many   install from module-list at path <path>"
