@@ -130,6 +130,16 @@ One of the most important aliases is *msu.reload*.
 Other aliases are listed in man(3).
 
 
+SHEBANG
+-------
+
+msu can be used in a shebang line, which in almost all cases would be
+'#!/usr/bin/env msu'. The shell script (using the shebang), would receive
+the path to itself as `${1}` and have the other arguments follow as normal,
+in `${2}`, `${3}`, ... This means that the script can accept command-line
+arguments.
+
+
 CAVEATS
 -------
 The command *upgrade* uses python behind the covers to upgrade msu(1) to

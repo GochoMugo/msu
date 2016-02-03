@@ -10,11 +10,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 Added:
 
 * add the alias `msu.reload` for reloading aliases
+* add support for use in shebang e.g `#!/usr/bin/env msu`
 
 Changed:
 
 * prefix all aliases added by msu library with `msu`
 
+Fixed:
+
+* Fix path to executable, if executed directly (not through symlink)
 
 
 ## [0.0.0][0.0.0] - 24/01/2015

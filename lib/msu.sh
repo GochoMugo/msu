@@ -7,10 +7,7 @@
 #set -e errexit
 
 
-[ -L "${BASH_SOURCE[0]}" ] && EXE=$(readlink -f "${BASH_SOURCE[0]}") # using symbolic link
-[ "${EXE}" ] || {
-  EXE="${BASH_SOURCE[0]}" # file executed directly
-}
+EXE=$(readlink -f "${BASH_SOURCE[0]}")
 MSU_LIB=$(dirname "${EXE}") # directory holding our library
 export MSU_LIB
 
@@ -101,6 +98,15 @@ case "${1:-''}" in
     fi
   ;;
   * )
-    # do nothing
+    # maybe, we are being used in a shebang e.g. #!/usr/bin/env msu
+    if [ "${1}" ]
+    then
+        FILE="$(readlink -f "${1}" 2>> log)"
+        if [ -r "${FILE}" ]
+        then
+            msu_execute "${FILE}" "${@:2}"
+        fi
+    fi
+    # otherwise, we just ignore it!
   ;;
 esac

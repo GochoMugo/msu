@@ -2,16 +2,11 @@
 # tests against lib/msu.sh
 
 
-@test "\`msu' exports \${MSU_LIB}" {
-  . lib/msu.sh
-  [ "${MSU_LIB}" ]
-}
-
-
 @test "\`msu' sets \${MSU_LIB} to library, if its a symbolic link" {
-  ./install.sh
-  . msu
-  [ "${MSU_LIB}" == "$(readlink -f ~/lib/msu)" ]
+  msu_ln="${BATS_TMPDIR}/msu"
+  ln -sf "${PWD}/lib/msu.sh" "${msu_ln}"
+  . "${msu_ln}"
+  [ "$(readlink -f ${MSU_LIB})" == "$(readlink -f ${PWD}/lib)" ]
 }
 
 
@@ -23,7 +18,7 @@
 
 @test "\`msu require' loads a module" {
   [ ! "$(command -v log)" ]
-  . msu require console
+  . ./lib/msu.sh require console
   command -v log
   command -v success
   command -v error
@@ -61,4 +56,20 @@
 @test "\`msu' does not error if run without arguments" {
   run lib/msu.sh
   [ "${status}" -eq 0 ]
+}
+
+
+@test "\`msu' can be used in a shebang" {
+  bang_sh="${BATS_TMPDIR}/bang.sh"
+  shebang="#!/usr/bin/env msu.sh"
+  {
+    echo "${shebang}"
+    echo "msu_require 'console'"
+    echo "log 'LOGGED'"
+  } > "${bang_sh}"
+  chmod +x "${bang_sh}"
+  PATH="${PWD}/lib:${PATH}" run ${bang_sh}
+  echo "${output}"
+  [ "${status}" -eq 0 ]
+  echo "${output}" | grep "LOGGED"
 }

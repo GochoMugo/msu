@@ -145,7 +145,7 @@ function new_mod() {
 
 @test "\`is_superuser' checks if script is run as superuser" {
   ! is_superuser
-  sudo ./lib/msu.sh - core_utils.is_superuser
+  sudo ./lib/msu.sh run core_utils.is_superuser
 }
 
 
