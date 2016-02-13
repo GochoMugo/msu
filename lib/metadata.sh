@@ -8,5 +8,5 @@
 {
   MSU_AUTHOR_NAME="GochoMugo"
   MSU_AUTHOR_EMAIL="mugo@forfuture.co.ke"
-  MSU_VERSION="0.0.0"
+  MSU_VERSION="0.1.0"
 }
