@@ -53,15 +53,13 @@ function upgrade() {
     status=$?
     case "${status}" in
       1 )
-        log "you have the latest version"
+        log "you have the latest version: ${version}"
       ;;
       2 )
         error "required python dependencies are missing"
-        echo "${version}"
       ;;
       3 )
         error "network request error"
-        echo "${version}"
       ;;
     esac
     [ "${status}" -ne 0 ] && exit ${status}

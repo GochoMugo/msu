@@ -57,7 +57,8 @@ cp -r lib/* "${MSU_LIB}"
 
 echo "${MARKER} checking if ${MSU_MAN} is in \${MANPATH}"
 echo "${MANPATH}" | grep "${MSU_MAN}" > /dev/null || {
-  echo "${MARKER} ${MSU_MAN} not in manpath. Adding it to ${BASHRC}. You need to restart your terminal for this to take effect!"
+  echo "${MARKER} ${MSU_MAN} not in manpath. Adding it to ${BASHRC}."
+  echo "${MARKER} !! You need to restart your terminal for this to take effect!"
   {
     echo ""
     echo "# added by msu"
@@ -70,9 +71,9 @@ echo "${MANPATH}" | grep "${MSU_MAN}" > /dev/null || {
 if [ -f docs/man/man1/msu.1 ] && [ -f docs/man/man3/msu.3 ]
 then
   echo "${MARKER} copying manpages"
-  mkdir -p "${MAN}/man1" "${MAN}/man3"
-  cp -r docs/man/man1/*.1 "${MAN}/man1" || true
-  cp -r docs/man/man3/*.3 "${MAN}/man3" || true
+  mkdir -p "${MSU_MAN}/man1" "${MSU_MAN}/man3"
+  cp -r docs/man/man1/*.1 "${MSU_MAN}/man1" || true
+  cp -r docs/man/man3/*.3 "${MSU_MAN}/man3" || true
 fi
 
 
