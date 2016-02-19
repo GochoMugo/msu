@@ -103,7 +103,7 @@ function ask() {
   else
     local password=''
     local prompt=''
-    local charcount=''
+    declare -i charcount=0
     while IFS='' read -p "${prompt}" -r -s -n 1 char
     do
         if [[ "${char}" == $'\0' ]]

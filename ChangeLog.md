@@ -7,6 +7,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Fixed:
+
+* fix using backspace as first key-press in password prompt
 
 
 ## [0.1.0][0.1.0] - 13/02/2016
