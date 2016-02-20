@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 Fixed:
 
 * fix using backspace as first key-press in password prompt
+* fix unnecessary logging to a file named `log` when using `msu` in a shebang
 
 
 ## [0.1.0][0.1.0] - 13/02/2016

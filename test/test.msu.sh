@@ -71,5 +71,6 @@
   PATH="${PWD}/lib:${PATH}" run ${bang_sh}
   echo "${output}"
   [ "${status}" -eq 0 ]
+  echo "${output}"
   echo "${output}" | grep "LOGGED"
 }
