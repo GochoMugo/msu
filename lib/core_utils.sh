@@ -285,7 +285,7 @@ function list_modules() {
     then
       output "$(ls "${MSU_EXTERNAL_LIB}")"
     else
-      echo -e "${clr_red}no modules found${clr_reset}"
+      echo -e "${clr_red:-}no modules found${clr_reset}"
     fi
   }
 }
