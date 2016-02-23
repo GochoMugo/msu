@@ -7,8 +7,10 @@
 #set -e errexit
 
 
-EXE=$(readlink -f "${BASH_SOURCE[0]}")
-MSU_LIB=$(dirname "${EXE}") # directory holding our library
+MSU_EXE="${BASH_SOURCE[0]}"
+MSU_REAL_EXE=$(readlink -f "${MSU_EXE}")
+MSU_LIB=$(dirname "${MSU_REAL_EXE}") # directory holding our library
+export MSU_EXE
 export MSU_LIB
 
 
@@ -57,6 +59,9 @@ case "${1:-''}" in
   "ls" | "list" )
     msu_run core_utils.list_modules "${2}"
   ;;
+  "nk" | "nuke" )
+    msu_run core_utils.nuke
+  ;;
   "h" | "help" )
     echo
     echo " msu by ${MSU_AUTHOR_NAME} <${MSU_AUTHOR_EMAIL}>"
@@ -65,6 +70,7 @@ case "${1:-''}" in
     echo "    msu require|install|uninstall <mod>..."
     echo "    msu execute|install-many|uninstall-many <path>"
     echo "    msu run <mod>.<func>"
+    echo "    msu list [scope]"
     echo "    msu upgrade [version]"
     echo "    msu version [mod]"
     echo
@@ -78,6 +84,7 @@ case "${1:-''}" in
     echo "    um | uninstall-many uninstall from module-list at path <path>"
     echo "    ls | list           list installed modules"
     echo "    up | upgrade        upgrade to the latest version"
+    echo "    nk | nuke           nuke msu entirely"
     echo "    h  | help           show this help information"
     echo "    v  | version        show version information of module [mod] or msu itself"
     echo

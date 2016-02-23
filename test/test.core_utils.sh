@@ -2,10 +2,26 @@
 # tests against ./lib/core_utils.sh
 
 
+BASHRC_TMP=~/.bashrc.msu
+
+cp ~/.bashrc ~/.bashrc~ # backup
+
 MSU_LIB="${PWD}"/lib
 source lib/core.sh
 source lib/core_utils.sh
 source lib/format.sh
+
+
+function setup() {
+  mv ~/.bashrc "${BASHRC_TMP}"
+  touch ~/.bashrc
+}
+
+
+function teardown() {
+  mv "${BASHRC_TMP}" ~/.bashrc
+  rm -rf /tmp/msu
+}
 
 
 @test "gets the \${MSU_EXTERNAL_LIB} readily set" {
@@ -170,5 +186,23 @@ function new_mod() {
   ! echo "${output}" | grep "external modules"
   run list_modules --external
   ! echo "${output}" | grep "internal modules"
+}
+
+
+@test "\`nuke' nukes msu entirely" {
+  LIB="${BATS_TMPDIR}/nuke-lib"
+  BIN="${BATS_TMPDIR}/nuke-bin"
+  MAN="${BATS_TMPDIR}/nuke-man"
+  LIB="${LIB}" BIN="${BIN}" MAN="${MAN}" ./install.sh
+  MSU_ASSUME_YES="yes" "${BIN}/msu" nuke
+  [ ! -d "${LIB}/msu" ]
+  [ ! -e "${BIN}/msu" ]
+  [ ! -e "${MAN}/man1/msu.1" ]
+  [ ! -e "${MAN}/man3/msu.3" ]
+  ! grep "${MSU_LOAD_STRING}" ~/.bashrc
+  ! grep "# added by msu" ~/.bashrc
+  [ ! -d "/tmp/msu" ]
+  [ ! -e "/tmp/nuke_msu" ]
+  [ ! -d "/tmp/.msu.clones" ]
 }
 

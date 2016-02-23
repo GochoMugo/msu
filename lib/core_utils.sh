@@ -285,3 +285,34 @@ function list_modules() {
   }
 }
 
+
+# nuke msu entirely
+function nuke() {
+  # just ask to ensure we really want to nuke
+  log "you are about to remove the msu executable, internal and external libraries"
+  yes_no "I want to nuke msu" || return 1
+
+  local nuke_script="/tmp/nuke_msu"
+  {
+    echo "echo - removing load string from ~/.bashrc"
+    echo "grep -v '${MSU_INSTALL_LOAD_STRING}' ~/.bashrc > ~/.bashrc"
+    echo "grep -v '# added by msu' ~/.bashrc > ~/.bashrc"
+    echo "echo - removing external libraries"
+    echo "rm -rf '${MSU_EXTERNAL_LIB}'"
+    echo "echo - removing internal libraries"
+    echo "rm -rf '${MSU_LIB}'"
+    echo "echo - removing manpages"
+    echo "rm -rf ${MSU_INSTALL_MAN}/**/msu*"
+    echo "echo - removing executable"
+    echo "rm -f  '${MSU_EXE}'"
+    echo "echo - extra removal actions"
+    echo "rm -rf /tmp/msu" # we need to nuke the location of installation clone
+    echo "rm -rf /tmp/.msu.clones"
+    echo "echo - removing this nuke script"
+    echo "rm -f '${nuke_script}'"
+    echo "echo !! Just nuked msu !!"
+  } > "${nuke_script}"
+  # running the nuke script
+  bash "${nuke_script}"
+}
+

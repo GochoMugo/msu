@@ -14,6 +14,8 @@ MSU_LIB="${LIB}/msu"
 MSU_EXE="${BIN}/msu"
 MSU_MAN="${MAN}"
 MARKER=" >>>"
+MSU_LOAD_STRING="# loading msu
+. msu require load"
 
 
 function check() {
@@ -91,14 +93,6 @@ then
 fi
 
 
-echo "${MARKER} storing installation configuration"
-{
-  echo "MSU_INSTALL_LIB='${LIB}'"
-  echo "MSU_INSTALL_BIN='${BIN}'"
-  echo "MSU_INSTALL_MAN='${MAN}'"
-} >> "${MSU_LIB}"/metadata.sh
-
-
 echo "${MARKER} linking executable"
 mkdir -p "$(dirname "${MSU_EXE}")"
 rm -f "${MSU_EXE}"
@@ -106,14 +100,22 @@ ln -sf "${MSU_LIB}"/msu.sh "${MSU_EXE}"
 
 
 echo "${MARKER} make bash load msu into environment on start"
-loader=". msu require load"
-grep "${loader}" "${BASHRC}" > /dev/null || {
+grep "${MSU_LOAD_STRING}" "${BASHRC}" > /dev/null || {
   {
     echo ""
-    echo "# loading msu"
-    echo "${loader}"
+    echo "${MSU_LOAD_STRING}"
   } >> "${BASHRC}"
 }
+
+
+echo "${MARKER} storing installation configuration"
+{
+  echo "MSU_INSTALL_LIB='${LIB}'"
+  echo "MSU_INSTALL_BIN='${BIN}'"
+  echo "MSU_INSTALL_MAN='${MAN}'"
+  echo "MSU_INSTALL_LOAD_STRING='${MSU_LOAD_STRING}'"
+} >> "${MSU_LIB}"/metadata.sh
+
 
 
 echo "${MARKER} finished installing"

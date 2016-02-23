@@ -20,6 +20,8 @@ SYNOPSIS
 
 *msu* upgrade ['VERSION']
 
+*msu* nuke
+
 *msu* version ['MODULE']
 
 *msu* help
@@ -98,6 +100,11 @@ COMMANDS
     to the latest version.  If 'VERSION' equals 'HEAD', the master branch
     is used directly. This request hits the network to check for new
     versions and execute downloads if necessary.
+
+*nk, nuke*::
+    Nukes msu entirely. This involves removing the msu executable, internal
+    and external libraries, load strings added to ~/.bashrc and temporary
+    installation locations.
 
 *h, help*::
     Shows basic help information, shortened for easier recap.

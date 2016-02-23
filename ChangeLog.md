@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 Added:
 
+* add command, `nuke`, for nuking `msu`
 * add support for SSH in installing modules from private, remote repos (issue #18)
 
 Fixed:
