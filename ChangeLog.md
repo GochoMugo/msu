@@ -7,6 +7,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+* add support for SSH in installing modules from private, remote repos (issue #18)
+
 Fixed:
 
 * fix using backspace as first key-press in password prompt

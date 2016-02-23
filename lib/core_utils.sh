@@ -96,8 +96,14 @@ function install() {
         "gh" )
           url="https://github.com/${shorthand}.git"
         ;;
+        "ghs" )
+          url="git@github.com:${shorthand}.git"
+        ;;
         "bt" )
           url="https://bitbucket.org/${shorthand}.git"
+        ;;
+        "bts" )
+          url="git@bitbucket.org:${shorthand}.git"
         ;;
       esac
       rm -rf "${tmpdir}"
