@@ -71,9 +71,15 @@ COMMANDS
     Available shorthands include:
 
       gh: - from Github, e.g. 'gh:GochoMugo/transfer'
+      ghs: - from Github, using SSH e.g. 'ghs:GochoMugo/transfer'
       bt: - from Bitbucket, e.g. 'bt:GochoMugo/transfer'
+      bts: - from Bitbucket, using SSH e.g. 'bts:GochoMugo/transfer'
 
     The shorthands are case-insensitive.
+
+    If the remote repository is private, SSH should be used instead. This
+    allows avoiding being prompted for password and the request being
+    rejected in cases where 2FA is enabled for the user.
 
 *im, install-many* 'PATH'::
     Installs modules listed in a file at path 'PATH'. The list is a
