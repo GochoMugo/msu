@@ -281,7 +281,12 @@ function list_modules() {
   # list external modules, if allowed
   [[ "${external}" == "true" ]] && {
     echo -e "\n${clr_white}external modules${clr_reset}"
-    output "$(ls "${MSU_EXTERNAL_LIB}")"
+    if [ -d "${MSU_EXTERNAL_LIB}" ]
+    then
+      output "$(ls "${MSU_EXTERNAL_LIB}")"
+    else
+      echo -e "${clr_red}no modules found${clr_reset}"
+    fi
   }
 }
 

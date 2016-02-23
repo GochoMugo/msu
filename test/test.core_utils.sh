@@ -189,6 +189,14 @@ function new_mod() {
 }
 
 
+@test "\`list_modules' does not error if no external modules exist" {
+  MSU_EXTERNAL_LIB="${BATS_TMPDIR}/no-external-mods"
+  [ ! -d "${MSU_EXTERNAL_LIB}" ]
+  run list_modules
+  echo "${output}" | grep "no modules found"
+}
+
+
 @test "\`nuke' nukes msu entirely" {
   LIB="${BATS_TMPDIR}/nuke-lib"
   BIN="${BATS_TMPDIR}/nuke-bin"
