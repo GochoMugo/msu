@@ -2,7 +2,19 @@
 # tests against get.sh
 
 
+BASHRC_TMP=~/.bashrc.msu
+
+cp ~/.bashrc ~/.bashrc~ # backup
+
+
+function setup() {
+  mv ~/.bashrc "${BASHRC_TMP}"
+  touch ~/.bashrc
+}
+
+
 function teardown() {
+  mv "${BASHRC_TMP}" ~/.bashrc
   rm -rf /tmp/msu
 }
 
@@ -34,7 +46,7 @@ function teardown() {
 
 
 @test "clone for a certain build" {
-  local hash="49b0104a2e962e6da5dac12f1860e7898505090c"
+  local hash="9bc50798b321b134a0d471a8584fba4fc0c15b06"
   cat get.sh | BUILD="${hash}" bash
   cd /tmp/msu
   [ "$(git rev-parse HEAD)" == "${hash}" ]
