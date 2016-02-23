@@ -34,7 +34,7 @@ source lib/format.sh
 
 
 @test "\`install' installs from github" {
-  MSU_EXTERNAL_LIB="${BATS_TMPDIR}/github"
+  MSU_EXTERNAL_LIB="${BATS_TMPDIR}/gh"
   source lib/core_utils.sh
   samplemodule="GH:GochoMugo/msu"
   run install "${samplemodule}"
@@ -45,7 +45,13 @@ source lib/format.sh
 
 
 @test "\`install' installs from bitbucket" {
-  skip
+  MSU_EXTERNAL_LIB="${BATS_TMPDIR}/bt"
+  source lib/core_utils.sh
+  samplemodule="BT:GochoMugo/msu-test"
+  run install "${samplemodule}"
+  [ "${status}" -eq 0 ]
+  echo "${output}" | grep "${sym_tick}"
+  [ -d "${MSU_EXTERNAL_LIB}/msu-test" ]
 }
 
 
