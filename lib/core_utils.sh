@@ -53,7 +53,7 @@ function upgrade() {
     status=$?
     case "${status}" in
       1 )
-        log "you have the latest version: ${version}"
+        log "you have the latest version"
       ;;
       2 )
         error "required python dependencies are missing"
