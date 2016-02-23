@@ -132,29 +132,36 @@ function ask() {
 }
 
 
-# asks a yes or no question
+# asks a yes or no question. If ${MSU_ASSUME_YES} is defined, 'yes' is
+# implied immediately.
+#
 # ${1} question to ask
 # ${2} default answer (defaults to "N")
 # return 0 (yes), 1 (no)
 function yes_no() {
+  if [ -n "${MSU_ASSUME_YES}" ]
+  then
+    return 0
+  fi
+
   local show="y|N"
   local answer=''
-  local exit_code=1
+  local return_code=1
   case "${2:-''}" in
     "Y" | "y" )
       show="Y|n"
-      exit_code=0
+      return_code=0
     ;;
   esac
   question="${1} (${show})?"
   ask "${question}" answer
   case "${answer}" in
     "Y" | "y" )
-      exit_code=0
+      return_code=0
     ;;
     "N" | "n" )
-      exit_code=1
+      return_code=1
     ;;
   esac
-  return ${exit_code}
+  return ${return_code}
 }

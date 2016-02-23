@@ -59,7 +59,9 @@ DESCRIPTION
 *yes_no('QUESTION' [, 'DEFAULT'="N"])*::
     Asks the yes/no questions 'QUESTION' to the user. Returns 0 for a
     YES and 1 for a NO. If default is set to "Y", then Yes will be the
-    default answer. Otherwise, defaults to No.
+    default answer. Otherwise, defaults to No. If the variable
+    `${MSU_ASSUME_YES}` has a non-zero length, YES is assumed, without
+    asking the question.
 
 
 RESOURCES

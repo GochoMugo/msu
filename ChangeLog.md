@@ -11,6 +11,7 @@ Added:
 
 * add command, `nuke`, for nuking `msu`
 * add support for SSH in installing modules from private, remote repos (issue #18)
+* allow assuming "yes" in a `yes_no` question, using `${MSU_ASSUME_YES}`
 
 Fixed:
 
