@@ -295,6 +295,7 @@ function list_modules() {
 function nuke() {
   # just ask to ensure we really want to nuke
   log "you are about to remove the msu executable, internal and external libraries"
+  log "this action will change your ~/.bashrc! You may want to back it up in case shit happens!"
   yes_no "I want to nuke msu" || return 1
 
   local nuke_script="/tmp/nuke_msu"
