@@ -17,7 +17,8 @@ Fixed:
 
 * fix using backspace as first key-press in password prompt
 * fix unnecessary logging to a file named `log` when using `msu` in a shebang
-* fix listing external libraries, when directory at `${MSU_EXTERNAL_LIB}` does **not** exist
+* fix listing external modules, when directory at `${MSU_EXTERNAL_LIB}` does **not** exist
+* fix listing internal modules i.e. only list the `*.sh` files
 
 
 ## [0.1.0][0.1.0] - 13/02/2016

@@ -275,7 +275,8 @@ function list_modules() {
   # list internal modules, if allowed
   [[ "${internal}" == "true" ]] && {
     echo -e "\n${clr_white}internal modules${clr_reset}"
-    output "$(ls "${MSU_LIB}")"
+    # shellcheck disable=SC2010
+    output "$(ls "${MSU_LIB}" | grep -E "\.sh$")"
   }
 
   # list external modules, if allowed

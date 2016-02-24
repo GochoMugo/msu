@@ -180,6 +180,7 @@ function new_mod() {
   run list_modules
   echo "${output}" | grep "internal modules"
   echo "${output}" | grep "console"
+  ! echo "${output}" | grep "get-latest-version.py"
   echo "${output}" | grep "external modules"
   echo "${output}" | grep "a-stupid-module-ofcos"
   run list_modules --internal
