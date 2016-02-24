@@ -300,8 +300,11 @@ function nuke() {
   local nuke_script="/tmp/nuke_msu"
   {
     echo "echo - removing load string from ~/.bashrc"
-    echo "grep -v '${MSU_INSTALL_LOAD_STRING}' ~/.bashrc > ~/.bashrc"
-    echo "grep -v '# added by msu' ~/.bashrc > ~/.bashrc"
+    echo "cp ~/.bashrc /tmp/bashrc.msu"
+    echo "grep -v '${MSU_INSTALL_LOAD_STRING}' /tmp/bashrc.msu > ~/.bashrc"
+    echo "cp ~/.bashrc /tmp/bashrc.msu"
+    echo "grep -v '# added by msu' /tmp/bashrc.msu > ~/.bashrc"
+    echo "rm /tmp/bashrc.msu"
     echo "echo - removing external libraries"
     echo "rm -rf '${MSU_EXTERNAL_LIB}'"
     echo "echo - removing internal libraries"
