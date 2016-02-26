@@ -7,9 +7,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+
+
+## [0.2.0][0.2.0] - 26/02/2016
+
 Added:
 
-* add command, `nuke`, for nuking `msu`
+* add command, `nuke`, for nuking `msu` (issue #19)
 * add support for SSH in installing modules from private, remote repos (issue #18)
 * allow assuming "yes" in a `yes_no` question, using `${MSU_ASSUME_YES}`
 
@@ -45,3 +49,4 @@ This is the very first version of `msu`.
 <!-- Release links are placed here for easier updating -->
 [0.0.0]:https://github.com/GochoMugo/msu/releases/tag/0.0.0
 [0.1.0]:https://github.com/GochoMugo/msu/releases/tag/0.1.0
+[0.2.0]:https://github.com/GochoMugo/msu/releases/tag/0.2.0
