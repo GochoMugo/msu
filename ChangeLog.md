@@ -7,6 +7,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## Added:
+
+* check dependencies aggressively, on installation
+
 
 
 ## [0.2.0][0.2.0] - 26/02/2016

@@ -27,9 +27,28 @@ function check() {
 
 
 function check_deps() {
-  check "wget" "self-upgrade, downloading files"
-  check "git" "self-upgrade, install modules from github"
+  check "bash" "runtime"
+  check "cat" "file reading, stream concat"
+  check "command" "command lookup/execution"
+  check "cp" "file copying"
+  check "cut" "stream cutting"
+  check "dirname" "path manipulation"
+  check "echo" "line printing"
+  check "git" "install, self-upgrade, module-install, metadata gen."
+  check "grep" "regexp matching"
+  check "id" "check user id"
+  check "ln" "symlink creation"
+  check "mkdir" "directory creation"
+  check "mv" "file renaming"
+  check "popd" "pop directory from stack"
+  check "pushd" "push directory onto stack"
+  check "python" "self-upgrade"
+  check "readlink" "handling symlinks"
+  check "rm" "file removal"
+  check "tar" "self-upgrade"
   check "tput" "formatting styles"
+  check "tr" "character translation"
+  check "wget" "self-upgrade"
 }
 
 
