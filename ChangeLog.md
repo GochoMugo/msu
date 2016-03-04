@@ -7,10 +7,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
-## Added:
+Added:
 
 * check dependencies aggressively, on installation
 
+Removed:
+
+* the `fs` and `net` modules are removed, to keep `msu` minimal
 
 
 ## [0.2.0][0.2.0] - 26/02/2016

@@ -15,16 +15,6 @@ alias x="msu run"
 # modules
 alias msu.reload=". msu require load"
 
-# fs
-alias msu.fs.join="msu run fs.joindirs"
-alias msu.fs.trash="msu run fs.trash"
-alias msu.fs.untrash="msu run fs.untrash"
-
-
-# net
-alias msu.net.ch="msu run net.check"
-alias msu.net.dl="msu run net.download"
-
 
 # external module aliases
 if [ -d "${MSU_EXTERNAL_LIB}" ]

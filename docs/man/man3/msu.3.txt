@@ -46,13 +46,6 @@ This documentation is on internal msu(3) modules. These modules include:
     Formatting symbols useful in terminal output. Such symbols include ticks
     and arrows. See *msu-format(3)*.
 
-*fs*::
-    Functions for manipulating the file-system. See *msu-fs(3)*.
-
-*net*::
-    Functions for interacting with the network for common tasks. See
-    *msu-net(3)*.
-
 
 MODULES
 -------
