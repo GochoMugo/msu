@@ -7,6 +7,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+
+## [0.3.0][0.3.0] - 19/03/2016
+
 Added:
 
 * check dependencies aggressively, on installation
@@ -57,3 +60,4 @@ This is the very first version of `msu`.
 [0.0.0]:https://github.com/GochoMugo/msu/releases/tag/0.0.0
 [0.1.0]:https://github.com/GochoMugo/msu/releases/tag/0.1.0
 [0.2.0]:https://github.com/GochoMugo/msu/releases/tag/0.2.0
+[0.3.0]:https://github.com/GochoMugo/msu/releases/tag/0.3.0
