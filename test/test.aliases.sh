@@ -18,8 +18,8 @@ function teardown() {
 
 @test "aliases.sh loads aliases into the current environment" {
   . lib/aliases.sh
-  alias msu.fs.join
-  alias msu.net.dl
+  alias x
+  alias msu.reload
 }
 
 
