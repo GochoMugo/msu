@@ -5,7 +5,7 @@
 
 [![Terminal Lover](https://img.shields.io/badge/terminal-lover-blue.svg?style=flat-square)](https://github.com/GochoMugo) [![Travis](https://img.shields.io/travis/GochoMugo/msu.svg?style=flat-square)](https://travis-ci.org/GochoMugo/msu)
 
-* [An Introductory Post on `msu`](https://gochomugo.github.io/musings/msu-introduction/)!
+* Introductory blog posts: [hack with msu](http://www.gmugo.in/musings/hack-with-msu/), [very first post](https://www.gmugo.in/musings/msu-introduction/)
 * [Project Principles](#principles)
 * [Showcase of modules using `msu`][showcase]
 * [Documentation](#documentation)
@@ -16,7 +16,7 @@
 > **`msu` wishlist**
 
 * [x] [automated/manual installation][installation]
-* [x] [small but comprehensive internal library](https://github.com/GochoMugo/msu/blob/master/docs/api.md)
+* [x] [small but comprehensive internal library][api]
 * [x] support external modules
 * [x] auto-loading aliases modules
 * [x] install module from github/bitbucket
@@ -71,4 +71,3 @@ Copyright &copy; 2015-2016 GochoMugo <mugo@forfuture.co.ke>
 [api]:https://github.com/GochoMugo/msu/tree/master/docs/api.md "msu API"
 [showcase]:https://github.com/GochoMugo/msu/blob/master/docs/showcase.md "showcase of modules using msu"
 [hacking]:https://github.com/GochoMugo/msu/blob/master/docs/hack.md "Hacking on msu"
-
