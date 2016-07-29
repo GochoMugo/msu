@@ -16,8 +16,13 @@ unit-tests: test/test.*.sh
 
 deps:
 	./deps/install-deps.sh
+	@echo ' >>> updating package index, using cabal'
 	cabal update --verbose=0
+	@echo ' >>> installing shellcheck, using cabal'
 	cabal install shellcheck
+	@echo ' >>> installing bats, using git submodule'
+	git submodule init
+	git submodule update
 
 build: docs
 
