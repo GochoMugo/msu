@@ -30,10 +30,16 @@ function missing_stub() {
 
 # Debian-based distro
 has "apt-get" && {
+  # we are running our tests on a ubuntu machine
+  # we need to ensure our tests does not hang waiting for user input
+  APT_FLAGS=
+  if [[ -n "${CI}" ]] ; then APT_FLAGS="-y -qq" ; fi
   echo " >>> updating package index, using apt-get"
-  sudo apt-get update
+  # shellcheck disable=SC2086
+  sudo apt-get ${APT_FLAGS} update
   echo " >>> installing asciidoc, cabal-install, using apt-get"
-  sudo apt-get install asciidoc cabal-install
+  # shellcheck disable=SC2086
+  sudo apt-get install ${APT_FLAGS} asciidoc cabal-install
   missing_stub "apt-get" "hub"
   exit
 }
