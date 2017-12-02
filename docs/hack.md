@@ -33,11 +33,12 @@ Running tests fully:
 $ make test
 ```
 
-Some of the sub-parts of the testing can be invoked separately.
+Some of the different types of tests can be invoked separately.
 
 ```bash
-$ make static-analysis    # run static analysis
-$ make unit-tests         # run unit tests
+$ make test.lint          # run static analysis
+$ make test.unit          # run unit tests
+$ make test.doc           # run tests on documentation
 ```
 
 
@@ -46,5 +47,5 @@ $ make unit-tests         # run unit tests
 You can build the manpages using:
 
 ```bash
-$ make docs
+$ make doc
 ```

@@ -32,8 +32,8 @@ log "run the tests"
 make test
 
 
-log "building any raw files"
-make build
+log "generating documentation"
+make doc
 
 
 log "creating directory for releases"
