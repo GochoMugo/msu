@@ -77,7 +77,7 @@ cp -r lib/* "${MSU_LIB}"
 
 
 echo "${MARKER} checking if ${MSU_MAN} is in \${MANPATH}"
-echo "${MANPATH}" | grep "${MSU_MAN}" > /dev/null || {
+echo "${MANPATH:-}" | grep "${MSU_MAN}" > /dev/null || {
   echo "${MARKER} ${MSU_MAN} not in manpath. Adding it to ${BASHRC}."
   echo "${MARKER} !! You need to restart your terminal for this to take effect!"
   {

@@ -7,6 +7,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Fixed:
+
+* Reduce noise during installation
+
 
 ## [0.3.0][0.3.0] - 19/03/2016
 
