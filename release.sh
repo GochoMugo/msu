@@ -45,7 +45,7 @@ mkdir "${RELEASE_DIR}"
 log "copying the contents of the working directory"
 # shellcheck disable=SC2010
 ls \
-  | grep -Ev "deps|get.sh|Makefile|package.json|msu\-|release.sh|test" \
+  | grep -Ev "deps|get.sh|Makefile|package.json|msu-|release.sh|test" \
   | xargs -I{} cp -rf {} "${RELEASE_DIR}/"
 rm "${RELEASE_DIR}"/docs/man/**/*.txt
 

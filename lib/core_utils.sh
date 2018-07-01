@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # useful utilities
 
+# shellcheck disable=2181
+
 
 # modules
 msu_require "console"
@@ -18,7 +20,7 @@ msu_require "metadata"
 function upgrade() {
   log "upgrading myself"
   LIB=${MSU_INSTALL_LIB:-$(dirname "${MSU_LIB}")}
-  BIN=${MSU_INSTALL_BIN:-$(dirname "$(which msu)")}
+  BIN=${MSU_INSTALL_BIN:-$(dirname "$(command -v msu)")}
   MAN=${MSU_INSTALL_MAN}
   if [ ! "${MAN}" ]
   then
@@ -47,7 +49,7 @@ function upgrade() {
   fi
 
   # upgrade using tarball
-  pushd /tmp > /dev/null
+  pushd /tmp > /dev/null || return 1
   [ ! "${version}" ] && {
     version=$(python "${MSU_LIB}/get-latest-version.py" "${MSU_VERSION}")
     status=$?
@@ -71,7 +73,7 @@ function upgrade() {
     return 1
   }
   LIB="${LIB}" BIN="${BIN}" MAN="${MAN}" ./install.sh
-  popd > /dev/null
+  popd > /dev/null || return 1
 }
 
 
@@ -83,7 +85,7 @@ function install() {
   do
     local module_name
     local remote_mark
-    remote_mark=$(echo "${dir}" | grep -Eo "[a-Z0-9]+:" | grep -Eo "[^:]*")
+    remote_mark=$(echo "${dir}" | grep -Eo "[a-zA-Z0-9]+:" | grep -Eo "[^:]*")
     if [ "${remote_mark}" ] ; then
       # requires cloning
       local tmpdir
@@ -108,7 +110,7 @@ function install() {
       esac
       rm -rf "${tmpdir}"
       mkdir -p "${tmpdir}"
-      pushd "${tmpdir}" > /dev/null
+      pushd "${tmpdir}" > /dev/null || return 1
       git clone --depth=1 --quiet "${url}"
       if [ ! $? ]
       then
@@ -117,7 +119,7 @@ function install() {
       fi
       module_name=$(echo "${shorthand}" | grep -Eo '\/.*$' | cut -b 2-)
       install "${module_name}"
-      popd > /dev/null
+      popd > /dev/null || return 1
     else
       # simple copying
       # for faster development, we may be in a module's repo and want to
@@ -139,7 +141,7 @@ function install() {
 
 # generate metadata for an installed module
 function generate_metadata() {
-  pushd "${MSU_EXTERNAL_LIB}/${1}" > /dev/null
+  pushd "${MSU_EXTERNAL_LIB}/${1}" > /dev/null || return 1
   if [ ! -d .git ] || [ "$(git rev-list --all --count 2> /dev/null || echo 0)" -eq 0 ]
   then
     error "can not generate metadata without at least one git commit"
@@ -150,7 +152,7 @@ function generate_metadata() {
     echo "build=$(git rev-parse HEAD)"
     echo "date=$(git show -s --format=%ci)"
   } >> metadata.sh
-  popd > /dev/null
+  popd > /dev/null || return 1
 }
 
 
@@ -168,7 +170,7 @@ function show_metadata() {
   function echo_value() {
     local value
     value=$(echo "${metadata}" | grep "${1}" | grep -Eo '[!=].*$' | cut -b 2-)
-    echo -e "    ${1}\t${value}"
+    echo -e "    ${1}\\t${value}"
   }
   echo -e " ${clr_white:-''}${1}${clr_reset:-''}"
   echo_value "author"
@@ -274,14 +276,14 @@ function list_modules() {
 
   # list internal modules, if allowed
   [[ "${internal}" == "true" ]] && {
-    echo -e "\n${clr_white}internal modules${clr_reset}"
+    echo -e "\\n${clr_white}internal modules${clr_reset}"
     # shellcheck disable=SC2010
-    output "$(ls "${MSU_LIB}" | grep -E "\.sh$")"
+    output "$(ls "${MSU_LIB}" | grep -E "\\.sh$")"
   }
 
   # list external modules, if allowed
   [[ "${external}" == "true" ]] && {
-    echo -e "\n${clr_white}external modules${clr_reset}"
+    echo -e "\\n${clr_white}external modules${clr_reset}"
     if [ -d "${MSU_EXTERNAL_LIB}" ]
     then
       output "$(ls "${MSU_EXTERNAL_LIB}")"

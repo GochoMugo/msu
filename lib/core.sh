@@ -59,8 +59,8 @@ function msu_require() {
 function msu_run() {
   local module
   local func
-  module=$(echo "${1}" | grep -Eo ".*\.")
-  func=$(echo "${1}" | grep -Eo "\.[^.]+$" | cut -b 2-)
+  module=$(echo "${1}" | grep -Eo ".*\\.")
+  func=$(echo "${1}" | grep -Eo "\\.[^.]+$" | cut -b 2-)
   msu_require "${module}"
   if [ "${func}" ]
   then

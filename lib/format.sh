@@ -15,11 +15,11 @@
 
 
   # colors
-  clr_blue="\033[0;34m"
-  clr_green="\033[0;32m"
-  clr_red="\033[0;31m"
-  clr_reset="\e[0m"
-  clr_white="\033[1;37m"
+  clr_blue="\\033[0;34m"
+  clr_green="\\033[0;32m"
+  clr_red="\\033[0;31m"
+  clr_reset="\\e[0m"
+  clr_white="\\033[1;37m"
 
 
   # symbols
