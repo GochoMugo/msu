@@ -3,8 +3,17 @@
 # Copyright (c) 2015 Gocho Mugo <mugo@forfuture.co.ke>
 # Licensed under the MIT License
 
+DOCKER_IMAGE=gochomugo/msu:test
+
 # Run tests ***
-test: test.lint test.unit test.doc clean
+test: test.image
+
+# Run tests in bare-metal mode
+test.bare: doc test.lint test.unit test.doc clean
+
+# Run tests in Docker container
+test.image: image
+	docker run --rm --tty $(DOCKER_IMAGE)
 
 # Run linting (static-analysis) tests
 test.lint: ./*.sh lib/*.sh
@@ -19,7 +28,7 @@ unit-tests: # DEPRECATED
 	make test.unit
 
 # Run tests on documentation
-test.doc: doc
+test.doc:
 	bash test/misc/docs.sh
 
 # Install dependencies
@@ -60,4 +69,8 @@ build: # DEPRECATED
 	@echo " !!! 'make build' is deprecated. It is no longer of use."
 	make doc
 
-.PHONY: clean deps doc release test test.doc test.lint test.unit static-analysis unit-tests build docs
+# Build image; usually for testing or building docs.
+image:
+	docker build --file ./test/Dockerfile --tag $(DOCKER_IMAGE) .
+
+.PHONY: clean deps doc image release test test.bare test.doc test.image test.lint test.unit static-analysis unit-tests build docs
