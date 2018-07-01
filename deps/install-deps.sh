@@ -13,7 +13,7 @@ echo
 
 # check if command is available
 function has() {
-  command "${1}" > /dev/null 2>&1
+  command -v "${1}" > /dev/null 2>&1
 }
 
 # informing user, when we are unaware of how to install a dependency
