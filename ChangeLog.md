@@ -7,6 +7,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+* Support installing modules from GitLab using shorthand
+
 Fixed:
 
 * Reduce noise during installation

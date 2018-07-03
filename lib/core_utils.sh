@@ -107,6 +107,12 @@ function install() {
         "bts" )
           url="git@bitbucket.org:${shorthand}.git"
         ;;
+        "gl" )
+          url="https://gitlab.com/${shorthand}.git"
+        ;;
+        "gls" )
+          url="git@gitlab.com:${shorthand}.git"
+        ;;
       esac
       rm -rf "${tmpdir}"
       mkdir -p "${tmpdir}"
