@@ -7,7 +7,7 @@
 txts="$(ls docs/man/**/*.txt)"
 for txt in ${txts}
 do
-  manpage="$(echo "${txt}" | sed 's/\.txt//')"
+  manpage="dist/$(echo "${txt}" | sed 's/\.txt//')"
   [ -f "${manpage}" ] || {
     echo "ERROR: manpage missing: ${manpage} for ${txt}"
     exit 1

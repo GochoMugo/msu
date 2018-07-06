@@ -62,7 +62,7 @@ test.bare.unit: test/test.*.sh
 # Run tests on documentation in bare-metal mode
 test.bare.doc: doc.bare
 	@echo "**** test.bare.doc"
-	@bash test/misc/docs.sh
+	@bash test/misc/test.docs.sh
 
 
 ### deps
