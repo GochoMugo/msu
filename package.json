@@ -18,7 +18,7 @@
   },
   "main": "lib/msu.sh",
   "bin": {
-    "msu": "lib/msu.sh"
+    "msu": "bin/msu"
   },
   "keywords": [
     "bash",
