@@ -18,7 +18,7 @@ MSU_LOAD_STRING="# loading msu
 . msu require load"
 
 
-function check() {
+function check_dep() {
   command -v "${1}" > /dev/null 2>&1 || {
     echo "\`${1}' is NOT available. It is required for: ${2}" > /dev/stderr
     exit 1
@@ -27,28 +27,28 @@ function check() {
 
 
 function check_deps() {
-  check "bash" "runtime"
-  check "cat" "file reading, stream concat"
-  check "command" "command lookup/execution"
-  check "cp" "file copying"
-  check "cut" "stream cutting"
-  check "dirname" "path manipulation"
-  check "echo" "line printing"
-  check "git" "install, self-upgrade, module-install, metadata gen."
-  check "grep" "regexp matching"
-  check "id" "check user id"
-  check "ln" "symlink creation"
-  check "mkdir" "directory creation"
-  check "mv" "file renaming"
-  check "popd" "pop directory from stack"
-  check "pushd" "push directory onto stack"
-  check "python" "self-upgrade"
-  check "readlink" "handling symlinks"
-  check "rm" "file removal"
-  check "tar" "self-upgrade"
-  check "tput" "formatting styles"
-  check "tr" "character translation"
-  check "wget" "self-upgrade"
+  check_dep "bash" "runtime"
+  check_dep "cat" "file reading, stream concat"
+  check_dep "command" "command lookup/execution"
+  check_dep "cp" "file copying"
+  check_dep "cut" "stream cutting"
+  check_dep "dirname" "path manipulation"
+  check_dep "echo" "line printing"
+  check_dep "git" "install, self-upgrade, module-install, metadata gen."
+  check_dep "grep" "regexp matching"
+  check_dep "id" "check user id"
+  check_dep "ln" "symlink creation"
+  check_dep "mkdir" "directory creation"
+  check_dep "mv" "file renaming"
+  check_dep "popd" "pop directory from stack"
+  check_dep "pushd" "push directory onto stack"
+  check_dep "python" "self-upgrade"
+  check_dep "readlink" "handling symlinks"
+  check_dep "rm" "file removal"
+  check_dep "tar" "self-upgrade"
+  check_dep "tput" "formatting styles"
+  check_dep "tr" "character translation"
+  check_dep "wget" "self-upgrade"
 }
 
 

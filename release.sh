@@ -14,10 +14,6 @@ msu_require "console"
 RELEASE=""
 
 
-log "clean up working directory"
-make clean
-
-
 log "prompting for new version number"
 MSU_VERSION=""
 ask "New version number" MSU_VERSION
@@ -28,26 +24,26 @@ RELEASE=${MSU_VERSION}
 export RELEASE
 
 
-log "run the tests"
-make test
-
-
-log "generating documentation"
-make doc
-
-
 log "creating directory for releases"
-RELEASE_DIR="msu-${MSU_VERSION}"
-RELEASE_TARBALL="msu-${MSU_VERSION}.tar.gz"
-mkdir "${RELEASE_DIR}"
+RELEASE_DIR="releases/v${MSU_VERSION}"
+RELEASE_TARBALL="releases/msu-${MSU_VERSION}.tar.gz"
+rm --force --recursive "${RELEASE_DIR}" "${RELEASE_TARBALL}"
+mkdir --parents "${RELEASE_DIR}"
 
 
 log "copying the contents of the working directory"
-# shellcheck disable=SC2010
-ls \
-  | grep -Ev "deps|get.sh|Makefile|package.json|msu-|release.sh|test" \
-  | xargs -I{} cp -rf {} "${RELEASE_DIR}/"
-rm "${RELEASE_DIR}"/docs/man/**/*.txt
+release_contents=(
+  dist/docs/
+  lib/
+  install.sh
+  CHANGELOG.md
+  LICENSE
+  README.md
+)
+for release_content in "${release_contents[@]}" ; do
+  mkdir --parents "${RELEASE_DIR}/$(dirname "${release_content}")"
+  cp --force --parents --recursive "${release_content}" "${RELEASE_DIR}"
+done
 
 
 log "generating metadata"
@@ -60,11 +56,11 @@ MSU_BUILD_DATE=$(git show -s --format=%ci "${MSU_BUILD_HASH}")
 
 
 log "creating a tarball of the release"
-tar czf "${RELEASE_TARBALL}" "${RELEASE_DIR}/"
+tar --create --gzip --file "${RELEASE_TARBALL}" "${RELEASE_DIR}/"
 
 
 log "creating a new github release"
-hub release create -a ${RELEASE_TARBALL} ${MSU_VERSION}
+hub release create -a ${RELEASE_TARBALL} v${MSU_VERSION}
 
 
 success "New MSU release: v${MSU_VERSION}"

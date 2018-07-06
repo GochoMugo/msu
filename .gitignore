@@ -10,4 +10,4 @@ _test*
 dist/
 
 # release assets
-/msu-*
+releases/

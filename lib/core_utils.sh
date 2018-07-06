@@ -66,7 +66,7 @@ function upgrade() {
     esac
     [ "${status}" -ne 0 ] && exit ${status}
   }
-  wget "https://github.com/GochoMugo/msu/releases/download/${version}/msu-${version}.tar.gz" -q > /dev/null
+  wget "https://github.com/GochoMugo/msu/releases/download/v${version}/msu-${version}.tar.gz" -q > /dev/null
   tar xvf "msu-${version}.tar.gz" > /dev/null 2>&1
   cd "msu-${version}" || {
     error "could not \`cd' into directory with extracted contents"

@@ -117,8 +117,8 @@ doc.bare: clean.doc
 ### release
 
 # Draft release
-release:
-	@./lib/msu.sh execute release.sh
+release: test clean doc
+	@./bin/msu execute release.sh
 
 
 ### clean
@@ -126,9 +126,7 @@ release:
 # Clean up working directory
 clean: clean.doc
 	@echo "**** clean"
-	@rm -rf \
-		lib/tmp_* _test* \
-		msu-*/
+	@rm -rf lib/tmp_* _test*
 
 # Clean up generated docs
 clean.doc:
