@@ -89,12 +89,12 @@ echo "${MANPATH:-}" | grep "${MSU_MAN}" > /dev/null || {
 
 
 # there are cases where manpages are not generated yet
-if [ -f docs/man/man1/msu.1 ] && [ -f docs/man/man3/msu.3 ]
+if [ -f dist/docs/man/man1/msu.1 ] && [ -f dist/docs/man/man3/msu.3 ]
 then
   echo "${MARKER} copying manpages"
   mkdir -p "${MSU_MAN}/man1" "${MSU_MAN}/man3"
-  cp -r docs/man/man1/*.1 "${MSU_MAN}/man1" || true
-  cp -r docs/man/man3/*.3 "${MSU_MAN}/man3" || true
+  cp -r dist/docs/man/man1/*.1 "${MSU_MAN}/man1" || true
+  cp -r dist/docs/man/man3/*.3 "${MSU_MAN}/man3" || true
 fi
 
 
