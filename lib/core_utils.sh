@@ -90,9 +90,11 @@ function install() {
       # requires cloning
       local tmpdir
       local shorthand
+      local version
       local url
       tmpdir="/tmp/.msu.clones"
-      shorthand=$(echo "${dir}" | grep -Eo ":.*" | cut -b 2-)
+      shorthand=$(echo "${dir}" | sed --regexp-extended --expression=s/^.+:\([^\#]+\).*/\\1/)
+      version=$(echo "${dir}" | grep '#' | sed --regexp-extended --expression=s/.+\#\(.+\)$/\\1/)
       remote_mark=$(echo "${remote_mark}" | tr '[:upper:]' '[:lower:]')
       case "${remote_mark}" in
         "gh" )
@@ -117,7 +119,7 @@ function install() {
       rm -rf "${tmpdir}"
       mkdir -p "${tmpdir}"
       pushd "${tmpdir}" > /dev/null || return 1
-      git clone --depth=1 --quiet "${url}"
+      git clone --branch="${version:-master}" --depth=1 --quiet "${url}"
       if [ ! $? ]
       then
         cross "${shorthand}"
@@ -333,4 +335,3 @@ function nuke() {
   # running the nuke script
   bash "${nuke_script}"
 }
-

@@ -82,6 +82,17 @@ function teardown() {
 }
 
 
+@test "\`install' supports versions (git tags)" {
+  MSU_EXTERNAL_LIB="${BATS_TMPDIR}/gl-version"
+  source lib/core_utils.sh
+  samplemodule="GL:GochoMugo/msu-test#v0.0.0"
+  run install "${samplemodule}"
+  [ "${status}" -eq 0 ]
+  echo "${output}" | grep "${sym_tick}"
+  [ -d "${MSU_EXTERNAL_LIB}/msu-test" ]
+}
+
+
 @test "\`install_from_list' installs from a list in a file" {
   MSU_EXTERNAL_LIB="${BATS_TMPDIR}/install-many"
   source lib/core_utils.sh
@@ -225,4 +236,3 @@ function new_mod() {
   [ ! -e "/tmp/nuke_msu" ]
   [ ! -d "/tmp/.msu.clones" ]
 }
-

@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 Added:
 
 * Support installing modules from GitLab using shorthand
+* Support versions (git tags) when installing remote modules
 
 Fixed:
 
