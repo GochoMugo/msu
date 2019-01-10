@@ -33,7 +33,7 @@ has "apt-get" && {
   # we are running our tests on a ubuntu machine
   # we need to ensure our tests does not hang waiting for user input
   APT_FLAGS=
-  if [[ -n "${CI}" ]] ; then APT_FLAGS="-y -qq" ; fi
+  if [[ -n "${CI}" ]] ; then APT_FLAGS="-y -q --install-recommends" ; fi
   echo " >>> updating package index, using apt-get"
   # shellcheck disable=SC2086
   sudo apt-get ${APT_FLAGS} update
