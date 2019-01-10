@@ -72,13 +72,13 @@ function teardown() {
 
 
 @test "\`install' installs from gitlab" {
-  MSU_EXTERNAL_LIB="${BATS_TMPDIR}/gh"
+  MSU_EXTERNAL_LIB="${BATS_TMPDIR}/gl"
   source lib/core_utils.sh
   samplemodule="GL:GochoMugo/msu-test"
   run install "${samplemodule}"
   [ "${status}" -eq 0 ]
   echo "${output}" | grep "${sym_tick}"
-  [ -d "${MSU_EXTERNAL_LIB}/msu" ]
+  [ -d "${MSU_EXTERNAL_LIB}/msu-test" ]
 }
 
 
