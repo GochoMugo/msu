@@ -74,12 +74,19 @@ COMMANDS
       ghs: - from Github, using SSH e.g. 'ghs:GochoMugo/transfer'
       bt: - from Bitbucket, e.g. 'bt:GochoMugo/transfer'
       bts: - from Bitbucket, using SSH e.g. 'bts:GochoMugo/transfer'
+      gl: - for GitLab, e.g. 'gl:GochoMugo/transfer'
+      gls: - for GitLab, using SSH e.g. 'gls:GochoMugo/transfer'
 
     The shorthands are case-insensitive.
 
     If the remote repository is private, SSH should be used instead. This
     allows avoiding being prompted for password and the request being
     rejected in cases where 2FA is enabled for the user.
+
+    You can specify a version, using a git tag. For example,
+    'gh:GochoMugo/transfer#v0.0.0' would fetch the remote module
+    at version 'v0.0.0', provided the git tag ('v0.0.0'; exactly as
+    specified) exists.
 
 *im, install-many* 'PATH'::
     Installs modules listed in a file at path 'PATH'. The list is a

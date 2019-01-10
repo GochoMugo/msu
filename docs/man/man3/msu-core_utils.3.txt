@@ -31,8 +31,12 @@ DESCRIPTION
     `${MSU_EXTERNAL_LIB}`. To install remote modules, we require
     prefix shorthands:
 
-    gh: - for Github repos e.g. GochoMugo/msu
-    bt: - for Bitbucket repos e.g GochoMugo/msu
+    gh:  - for public Github repos
+    ghs: - for private GitHub repos
+    bt:  - for public Bitbucket repos
+    bts: - for private Bitbucket repos
+    gl:  - for public GitLab repos
+    gls: - for private GitLab repos
 
 *install-many('PATH')*::
     Using a file at path 'PATH' containing a '\n'-delimited list of modules,
