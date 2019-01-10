@@ -100,7 +100,7 @@ doc.image_: doc.bare
 	@chown -R ${CHOWN_UID}:${CHOWN_GID} dist/
 
 # Generate documentation in bare-metal mode
-doc.bare: clean.doc
+doc.bare: clean.bare.doc
 	@echo "**** doc.bare"
 	@echo "a2x --doctype manpage --format manpage"
 	@for file in $$(ls docs/man/**/*.txt) ; do \
@@ -117,20 +117,31 @@ doc.bare: clean.doc
 ### release
 
 # Draft release
-release: test clean doc
+release: test clean.bare doc
 	@./bin/msu execute release.sh
 
 
 ### clean
 
-# Clean up working directory
-clean: clean.doc
-	@echo "**** clean"
+# Clean up
+clean: clean.image
+
+# Clean up docker image
+clean.image:
+	@echo "**** clean.image"
+	@docker rmi --force $(DOCKER_IMAGE)
+
+# Clean up in bare-metal mode
+clean.bare: clean.bare.test clean.bare.doc
+
+# Clean up working directory of test outputs
+clean.bare.test:
+	@echo "**** clean.bare.test"
 	@rm -rf lib/tmp_* _test*
 
 # Clean up generated docs
-clean.doc:
-	@echo "**** clean.doc"
+clean.bare.doc:
+	@echo "**** clean.bare.doc"
 	@rm -rf dist/docs
 
 
@@ -143,7 +154,7 @@ image:
 
 
 .PHONY: \
-	clean clean.doc \
+	clean clean.bare clean.bare.doc clean.bare.test clean.image \
 	deps \
 	doc doc.bare doc.image \
 	image \
