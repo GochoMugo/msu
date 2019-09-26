@@ -37,47 +37,17 @@ has "apt-get" && {
   echo " >>> updating package index, using apt-get"
   # shellcheck disable=SC2086
   sudo apt-get ${APT_FLAGS} update
-  echo " >>> installing asciidoc, cabal-install, using apt-get"
+  echo " >>> installing asciidoc, shellcheck, using apt-get"
   # shellcheck disable=SC2086
-  sudo apt-get install ${APT_FLAGS} asciidoc cabal-install
+  sudo apt-get install ${APT_FLAGS} asciidoc shellcheck
   missing_stub "apt-get" "hub"
   exit
 }
 
-
-# Fedora
-has "yum" && {
-  echo " >>> updating package index, using yum"
-  sudo yum update
-  echo " >>> installing cabal-install, using yum"
-  sudo yum install cabal-install
-  missing_stub "yum" "a2x" "hub"
-  exit
-}
-
-
-# openSUSE:Tumbleweed
-has "zypper" && {
-  echo " >>> installing cabal-install, using zypper"
-  sudo zypper in cabal-install
-  missing_stub "zypper" "a2x" "hub"
-  exit
-}
-
-
 # Mac OS X with homebrew
 has "brew" && {
-  echo " >>> installing cabal-install, using zypper"
-  brew install cabal-install
+  echo " >>> installing shellcheck, using zypper"
+  brew install shellcheck
   missing_stub "brew" "a2x" "hub"
-  exit
-}
-
-
-# Mac OS X with MacPorts
-has "port" && {
-  echo " >>> installing hs-cabal-install, using port"
-  port install hs-cabal-install
-  missing_stub "port" "a2x" "hub"
   exit
 }

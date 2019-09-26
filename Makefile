@@ -51,7 +51,7 @@ test.bare: test.bare.lint test.bare.unit test.bare.doc
 # Run linting tests in bare-metal mode
 test.bare.lint: ./*.sh lib/*.sh
 	@echo "**** test.bare.lint"
-	@PATH="${HOME}/.cabal/bin:${PATH}" shellcheck $?
+	@shellcheck $?
 
 # Run unit tests in bare-metal mode
 test.bare.unit: test/test.*.sh
@@ -70,10 +70,6 @@ test.bare.doc: doc.bare
 # Install dependencies
 deps:
 	./deps/install-deps.sh
-	@echo ' >>> updating package index, using cabal'
-	cabal update --verbose=0
-	@echo ' >>> installing shellcheck, using cabal'
-	cabal install shellcheck
 	@echo ' >>> installing bats, using git submodule'
 	git submodule init
 	git submodule update
