@@ -1,5 +1,10 @@
 sudo: required
-dist: xenial
+matrix:
+  include:
+    - os: linux
+      dist: xenial
+    - os: osx
+      osx_image: xcode10.2
 language: go
 go:
   - 1.3
