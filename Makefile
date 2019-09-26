@@ -102,7 +102,8 @@ doc.bare: clean.bare.doc
 	@for file in $$(ls docs/man/**/*.txt) ; do \
 		echo " $${file}" ; \
 		mkdir -p "dist/$$(dirname $${file})" ; \
-		a2x \
+		command -v brew > /dev/null && xml_env="XML_CATALOG_FILES=$$(brew --prefix)/etc/xml/catalog" ; \
+		"$${xml_env}" a2x \
 			--destination-dir "dist/$$(dirname $${file})" \
 		  --doctype manpage \
 			--format manpage \

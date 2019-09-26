@@ -44,10 +44,10 @@ has "apt-get" && {
   exit
 }
 
-# Mac OS X with homebrew
+# Mac OSX, with homebrew
 has "brew" && {
-  echo " >>> installing shellcheck, using zypper"
-  brew install shellcheck
-  missing_stub "brew" "a2x" "hub"
+  echo " >>> installing asciidoc, shellcheck, using zypper"
+  brew install asciidoc shellcheck
+  missing_stub "brew" "hub"
   exit
 }
