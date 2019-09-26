@@ -103,7 +103,7 @@ doc.bare: clean.bare.doc
 		echo " $${file}" ; \
 		mkdir -p "dist/$$(dirname $${file})" ; \
 		command -v brew > /dev/null && xml_env="XML_CATALOG_FILES=$$(brew --prefix)/etc/xml/catalog" ; \
-		"$${xml_env}" a2x \
+		$${xml_env} a2x \
 			--destination-dir "dist/$$(dirname $${file})" \
 		  --doctype manpage \
 			--format manpage \
