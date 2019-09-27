@@ -6,13 +6,13 @@
   msu_ln="${BATS_TMPDIR}/msu"
   ln -sf "${PWD}/lib/msu.sh" "${msu_ln}"
   . "${msu_ln}"
-  [ "$(readlink -f ${MSU_LIB})" == "$(readlink -f ${PWD}/lib)" ]
+  [ "$(greadlink -f ${MSU_LIB})" == "$(greadlink -f ${PWD}/lib)" ]
 }
 
 
 @test "\`msu' sets \${MSU_LIB} to library, if executed directly" {
   . ./lib/msu.sh
-  [ "$(readlink -f ${MSU_LIB})" == "$(readlink -f ${PWD}/lib)" ]
+  [ "$(greadlink -f ${MSU_LIB})" == "$(greadlink -f ${PWD}/lib)" ]
 }
 
 

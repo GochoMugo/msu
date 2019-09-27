@@ -8,7 +8,7 @@
 
 
 MSU_EXE="${BASH_SOURCE[0]}"
-MSU_REAL_EXE=$(readlink -f "${MSU_EXE}")
+MSU_REAL_EXE=$(greadlink -f "${MSU_EXE}")
 MSU_LIB=$(dirname "${MSU_REAL_EXE}") # directory holding our library
 export MSU_EXE
 export MSU_LIB
@@ -108,7 +108,7 @@ case "${1:-''}" in
     # maybe, we are being used in a shebang e.g. #!/usr/bin/env msu
     if [ "${1}" ]
     then
-        FILE="$(readlink -f "${1}" 2> /dev/null)"
+        FILE="$(greadlink -f "${1}" 2> /dev/null)"
         if [ -r "${FILE}" ]
         then
             msu_execute "${FILE}" "${@:2}"

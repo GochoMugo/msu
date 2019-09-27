@@ -37,17 +37,17 @@ has "apt-get" && {
   echo " >>> updating package index, using apt-get"
   # shellcheck disable=SC2086
   sudo apt-get ${APT_FLAGS} update
-  echo " >>> installing asciidoc, shellcheck, using apt-get"
+  echo " >>> installing (asciidoc, coreutils, shellcheck) using apt-get"
   # shellcheck disable=SC2086
-  sudo apt-get install ${APT_FLAGS} asciidoc shellcheck
+  sudo apt-get install ${APT_FLAGS} asciidoc coreutils shellcheck
   missing_stub "apt-get" "hub"
   exit
 }
 
 # Mac OSX, with homebrew
 has "brew" && {
-  echo " >>> installing asciidoc, shellcheck, using zypper"
-  brew install asciidoc shellcheck
+  echo " >>> installing (asciidoc, coreutils, shellcheck) using zypper"
+  brew install asciidoc coreutils shellcheck
   missing_stub "brew" "hub"
   exit
 }

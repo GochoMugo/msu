@@ -84,9 +84,9 @@ function teardown() {
 
 @test "links executable in path to that in library" {
   ./install.sh
-  local realpath=$(readlink ~/bin/msu)
+  local realpath=$(greadlink ~/bin/msu)
   [ -x ~/bin/msu ]
-  [ "${realpath}" == "$(readlink -f ~/lib/msu/msu.sh)" ]
+  [ "${realpath}" == "$(greadlink -f ~/lib/msu/msu.sh)" ]
 }
 
 
