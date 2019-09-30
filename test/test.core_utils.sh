@@ -43,7 +43,7 @@ function teardown() {
   rm -rf "${MSU_EXTERNAL_LIB}/mod1" "${MSU_EXTERNAL_LIB}/mod2"
   run install "${mod1}" "${mod2}"
   [ "${status}" -eq 0 ]
-  echo "${output}" | grep "${sym_tick:-tick}"
+  echo "${output}" | grep "${sym_tick}"
   [ -d "${MSU_EXTERNAL_LIB}"/mod1 ]
   [ -d "${MSU_EXTERNAL_LIB}"/mod2 ]
 }
@@ -55,6 +55,7 @@ function teardown() {
   samplemodule="GH:GochoMugo/msu"
   run install "${samplemodule}"
   [ "${status}" -eq 0 ]
+  echo "${output}"
   echo "${output}" | grep "${sym_tick}"
   [ -d "${MSU_EXTERNAL_LIB}/msu" ]
 }
