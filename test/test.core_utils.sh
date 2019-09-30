@@ -43,8 +43,7 @@ function teardown() {
   rm -rf "${MSU_EXTERNAL_LIB}/mod1" "${MSU_EXTERNAL_LIB}/mod2"
   run install "${mod1}" "${mod2}"
   [ "${status}" -eq 0 ]
-  echo "${output}"
-  echo "${output}" | grep "${sym_tick}"
+  echo "${output}" | grep "${sym_tick:-tick}"
   [ -d "${MSU_EXTERNAL_LIB}"/mod1 ]
   [ -d "${MSU_EXTERNAL_LIB}"/mod2 ]
 }
