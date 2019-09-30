@@ -16,6 +16,14 @@ msu_require "metadata"
   DEPS="git"
 }
 
+function msu__sed() {
+  if [[ "${OSTYPE}" == "darwin"* ]] ; then
+    eval "${1}=$(echo "${2}" | sed -E -e "s${3}")"
+  else
+    eval "${1}=$(echo "${2}" | sed --regexp-extended --expression="s${3}")"
+  fi
+}
+
 # upgrade myself
 function upgrade() {
   log "upgrading myself"

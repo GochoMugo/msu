@@ -14,14 +14,6 @@ function msu__readlink() {
   fi
 }
 
-function msu__sed() {
-  if [[ "${OSTYPE}" == "darwin"* ]] ; then
-    eval "${1}=$(echo "${2}" | sed -E -e "s${3}")"
-  else
-    eval "${1}=$(echo "${2}" | sed --regexp-extended --expression="s${3}")"
-  fi
-}
-
 
 MSU_EXE="${BASH_SOURCE[0]}"
 msu__readlink MSU_REAL_EXE -f "${MSU_EXE}"

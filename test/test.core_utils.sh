@@ -55,7 +55,6 @@ function teardown() {
   samplemodule="GH:GochoMugo/msu"
   run install "${samplemodule}"
   [ "${status}" -eq 0 ]
-  echo "${output}"
   echo "${output}" | grep "${sym_tick}"
   [ -d "${MSU_EXTERNAL_LIB}/msu" ]
 }
