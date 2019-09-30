@@ -35,7 +35,9 @@ function check_deps() {
   check_dep "dirname" "path manipulation"
   check_dep "echo" "line printing"
   check_dep "git" "install, self-upgrade, module-install, metadata gen."
-  check_dep "greadlink" "handling symlinks"
+  if [[ "${OSTYPE}" == "darwin"* ]] ; then
+    check_dep "greadlink" "handling symlinks"
+  fi
   check_dep "grep" "regexp matching"
   check_dep "id" "check user id"
   check_dep "ln" "symlink creation"
@@ -44,6 +46,9 @@ function check_deps() {
   check_dep "popd" "pop directory from stack"
   check_dep "pushd" "push directory onto stack"
   check_dep "python" "self-upgrade"
+  if [[ "${OSTYPE}" == "linux-gnu" ]] ; then
+    check_dep "readlink" "handling symlinks"
+  fi
   check_dep "rm" "file removal"
   check_dep "tar" "self-upgrade"
   check_dep "tput" "formatting styles"

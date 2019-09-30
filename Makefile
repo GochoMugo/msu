@@ -57,7 +57,11 @@ test.bare.lint: ./*.sh lib/*.sh
 test.bare.unit: test/test.*.sh
 	@make doc.bare
 	@echo "**** test.bare.unit"
-	@./deps/bats/bin/bats $?
+	@if ! command -v greadlink ; then \
+		mkdir -p test/bin ; \
+		ln -sf $((which readlink)) test/bin/greadlink ; \
+	fi
+	@PATH=$$(pwd)/test/bin:$${PATH} ./deps/bats/bin/bats $?
 
 # Run tests on documentation in bare-metal mode
 test.bare.doc: doc.bare
