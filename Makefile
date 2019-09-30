@@ -59,7 +59,7 @@ test.bare.unit: test/test.*.sh
 	@echo "**** test.bare.unit"
 	@if ! command -v greadlink ; then \
 		mkdir -p test/bin ; \
-		ln -sf $((which readlink)) test/bin/greadlink ; \
+		ln -sf $$(which readlink) test/bin/greadlink ; \
 	fi
 	@PATH=$$(pwd)/test/bin:$${PATH} ./deps/bats/bin/bats $?
 
