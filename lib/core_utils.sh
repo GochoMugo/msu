@@ -93,8 +93,8 @@ function install() {
       local version
       local url
       tmpdir="/tmp/.msu.clones"
-      shorthand=$(echo "${dir}" | sed --regexp-extended --expression=s/^.+:\([^\#]+\).*/\\1/)
-      version=$(echo "${dir}" | grep '#' | sed --regexp-extended --expression=s/.+\#\(.+\)$/\\1/)
+      msu__sed shorthand "${dir}" "/^.+:([^#]+).*/\1/"
+      msu__sed version "$(echo "${dir}" | grep '#')" "/.+#(.+)$/\1/"
       remote_mark=$(echo "${remote_mark}" | tr '[:upper:]' '[:lower:]')
       case "${remote_mark}" in
         "gh" )

@@ -6,9 +6,25 @@
 
 #set -e errexit
 
+function msu__readlink() {
+  if [[ "${OSTYPE}" == "darwin"* ]] ; then
+    eval "${1}=$(greadlink ${@:2})"
+  else
+    eval "${1}=$(readlink ${@:2})"
+  fi
+}
+
+function msu__sed() {
+  if [[ "${OSTYPE}" == "darwin"* ]] ; then
+    eval "${1}=$(echo "${2}" | sed -E -e s${3})"
+  else
+    eval "${1}=$(echo "${2}" | sed --regexp-extended --expression=s${3})"
+  fi
+}
+
 
 MSU_EXE="${BASH_SOURCE[0]}"
-MSU_REAL_EXE=$(greadlink -f "${MSU_EXE}")
+msu__readlink MSU_REAL_EXE -f "${MSU_EXE}"
 MSU_LIB=$(dirname "${MSU_REAL_EXE}") # directory holding our library
 export MSU_EXE
 export MSU_LIB
@@ -108,7 +124,7 @@ case "${1:-''}" in
     # maybe, we are being used in a shebang e.g. #!/usr/bin/env msu
     if [ "${1}" ]
     then
-        FILE="$(greadlink -f "${1}" 2> /dev/null)"
+        msu__readlink FILE -f "${1}"
         if [ -r "${FILE}" ]
         then
             msu_execute "${FILE}" "${@:2}"
