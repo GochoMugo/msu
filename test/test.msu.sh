@@ -17,7 +17,7 @@
 
 
 @test "\`msu require' loads a module" {
-  [ ! "$(command -v log)" ]
+  [ ! "$(command -v success)" ]
   . ./lib/msu.sh require console
   command -v log
   command -v success
