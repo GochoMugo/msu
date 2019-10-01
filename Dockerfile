@@ -6,7 +6,7 @@ WORKDIR ${WORKDIR}
 VOLUME ${WORKDIR}/dist/
 
 RUN apt-get -y update && \
-    apt-get -y install asciidoc coreutils git make shellcheck sudo wget
+    apt-get -y install asciidoc git make shellcheck sudo wget
 
 ENV BATS_VERSION v0.4.0
 RUN mkdir ${WORKDIR}/deps && \

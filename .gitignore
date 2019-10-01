@@ -2,6 +2,7 @@
 try.sh
 lib/tmp_
 _test*
+test/bin/
 
 # swap/tmp files from vim
 *.swp
