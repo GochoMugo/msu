@@ -135,7 +135,7 @@ function install() {
       if [ "${dir}" == "." ] ; then dir="${PWD}" ; fi
       module_name="$(basename "${dir}")"
       rm -rf "${MSU_EXTERNAL_LIB:-'.'}/${module_name}"
-      cp -rf "${dir}" "${MSU_EXTERNAL_LIB}" > /dev/null
+      cp -rf "${module_name}" "${MSU_EXTERNAL_LIB}" > /dev/null
       if [ $? -eq 0 ] ; then
         generate_metadata "${module_name}"
         tick "${module_name}"
