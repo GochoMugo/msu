@@ -1,6 +1,6 @@
-MSU(3)
-======
-:doctype: manpage
+% msu(3)
+%
+% November 2025
 
 
 NAME
@@ -15,36 +15,42 @@ It documents the internal modules msu(1) ships with.
 
 Conventions used when documenting symbols:
 
-*`${VARIABLE}`*::
-    Represents the variable with the name 'VARIABLE'. This is used for
-    both bash and environment variables, such as `${MSU_EXTERNAL_LIB}`.
+*`${VARIABLE}`*
 
-*function_name(parameter1...)*::
-    Represents the function with the name 'function_name' and formal
-    parameters 'parameter1'.... Do remember that invoking the function
-    is done by 'function_name "parameter 1"'.
+   > Represents the variable with the name 'VARIABLE'. This is used for
+   both bash and environment variables, such as `${MSU_EXTERNAL_LIB}`.
+
+*function_name(parameter1...)*
+
+   > Represents the function with the name 'function_name' and formal
+   parameters 'parameter1'.... Do remember that invoking the function
+   is done by 'function_name "parameter 1"'.
 
 
 DESCRIPTION
 -----------
 This documentation is on internal msu(3) modules. These modules include:
 
-*core*::
-    The most low-level module in charge of getting msu get  off the ground.
-    See *msu-core(3)*.
+*core*
 
-*core_utils*::
-    Utilties that make msu more useful and manageable to use. These utilities
-    help build up the msu ecosystem. See *msu-core_utils(3)*.
+   > The most low-level module in charge of getting msu get  off the ground.
+   See *msu-core(3)*.
 
-*console*::
-    Reading and writing to console/terminal. Function include logging and
-    prompting user for input. They facilitate interaction between user and msu.
-    See *msu-console(3)*.
+*core_utils*
 
-*format*::
-    Formatting symbols useful in terminal output. Such symbols include ticks
-    and arrows. See *msu-format(3)*.
+   > Utilities that make msu more useful and manageable to use. These utilities
+   help build up the msu ecosystem. See *msu-core_utils(3)*.
+
+*console*
+
+   > Reading and writing to console/terminal. Function include logging and
+   prompting user for input. They facilitate interaction between user and msu.
+   See *msu-console(3)*.
+
+*format*
+
+   > Formatting symbols useful in terminal output. Such symbols include ticks
+   and arrows. See *msu-format(3)*.
 
 
 MODULES
@@ -66,41 +72,41 @@ module contents to the external library directory (`${MSU_EXTERNAL_LIB}`).
 You can also install remote modules from github, using prefix shorthands.
 Available shorthands include:
 
-  gh: - for Github
-  bt: - for Bitbucket
+   > * gh: - for Github
+   * bt: - for Bitbucket
 
 For example if https://github.com/GochoMugo/submarine is a module you want
 to install:
 
     $ msu install gh:GochoMugo/submarine
 
-'NOTE:' the prefix shorthand, `gh:` part, is case-insensitive.
+**NOTE:** the prefix shorthand, `gh:` part, is case-insensitive.
 
 Internal modules *always* take precedence over external modules.
 
 A valid module can be a single script, say `sample.sh`, or a directory
 with many scripts, say
 
-....
+```
 my-module/
 |-- aliases.sh  # place your aliases here
 |-- script.sh
 `-- inner-dir
     |-- script.sh
     `-- another-script.sh
-....
+```
 
-'NOTE:' Nested directories are allowed.
+**NOTE:** Nested directories are allowed.
 
 A valid module filename has the extension *.sh* and has no *.* (dot)
 except that preceding the extension.
 
 Examples:
 
-* `foobar.sh` - valid
-* `foo-bar.sh` - valid
-* `foo_bar.sh` - valid
-* `foo.bar.sh` - *invalid*
+   > * `foobar.sh` - valid
+   * `foo-bar.sh` - valid
+   * `foo_bar.sh` - valid
+   * `foo.bar.sh` - *invalid*
 
 
 DEPENDENCIES
@@ -128,7 +134,7 @@ loaded after the internal module ones.
 A top-most aliases file at `${MSU_EXTERNAL_LIB}/aliases.sh` can be used to
 override any other aliases as it is loaded last.
 
-    A sample aliases file:
+A sample aliases file:
 
     alias my-alias="msu run my-module.func"
     alias another-alias="msu run my-module.another_func"
@@ -137,7 +143,7 @@ override any other aliases as it is loaded last.
 the same name. `msu` has no way to detect this. The best way to avoid this
 is to use a short prefix in front of your aliases.
 
-    For example:
+For example:
 
     alias pr.dance='msu run prior.module.dance'
 
@@ -158,4 +164,4 @@ COPYING
 -------
 THE MIT LICENSE (MIT)
 
-Copyright \(C) 2015-2016 Gocho Mugo <mugo@forfuture.co.ke>
+Copyright \(C) 2015-2016 Gocho Mugo \<mugo@forfuture.co.ke>

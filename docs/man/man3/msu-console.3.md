@@ -1,0 +1,92 @@
+% msu-console(3)
+%
+% November 2025
+
+
+NAME
+----
+msu-console - interacting with the user through the console/terminal.
+
+
+SYNOPSIS
+--------
+The primary use of this module is for console operations, such as logging
+and prompting user for input.
+
+    msu_require "console"
+
+
+DESCRIPTION
+-----------
+*write_text('TEXT' [, 'COLOR_INDEX'=0])*
+
+   > Writes the text 'TEXT' to the console using the coloer indexed with the
+   > index 'COLOR_INDEX'.
+
+   > The color indices:
+
+      0 - blue
+      1 - green
+      2 - red
+
+*log(['MESSAGE']...)*
+
+   > Writes the messages 'MESSAGE'... to stdout, usually in blue color. This is
+   used for normal informational messages.
+
+*success(['MESSAGE']...)*
+
+   > Writes the messages 'MESSAGE'..., usually in green color. This is used
+   for success messages.
+
+*error(['MESSAGE']...)*
+
+   > Writes the messages 'MESSAGE'..., usually in red color. This is used for
+   error messages.
+
+*tick(['LABEL'])*
+
+   > Writes the label 'LABEL' using the green color and a tick prefixing it.
+
+*cross(['LABEL'])*
+
+   > Writes the label 'LABEL' using the red color and a cross prefixing it.
+
+*list(['LABEL'])*
+
+   > Writes the label 'LABEL' using the blue color and a right-arrow prefixing
+   it.
+
+*ask('QUESTION', 'DESTINATION_VARIABLE' [, 'CLEAR'=0])*
+
+   > Asks the question 'QUESTION' to the user. The answer is assigned to the
+   variable 'DESTINATION_VARIABLE'. If 'CLEAR' is set to 1, the input is
+   hidden, as in the manner of a password. Otherwise, the text is show
+   plainly.
+
+*yes_no('QUESTION' [, 'DEFAULT'="N"])*
+
+   > Asks the yes/no questions 'QUESTION' to the user. Returns 0 for a
+   YES and 1 for a NO. If default is set to "Y", then Yes will be the
+   default answer. Otherwise, defaults to No. If the variable
+   `${MSU_ASSUME_YES}` has a non-zero length, YES is assumed, without
+   asking the question.
+
+
+RESOURCES
+---------
+Source code: https://github.com/GochoMugo/msu
+
+Issue tracker: https://github.com/GochoMugo/msu/issues
+
+
+AUTHOR
+------
+*msu* is developed and maintained by Gocho Mugo.
+
+
+COPYING
+-------
+THE MIT LICENSE (MIT)
+
+Copyright \(C) 2015-2016 Gocho Mugo \<mugo@forfuture.co.ke>
