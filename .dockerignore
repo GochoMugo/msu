@@ -1,8 +1,0 @@
-#.git/
-deps/
-dist/
-releases/
-.editorconfig
-.gitignore
-.gitmodules
-.travis.yml
