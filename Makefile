@@ -3,162 +3,85 @@
 # Copyright (c) 2015 Gocho Mugo <mugo@forfuture.co.ke>
 # Licensed under the MIT License
 
-# Image tag
-DOCKER_IMAGE=gochomugo/msu:dev
+# Show this help information.
+help:
+	@echo
+	@echo "  clean			Clean up"
+	@echo "  clean.doc		Clean up generated documentation"
+	@echo "  clean.test		Clean up test outputs"
+	@echo "  deps			Install dependencies using homebrew"
+	@echo "  doc			Generate documentation"
+	@echo "  help			Show this help information"
+	@echo "  release		Draft new release"
+	@echo "  test			Run all tests"
+	@echo "  test.doc		Run tests on documentation"
+	@echo "  test.lint		Run linting tests"
+	@echo "  test.unit		Run unit tests"
+	@echo
 
+# Clean up.
+clean: clean.test clean.doc
 
-### test
+# Clean up generated documentation.
+clean.doc:
+	@echo "**** clean.doc"
+	@rm -rf dist/docs
 
-# Run tests (DEFAULT, alias: test.image)
-test: image test.image
-
-# Run linting tests (alias: test.image.lint)
-test.lint: image test.image.lint
-
-# Run unit tests (alias: test.image.unit)
-test.unit: image test.image.unit
-
-# Run tests on documentation (alias: test.image.doc)
-test.doc: image test.image.doc
-
-
-### test.image
-
-# Run tests in container
-test.image: test.image.lint test.image.unit test.image.doc
-
-# Run linting tests in container
-test.image.lint:
-	@echo "**** test.image.lint"
-	@docker run --rm --tty $(DOCKER_IMAGE) make test.bare.lint
-
-# Run unit tests in container
-test.image.unit:
-	@echo "**** test.image.unit"
-	@docker run --rm --tty $(DOCKER_IMAGE) make test.bare.unit
-
-# Run tests on documentation in bare-metal mode
-test.image.doc:
-	@echo "**** test.image.doc"
-	@docker run --rm --tty $(DOCKER_IMAGE) make test.bare.doc
-
-
-### test.bare
-
-# Run tests in bare-metal mode
-test.bare: test.bare.lint test.bare.unit test.bare.doc
-
-# Run linting tests in bare-metal mode
-test.bare.lint: ./*.sh lib/*.sh
-	@echo "**** test.bare.lint"
-	@PATH="${HOME}/.cabal/bin:${PATH}" shellcheck $?
-
-# Run unit tests in bare-metal mode
-test.bare.unit: test/test.*.sh
-	@make doc.bare
-	@echo "**** test.bare.unit"
-	@./deps/bats/bin/bats $?
-
-# Run tests on documentation in bare-metal mode
-test.bare.doc: doc.bare
-	@echo "**** test.bare.doc"
-	@bash test/misc/test.docs.sh
-
-
-### deps
+# Clean up test outputs.
+clean.test:
+	@echo "**** clean.test"
+	@rm -rf lib/tmp_* _test*
 
 # Install dependencies
 deps:
-	./deps/install-deps.sh
-	@echo ' >>> updating package index, using cabal'
-	cabal update --verbose=0
-	@echo ' >>> installing shellcheck, using cabal'
-	cabal install shellcheck
-	@echo ' >>> installing bats, using git submodule'
-	git submodule init
-	git submodule update
+	@echo "**** installing bats using brew"
+	@brew install bats-core
+	@echo "**** installing hub using brew"
+	@brew install hub
+	@echo "**** installing pandoc using brew"
+	@brew install pandoc
+	@echo "**** installing shellcheck using brew"
+	@brew install shellcheck
 
-
-### doc
-
-# Generate documentation (alias: doc.image)
-doc: doc.image
-
-# Generate documentation in container
-doc.image:
-	@echo "**** doc.image"
-	@mkdir -p dist/
-	@docker run \
-		--env CHOWN_UID=$$(id --user) \
-		--env CHOWN_GID=$$(id --group) \
-		--rm \
-		--tty \
-		--volume $$(pwd)/dist:/opt/gochomugo/msu/dist \
-		$(DOCKER_IMAGE) \
-		make doc.image_
-doc.image_: doc.bare
-	@chown -R ${CHOWN_UID}:${CHOWN_GID} dist/
-
-# Generate documentation in bare-metal mode
-doc.bare: clean.bare.doc
-	@echo "**** doc.bare"
+# Generate documentation
+doc: clean.doc
+	@echo "**** doc"
 	@echo "a2x --doctype manpage --format manpage"
-	@for file in $$(ls docs/man/**/*.txt) ; do \
+	@for file in $$(ls docs/man/**/*.md) ; do \
 		echo " $${file}" ; \
 		mkdir -p "dist/$$(dirname $${file})" ; \
-		a2x \
-			--destination-dir "dist/$$(dirname $${file})" \
-		  --doctype manpage \
-			--format manpage \
-			$${file} ; \
+		pandoc \
+			$${file} -s -t man \
+			-o "dist/$$(dirname $${file})/$$(basename $${file} .md)" ; \
 	done
 
-
-### release
-
-# Draft release
-release: test clean.bare doc
+# Draft new release.
+release: test clean doc
 	@./bin/msu execute release.sh
 
+# Run all tests.
+test: test.lint test.unit test.doc
 
-### clean
+# Run tests on documentation.
+test.doc: doc
+	@echo "**** test.doc"
+	@bash test/misc/test.docs.sh
 
-# Clean up
-clean: clean.image
+# Run linting tests.
+test.lint: ./*.sh lib/*.sh
+	@echo "**** test.lint"
+	@shellcheck $?
 
-# Clean up docker image
-clean.image:
-	@echo "**** clean.image"
-	@docker rmi --force $(DOCKER_IMAGE)
-
-# Clean up in bare-metal mode
-clean.bare: clean.bare.test clean.bare.doc
-
-# Clean up working directory of test outputs
-clean.bare.test:
-	@echo "**** clean.bare.test"
-	@rm -rf lib/tmp_* _test*
-
-# Clean up generated docs
-clean.bare.doc:
-	@echo "**** clean.bare.doc"
-	@rm -rf dist/docs
-
-
-### image
-
-# Build image; usually for testing or building docs.
-image:
-	@echo "**** image"
-	@docker build --tag $(DOCKER_IMAGE) .
-
+# Run unit tests.
+test.unit: test/test.*.sh
+	@make doc
+	@echo "**** test.unit"
+	@bats $?
 
 .PHONY: \
-	clean clean.bare clean.bare.doc clean.bare.test clean.image \
+	clean clean.doc clean.test \
 	deps \
-	doc doc.bare doc.image \
-	image \
+	doc \
+	help \
 	release \
-	test test.lint test.unit \
-	test.bare test.bare.lint test.bare.unit \
-	test.image test.image.lint test.image.unit
+	test test.doc test.lint test.unit
