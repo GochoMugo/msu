@@ -6,7 +6,7 @@ set -o errexit
 set -o nounset
 
 
-BASHRC="${HOME}/.bashrc"
+BASHRC="${BASHRC:-${HOME}/.bashrc}"
 BIN="${BIN:-${HOME}/bin}"
 LIB="${LIB:-${HOME}/lib}"
 MAN="${MAN:-${HOME}/share/man}"

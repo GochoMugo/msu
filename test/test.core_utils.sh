@@ -267,17 +267,18 @@ function new_mod() {
 
 
 @test "\`nuke' nukes msu entirely" {
+  BASHRC="${BATS_TMPDIR}/.bashrc"
   LIB="${BATS_TMPDIR}/nuke-lib"
   BIN="${BATS_TMPDIR}/nuke-bin"
   MAN="${BATS_TMPDIR}/nuke-man"
-  LIB="${LIB}" BIN="${BIN}" MAN="${MAN}" ./install.sh
+  BASHRC="${BASHRC}" LIB="${LIB}" BIN="${BIN}" MAN="${MAN}" ./install.sh
   MSU_ASSUME_YES="yes" "${BIN}/msu" nuke
   [ ! -d "${LIB}/msu" ]
   [ ! -e "${BIN}/msu" ]
   [ ! -e "${MAN}/man1/msu.1" ]
   [ ! -e "${MAN}/man3/msu.3" ]
-  ! grep "${MSU_LOAD_STRING}" ~/.bashrc
-  ! grep "# added by msu" ~/.bashrc
+  ! grep "${MSU_LOAD_STRING}" "${BASHRC}"
+  ! grep "# added by msu" "${BASHRC}"
   [ ! -d "/tmp/msu" ]
   [ ! -e "/tmp/nuke_msu" ]
   [ ! -d "/tmp/.msu.clones" ]

@@ -28,6 +28,14 @@ function teardown() {
 }
 
 
+@test "uses \${BASHRC} to set path to .bashrc file" {
+  local bashrc="${BATS_TMPDIR}/.bashrc"
+  echo > "${bashrc}"
+  BASHRC="${bashrc}" ./install.sh
+  grep "loading msu" "${bashrc}"
+}
+
+
 @test "uses \${LIB} to prefix destination directory for library" {
   local lib="${BATS_TMPDIR}/some-lib"
   rm -rf "${lib}/msu"
