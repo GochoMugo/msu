@@ -29,6 +29,29 @@ function teardown() {
 }
 
 
+@test "\`get_latest_version' returns the latest version of msu" {
+  get_latest_version | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$'
+}
+
+
+@test "\`get_major_version' returns the major part of a semver version" {
+  [[ "$(get_major_version 1.2.3)" == 1 ]]
+  [[ "$(get_major_version 12.23.34)" == 12 ]]
+}
+
+
+@test "\`get_minor_version' returns the minor part of a semver version" {
+  [[ "$(get_minor_version 1.2.3)" == 2 ]]
+  [[ "$(get_minor_version 12.23.34)" == 23 ]]
+}
+
+
+@test "\`get_patch_version' returns the major part of a semver version" {
+  [[ "$(get_patch_version 1.2.3)" == 3 ]]
+  [[ "$(get_patch_version 12.23.34)" == 34 ]]
+}
+
+
 @test "\`upgrade' runs upgrade" {
   skip
 }
@@ -102,6 +125,29 @@ function teardown() {
   [ "${status}" -eq 0 ]
   echo "${output}" | grep "${sym_tick}"
   [ -d "${MSU_EXTERNAL_LIB}/msu" ]
+}
+
+
+@test "\`is_semver_gt' compares 2 versions correctly" {
+  [[ $(is_semver_gt 0.0.1 0.0.0) == 0 ]]
+  [[ $(is_semver_gt 0.1.0 0.0.0) == 0 ]]
+  [[ $(is_semver_gt 1.0.0 0.0.0) == 0 ]]
+  [[ $(is_semver_gt 0.1.0 0.0.1) == 0 ]]
+  [[ $(is_semver_gt 0.1.1 0.1.0) == 0 ]]
+  [[ $(is_semver_gt 1.0.0 0.1.0) == 0 ]]
+  [[ $(is_semver_gt 1.0.1 1.0.0) == 0 ]]
+  [[ $(is_semver_gt 1.1.0 1.0.1) == 0 ]]
+  [[ $(is_semver_gt 1.1.1 1.1.0) == 0 ]]
+
+  [[ $(is_semver_gt 0.0.0 0.0.1) == 1 ]]
+  [[ $(is_semver_gt 0.0.0 0.1.0) == 1 ]]
+  [[ $(is_semver_gt 0.0.0 1.0.0) == 1 ]]
+  [[ $(is_semver_gt 0.0.1 0.1.0) == 1 ]]
+  [[ $(is_semver_gt 0.1.0 0.1.1) == 1 ]]
+  [[ $(is_semver_gt 0.1.0 1.0.0) == 1 ]]
+  [[ $(is_semver_gt 1.0.0 1.0.1) == 1 ]]
+  [[ $(is_semver_gt 1.0.1 1.1.0) == 1 ]]
+  [[ $(is_semver_gt 1.1.0 1.1.1) == 1 ]]
 }
 
 

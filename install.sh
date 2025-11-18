@@ -42,7 +42,6 @@ function check_deps() {
   check_dep "mv" "file renaming"
   check_dep "popd" "pop directory from stack"
   check_dep "pushd" "push directory onto stack"
-  check_dep "python" "self-upgrade"
   check_dep "readlink" "handling symlinks"
   check_dep "rm" "file removal"
   check_dep "tar" "self-upgrade"

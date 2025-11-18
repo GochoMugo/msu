@@ -16,6 +16,7 @@ msu_require "metadata"
   DEPS="git"
 }
 
+
 # upgrade myself
 function upgrade() {
   log "upgrading myself"
@@ -51,22 +52,18 @@ function upgrade() {
   # upgrade using tarball
   pushd /tmp > /dev/null || return 1
   [ ! "${version}" ] && {
-    version=$(python "${MSU_LIB}/get-latest-version.py" "${MSU_VERSION}")
-    status=$?
-    case "${status}" in
-      1 )
-        log "you have the latest version"
-      ;;
-      2 )
-        error "required python dependencies are missing"
-      ;;
-      3 )
-        error "network request error"
-      ;;
-    esac
-    [ "${status}" -ne 0 ] && exit ${status}
+    version=$(get_latest_version)
+    if [ ! "${version}" ] ; then
+      error "network request error"
+      return 3
+    fi
+
+    if ! is_semver_gt "${version}" "${MSU_VERSION}" > /dev/null ; then
+      log "you have the latest version"
+      return 2
+    fi
   }
-  wget "https://github.com/GochoMugo/msu/releases/download/v${version}/msu-${version}.tar.gz" -q > /dev/null
+  wget "https://github.com/GochoMugo/msu/releases/download/${version}/msu-${version}.tar.gz" -q > /dev/null
   tar xvf "msu-${version}.tar.gz" > /dev/null 2>&1
   cd "msu-${version}" || {
     error "could not \`cd' into directory with extracted contents"
@@ -239,10 +236,86 @@ function uninstall_from_list() {
 }
 
 
+# Returns the version of the latest release.
+function get_latest_version() {
+  curl --silent https://api.github.com/repos/GochoMugo/msu/releases/latest |\
+      grep tag_name |\
+      grep -Eo '[0-9]+\.[0-9]+\.[0-9]+'
+}
+
+
+# Returns the major part of a semver version.
+# ${1} - semver version
+function get_major_version() {
+  grep -Eo '^[0-9]+' <<< "${1}"
+}
+
+
+# Returns the minor part of a semver version.
+# ${1} - semver version
+function get_minor_version() {
+  grep -Eo '\.[0-9]+\.' <<< "${1}" | sed -e s/\\.//g
+}
+
+
+# Returns the patch version of a semver version.
+# ${1} - semver version
+function get_patch_version() {
+  grep -Eo '[0-9]+$' <<< "${1}"
+}
+
+
 # checking if command is available on the system.
 # ${1} - command to check for.
 function has_command() {
   command -v "${1}" > /dev/null 2>&1
+}
+
+
+function is_semver_gt() {
+  local version1
+  local version2
+  version1="${1}"
+  version2="${2}"
+
+  local version1_major
+  local version2_major
+  version1_major=$(get_major_version "${version1}")
+  version2_major=$(get_major_version "${version2}")
+
+  if [[ "${version1_major}" -gt "${version2_major}" ]] ; then
+    echo 0
+    return 0
+  elif [[ "${version1_major}" -lt "${version2_major}" ]] ; then
+    echo 1
+    return 1
+  fi
+
+  local version1_minor
+  local version2_minor
+  version1_minor=$(get_minor_version "${version1}")
+  version2_minor=$(get_minor_version "${version2}")
+
+  if [[ "${version1_minor}" -gt "${version2_minor}" ]] ; then
+    echo 0
+    return 0
+  elif [[ "${version1_minor}" -lt "${version2_minor}" ]] ; then
+    echo 1
+    return 1
+  fi
+
+  local version1_patch
+  local version2_patch
+  version1_patch=$(get_patch_version "${version1}")
+  version2_patch=$(get_patch_version "${version2}")
+
+  if [[ "${version1_patch}" -gt "${version2_patch}" ]] ; then
+    echo 0
+    return 0
+  fi
+
+  echo 1
+  return 1
 }
 
 
