@@ -99,8 +99,11 @@ function teardown() {
 
 
 @test "adds loader string for loading msu" {
-  ./install.sh
-  cat ~/.bashrc | grep -E ". msu require load"
+  local bashrc="${BATS_TMPDIR}/.bashrc"
+  echo > "${bashrc}"
+  BASHRC="${bashrc}" ./install.sh
+  grep -E '^# loading msu$' < "${bashrc}"
+  grep -E '^\[\[ "\$\(command -v msu)" ]] && \. msu require load$' < "${bashrc}"
 }
 
 

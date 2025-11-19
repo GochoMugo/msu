@@ -14,8 +14,8 @@ MSU_LIB="${LIB}/msu"
 MSU_EXE="${BIN}/msu"
 MSU_MAN="${MAN}"
 MARKER=" >>>"
-MSU_LOAD_STRING="# loading msu
-. msu require load"
+MSU_LOAD_STRING='# loading msu
+[[ "$(command -v msu)" ]] && . msu require load'
 
 
 function check_dep() {
