@@ -34,4 +34,7 @@ fi
 
 # top-most aliases file
 # shellcheck source=/dev/null
-[ -f "${MSU_EXTERNAL_LIB}/aliases.sh" ] && source "${MSU_EXTERNAL_LIB}/aliases.sh"
+if [ -f "${MSU_EXTERNAL_LIB}/aliases.sh" ]
+then
+  source "${MSU_EXTERNAL_LIB}/aliases.sh"
+fi
