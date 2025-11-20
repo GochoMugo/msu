@@ -76,7 +76,7 @@ test.lint: ./*.sh lib/*.sh
 test.unit: test/test.*.sh
 	@make doc
 	@echo "**** test.unit"
-	@bats $?
+	@bats --print-output-on-failure --timing $?
 
 .PHONY: \
 	clean clean.doc clean.test \
