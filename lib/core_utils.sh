@@ -122,8 +122,7 @@ function install() {
         cross "${shorthand}"
         continue
       fi
-      module_name=$(echo "${shorthand}" | grep -Eo '\/.*$' | cut -b 2-)
-      install "${module_name}"
+      install "$(ls)"
       popd > /dev/null || return 1
     else
       # simple copying
