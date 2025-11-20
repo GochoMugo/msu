@@ -32,6 +32,9 @@ msu_run core_utils.is_superuser && {
 
 # parse command line arguments
 case "${1:-''}" in
+  "env" )
+    msu__load
+  ;;
   "re" | "require" )
     msu_require "${2:-''}"
   ;;

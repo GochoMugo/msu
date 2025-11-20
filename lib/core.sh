@@ -33,6 +33,37 @@ function msu__check_deps() {
 }
 
 
+# Load msu into current environment.
+# Used from .bashrc.
+function msu__load() {
+  # loading aliases
+  msu_require aliases
+
+  # clean up environment
+  # Added by msu.sh
+  unset MSU_EXE
+  unset MSU_REAL_EXE
+  unset MSU_LIB
+  # Added by metadata.sh
+  unset MSU_AUTHOR_NAME
+  unset MSU_AUTHOR_EMAIL
+  unset MSU_VERSION
+  unset MSU_BUILD_HASH
+  unset MSU_BUILD_DATE
+  unset MSU_INSTALL_LIB
+  unset MSU_INSTALL_BIN
+  unset MSU_INSTALL_MAN
+  unset MSU_INSTALL_LOAD_STRING
+  # Added by core.sh
+  unset MSU_REQUIRE_LOCK
+  unset msu__check_deps
+  unset msu__load
+  unset msu_require
+  unset msu_run
+  unset msu_execute
+}
+
+
 # require a module
 function msu_require() {
   # shellcheck disable=SC2001

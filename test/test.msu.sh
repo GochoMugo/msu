@@ -2,50 +2,79 @@
 # tests against lib/msu.sh
 
 
-@test "\`msu' sets \${MSU_LIB} to library, if its a symbolic link" {
-  msu_ln="${BATS_TMPDIR}/msu"
-  ln -sf "${PWD}/lib/msu.sh" "${msu_ln}"
-  . "${msu_ln}"
-  [ "$(readlink -f ${MSU_LIB})" == "$(readlink -f ${PWD}/lib)" ]
+setup() {
+  PATH="${BATS_TEST_TMPDIR}/bin:${PATH}"
+  HOME="${BATS_TEST_TMPDIR}" ./install.sh
 }
 
 
-@test "\`msu' sets \${MSU_LIB} to library, if executed directly" {
-  . ./lib/msu.sh
-  [ "$(readlink -f ${MSU_LIB})" == "$(readlink -f ${PWD}/lib)" ]
+@test "load string uses '. msu env'" {
+  grep ". msu env" "${BATS_TEST_TMPDIR}/.bashrc"
 }
 
 
-@test "\`msu require' loads a module" {
+@test "command '. msu env' loads aliases into the current environment" {
+  . msu env 
+  alias msu.reload
+}
+
+
+@test "command '. msu env' leaves a clean environment" {
+  . msu env
+  # Added by msu.sh
+  [ ! "${MSU_EXE}" ]
+  [ ! "${MSU_REAL_EXE}" ]
+  [ ! "${MSU_LIB}" ]
+  # Added by metadata.sh
+  [ ! "${MSU_AUTHOR_NAME}" ]
+  [ ! "${MSU_AUTHOR_EMAIL}" ]
+  [ ! "${MSU_VERSION}" ]
+  [ ! "${MSU_BUILD_HASH}" ]
+  [ ! "${MSU_BUILD_DATE}" ]
+  [ ! "${MSU_INSTALL_LIB}" ]
+  [ ! "${MSU_INSTALL_BIN}" ]
+  [ ! "${MSU_INSTALL_MAN}" ]
+  [ ! "${MSU_INSTALL_LOAD_STRING}" ]
+  # Added by core.sh
+  [ ! "${MSU_REQUIRE_LOCK}" ]
+  [ ! "$(type -t msu__check_deps)" ]
+  [ ! "$(type -t msu__load)" ]
+  [ ! "$(type -t msu_require)" ]
+  [ ! "$(type -t msu_run)" ]
+  [ ! "$(type -t msu_execute)" ]
+}
+
+
+@test "command 'msu require' loads a module" {
   [ ! "$(command -v log)" ]
-  . ./lib/msu.sh require console
+  . msu require console
   command -v log
   command -v success
   command -v error
 }
 
 
-@test "\`msu upgrade' upgrades msu" {
-  skip
+@test "command 'msu upgrade' upgrades msu" {
+  skip "Upgrading is untested for now"
 }
 
 
-@test "\`msu run' runs a module function" {
-  run lib/msu.sh run console.log ian
+@test "command 'msu run' runs a module function" {
+  run msu run console.log ian
   [ "${status}" -eq 0 ]
   echo "${output}" | grep "ian"
 }
 
 
-@test "\`msu help' shows help information" {
-  run lib/msu.sh help
+@test "command 'msu help' shows help information" {
+  run msu help
   [ "${status}" -eq 0 ]
   echo "${output}" | grep "help information"
 }
 
 
-@test "\`msu version' shows version information" {
-  run lib/msu.sh version
+@test "command 'msu version' shows version information" {
+  run msu version
   [ "${status}" -eq 0 ]
   echo "${output}" | grep "version"
   echo "${output}" | grep "build"
@@ -53,24 +82,21 @@
 }
 
 
-@test "\`msu' does not error if run without arguments" {
-  run lib/msu.sh
+@test "command 'msu' does not error if run without arguments" {
+  run msu
   [ "${status}" -eq 0 ]
 }
 
 
-@test "\`msu' can be used in a shebang" {
-  bang_sh="${BATS_TMPDIR}/bang.sh"
-  shebang="#!/usr/bin/env msu.sh"
+@test "program 'msu' can be used in a shebang" {
+  bang_sh="${BATS_TEST_TMPDIR}/bang.sh"
   {
-    echo "${shebang}"
+    echo "#!/usr/bin/env msu"
     echo "msu_require 'console'"
     echo "log 'LOGGED'"
   } > "${bang_sh}"
   chmod +x "${bang_sh}"
-  PATH="${PWD}/lib:${PATH}" run ${bang_sh}
-  echo "${output}"
+  run ${bang_sh}
   [ "${status}" -eq 0 ]
-  echo "${output}"
   echo "${output}" | grep "LOGGED"
 }
