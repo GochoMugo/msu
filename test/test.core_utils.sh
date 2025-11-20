@@ -62,13 +62,18 @@ function teardown() {
   source lib/core_utils.sh
   mod1="${BATS_TMPDIR}/mod1"
   mod2="${BATS_TMPDIR}/mod2"
-  mkdir -p "${mod1}" "${mod2}"
-  rm -rf "${MSU_EXTERNAL_LIB}/mod1" "${MSU_EXTERNAL_LIB}/mod2"
-  run install "${mod1}" "${mod2}"
+  mod3="${BATS_TMPDIR}/parent/mod3"
+  mkdir -p "${mod1}" "${mod2}" "${mod3}"
+  rm -rf \
+    "${MSU_EXTERNAL_LIB}/mod1" \
+    "${MSU_EXTERNAL_LIB}/mod2" \
+    "${MSU_EXTERNAL_LIB}/mod3"
+  run install "${mod1}" "${mod2}" "${mod3}"
   [ "${status}" -eq 0 ]
   echo "${output}" | grep "${sym_tick}"
   [ -d "${MSU_EXTERNAL_LIB}"/mod1 ]
   [ -d "${MSU_EXTERNAL_LIB}"/mod2 ]
+  [ -d "${MSU_EXTERNAL_LIB}"/mod3 ]
 }
 
 
