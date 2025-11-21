@@ -7,7 +7,7 @@
 if [ ! "${MSU_LIB}" ]
 then
   # without this path, we can not do anything! We should exit now!
-  echo "error: core: library path not set '${MSU_LIB}'"
+  echo "error: core: library path not set '${MSU_LIB}'" > /dev/stderr
   exit 1
 fi
 
@@ -18,7 +18,7 @@ MSU_EXTERNAL_LIB="${MSU_EXTERNAL_LIB:-${HOME}/.msu}"
 export MSU_EXTERNAL_LIB
 
 
-# check dependencies
+# Logs a warning for each missing command set in ${DEPS}.
 function msu__check_deps() {
   if [ ! "${DEPS}" ]
   then
@@ -33,7 +33,7 @@ function msu__check_deps() {
 }
 
 
-# Load msu into current environment.
+# Loads msu into current environment.
 # Used from .bashrc.
 function msu__load() {
   # loading aliases
@@ -66,23 +66,30 @@ function msu__load() {
 
 # require a module
 function msu_require() {
-  # shellcheck disable=SC2001
-  echo "${MSU_REQUIRE_LOCK}" | grep -E ":${1}:" > /dev/null || {
-    local fullpath
-    fullpath=$(echo "${1}" | sed 's/\.*$//g' | sed 's/\./\//g')
-    # internal modules have precedence
-    # shellcheck source=/dev/null
-    source "${MSU_LIB}/${fullpath}.sh" > /dev/null 2>&1 || {
-      # external libs
-      # shellcheck source=/dev/null
-      source "${MSU_EXTERNAL_LIB}/${fullpath}.sh" > /dev/null 2>&1 || {
-        echo "error: require: failed to load module '$(echo "${1}" | sed 's/\.$//g')'"
+  local resolved_paths
+  resolved_paths=(
+    "$(readlink -f "${MSU_LIB}/${1}.sh")"
+    "$(readlink -f "${MSU_EXTERNAL_LIB}/${1}.sh")"
+  )
+
+  for resolved_path in "${resolved_paths[@]}" ; do
+      if grep ":${resolved_path}:" <<< "${MSU_REQUIRE_LOCK}" > /dev/null ; then
+        return
+      fi
+      if [ ! -f "${resolved_path}" ] ; then
+          continue
+      fi
+      source "${resolved_path}" || {
+        echo "error: msu_require: failed to load module '${1}'" > /dev/stderr
         exit 1
       }
-    }
-    msu__check_deps
-    MSU_REQUIRE_LOCK=":${1}:${MSU_REQUIRE_LOCK}"
-  }
+      msu__check_deps
+      MSU_REQUIRE_LOCK=":${resolved_path}:${MSU_REQUIRE_LOCK}"
+      return
+  done
+
+  echo "error: msu_require: did not find module '${1}'" > /dev/stderr
+  exit 1
 }
 
 
@@ -90,14 +97,15 @@ function msu_require() {
 function msu_run() {
   local module
   local func
-  module=$(echo "${1}" | grep -Eo ".*\\.")
+  module=$(echo "${1}" | grep -Eo ".*\\." | sed -e s/\.$//)
   func=$(echo "${1}" | grep -Eo "\\.[^.]+$" | cut -b 2-)
   msu_require "${module}"
-  if [ "${func}" ]
+  if [ "$(type -t "${func}")" == 'function' ]
   then
     ${func} "${@:2}"
   else
-    echo "error: run: can not find function '${func}'"
+    echo "error: run: can not find function '${func}'" > /dev/stderr
+    return 1
   fi
 }
 
