@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # The Core
+#
+# Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
 
 
 # we expect the executable exports a variable $MSU_LIB whose
@@ -64,7 +66,9 @@ function msu__load() {
 }
 
 
-# require a module
+# Loads a module into current environment.
+#
+# ${1} - Module path
 function msu_require() {
   local resolved_paths
   resolved_paths=(
@@ -93,7 +97,9 @@ function msu_require() {
 }
 
 
-# run a single function
+# Runs a function in a module.
+#
+# ${1} - Module path, '.' and function name concatenated
 function msu_run() {
   local module
   local func
@@ -110,7 +116,9 @@ function msu_run() {
 }
 
 
-# execute a file
+# Loads a file into current environment.
+#
+# ${1} - File path
 function msu_execute() {
   # shellcheck source=/dev/null
   source "${1}"
