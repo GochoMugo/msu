@@ -103,16 +103,24 @@ function msu_require() {
 function msu_run() {
   local module
   local func
+  local args
   module=$(echo "${1}" | grep -Eo ".*\\." | sed -e s/\.$//)
   func=$(echo "${1}" | grep -Eo "\\.[^.]+$" | cut -b 2-)
+  args=""
+  for arg in "${@:2}" ; do
+      args+=" '${arg}'"
+  done
+  echo | bash <<EOF
+  MSU_LIB="${MSU_LIB}"
+  source "${MSU_LIB}/core.sh"
   msu_require "${module}"
-  if [ "$(type -t "${func}")" == 'function' ]
-  then
-    ${func} "${@:2}"
+  if [ "\$(type -t "${func}")" == 'function' ] ; then
+    ${func} ${args[@]}
   else
-    echo "error: run: can not find function '${func}'" > /dev/stderr
-    return 1
+    echo "error: msu_run: can not find function '${func}'" > /dev/stderr
+    exit 1
   fi
+EOF
 }
 
 

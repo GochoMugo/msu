@@ -148,18 +148,20 @@ function setup() {
 
 
 @test "'msu_run' runs a function in a module" {
+  MSU_LIB="${PWD}/lib"
   MSU_EXTERNAL_LIB="${BATS_TEST_TMPDIR}"
   sample_output="${BATS_TEST_TMPDIR}/output.txt"
   cat > "${MSU_EXTERNAL_LIB}/sample_external.sh" <<EOF
   function foo() {
-    echo \$1 > "${sample_output}"
+    echo \$1-\$2-\$3 > "${sample_output}"
   }
 EOF
   source lib/core.sh
 
-  msu_run sample_external.foo bar
-  grep bar "${sample_output}"
+  msu_run sample_external.foo bar 'abc def' baz
+  grep 'bar-abc def-baz' "${sample_output}"
+  [ ! "$(type -t foo)" ]
 
   run -1 msu_run sample_external.missing
-  grep "can not find function 'missing'" <<< "${output}"
+  grep "error: msu_run: can not find function 'missing'" <<< "${output}"
 }
