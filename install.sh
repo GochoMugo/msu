@@ -14,8 +14,6 @@ MSU_LIB="${LIB}/msu"
 MSU_EXE="${BIN}/msu"
 MSU_MAN="${MAN}"
 MARKER=" >>>"
-MSU_LOAD_STRING='# loading msu
-[[ "$(command -v msu)" ]] && . msu env'
 
 
 function check_dep() {
@@ -64,6 +62,10 @@ echo "${PATH}" | grep "${BIN}" > /dev/null || {
     echo "export PATH=\"${BIN}\":\${PATH}"
   } >> "${BASHRC}"
 }
+
+
+echo "${MARKER} loading metadata"
+source lib/metadata.sh
 
 
 echo "${MARKER} copying library"
@@ -118,10 +120,10 @@ ln -sf "${MSU_LIB}"/msu.sh "${MSU_EXE}"
 
 
 echo "${MARKER} make bash load msu into environment on start"
-grep "${MSU_LOAD_STRING}" "${BASHRC}" > /dev/null || {
+grep "${MSU_INSTALL_LOAD_STRING}" "${BASHRC}" > /dev/null || {
   {
     echo ""
-    echo "${MSU_LOAD_STRING}"
+    echo "${MSU_INSTALL_LOAD_STRING}"
   } >> "${BASHRC}"
 }
 
@@ -131,7 +133,7 @@ echo "${MARKER} storing installation configuration"
   echo "MSU_INSTALL_LIB='${LIB}'"
   echo "MSU_INSTALL_BIN='${BIN}'"
   echo "MSU_INSTALL_MAN='${MAN}'"
-  echo "MSU_INSTALL_LOAD_STRING='${MSU_LOAD_STRING}'"
+  echo "MSU_INSTALL_LOAD_STRING='${MSU_INSTALL_LOAD_STRING}'"
 } >> "${MSU_LIB}"/metadata.sh
 
 
