@@ -2,42 +2,38 @@
 # tests against lib/aliases.sh
 
 
-MSU_EXTERNAL_LIB="${BATS_TMPDIR:-/tmp}/test-aliases"
-
-
 function setup() {
+  MSU_EXTERNAL_LIB="${BATS_TEST_TMPDIR:-/tmp}/aliases"
   # shellcheck disable=SC2015
   mkdir -p "${MSU_EXTERNAL_LIB}"
 }
 
 
-function teardown() {
-  rm -rf "${MSU_EXTERNAL_LIB:-/tmp}/*"
-}
-
-
-@test "aliases.sh loads aliases into the current environment" {
-  . lib/aliases.sh
-  alias x
-  alias msu.reload
+@test "aliases.sh loads builtin aliases" {
+  source lib/aliases.sh
+  alias x | grep 'msu run'
+  alias msu.reload | grep -E "'$(bash -c 'source lib/metadata.sh && echo ${MSU_INSTALL_LOAD_STRING} | grep -Eo \&\&.+\$ | cut -c 4-')'"
 }
 
 
 @test "aliases.sh loads aliases from external modules" {
-  local mod="${MSU_EXTERNAL_LIB}/aliases"
-  mkdir -p "${mod}"
-  echo "alias humansshouldriseup='echo external'" > "${mod}/aliases.sh"
-  . lib/aliases.sh
-  alias humansshouldriseup | grep "external"
+  local mod1="${MSU_EXTERNAL_LIB}/mod1"
+  local mod2="${MSU_EXTERNAL_LIB}/mod2"
+  mkdir -p "${mod1}" "${mod2}"
+  echo "alias foo='test #1'" > "${mod1}/aliases.sh"
+  echo "alias bar='test #2'" > "${mod2}/aliases.sh"
+  source lib/aliases.sh
+  alias foo | grep "'test #1'"
+  alias bar | grep "'test #2'"
 }
 
 
-@test "\${MSU_EXTERNAL_LIB}/aliases.sh overides all" {
+@test "aliases.sh overrides aliases using \${MSU_EXTERNAL_LIB}/aliases.sh" {
   local alias_override="${MSU_EXTERNAL_LIB}/aliases.sh"
-  local mod="${MSU_EXTERNAL_LIB}/overide"
+  local mod="${MSU_EXTERNAL_LIB}/mod"
   mkdir -p "${mod}"
-  echo "alias bedaring='echo override'" > "${alias_override}"
-  echo "alias bedaring='echo external'" > "${mod}/aliases.sh"
-  . lib/aliases.sh
-  alias bedaring | grep "override"
+  echo "alias foo='test #1'" >> "${alias_override}"
+  echo "alias foo='test #2'" >> "${mod}/aliases.sh"
+  source lib/aliases.sh
+  alias foo | grep "'test #1'"
 }

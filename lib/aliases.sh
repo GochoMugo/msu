@@ -9,11 +9,12 @@ MSU_EXTERNAL_LIB="${MSU_EXTERNAL_LIB:-${HOME}/.msu}"
 
 
 # general
+
+# help: msu run
 alias x="msu run"
 
-# this allows reloading the aliases, useful after installing new
-# modules
-alias msu.reload=". msu require load"
+# help: reload msu into environment
+alias msu.reload=". msu env"
 
 
 # external module aliases
