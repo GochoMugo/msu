@@ -2,59 +2,59 @@
 # tests against ./install.sh
 
 
-BASHRC_TMP=~/.bashrc.msu
-
-
-cp ~/.bashrc ~/.bashrc~ # backup
-
-
 function setup() {
-  mv ~/.bashrc "${BASHRC_TMP}"
-  touch ~/.bashrc
+  HOME="${BATS_TEST_TMPDIR}"
+  PATH="${HOME}/bin:${PATH}"
+  mkdir -p "${HOME}/bin"
 }
 
 
-function teardown() {
-  [ -e ~/bin/msu ]  && rm -rf ~/bin/msu
-  [ -e "${BIN}/msu" ] && rm -rf "${BIN:-'.'}/msu"
-  [ -d ~/lib/msu ]  && rm -rf ~/lib/msu
-  [ -d "${LIB}/msu" ] && rm -rf "${LIB:-'.'}/msu"
-  mv "${BASHRC_TMP}" ~/.bashrc
-}
-
-
-@test "test-run install (requires NO sudo or other variables)" {
+@test "install.sh does not use sudo" {
+  echo 'echo SUDO used > /dev/stderr && exit 1' > "${HOME}/bin/sudo"
+  chmod +x "${HOME}/bin/sudo"
   ./install.sh
 }
 
 
-@test "uses \${BASHRC} to set path to .bashrc file" {
-  local bashrc="${BATS_TMPDIR}/.bashrc"
-  echo > "${bashrc}"
-  BASHRC="${bashrc}" ./install.sh
-  grep "loading msu" "${bashrc}"
+@test "install.sh installs to default locations" {
+  ./install.sh
+  [ -f "${HOME}/bin/msu" ]
+  [ -f "${HOME}/lib/msu/msu.sh" ]
+  [ -f "${HOME}/share/man/man1/msu.1" ]
 }
 
 
-@test "uses \${LIB} to prefix destination directory for library" {
-  local lib="${BATS_TMPDIR}/some-lib"
-  rm -rf "${lib}/msu"
+@test "install.sh uses \${BASHRC} to set path to .bashrc file" {
+  local bashrc="${HOME}/.bashrc.${RANDOM}"
+  [ ! -f "${bashrc}" ]
+  BASHRC="${bashrc}" ./install.sh
+  [ -f "${bashrc}" ]
+  source lib/metadata.sh
+  grep "${MSU_INSTALL_LOAD_STRING}" "${bashrc}"
+}
+
+
+@test "install.sh uses \${LIB} to prefix destination directory for library" {
+  local lib="${HOME}/lib.${RANDOM}"
+  [ ! -d "${lib}" ]
   LIB="${lib}" ./install.sh
   [ -d "${lib}/msu" ]
+  [ -f "${lib}/msu/msu.sh" ]
 }
 
 
-@test "uses \${BIN} to prefix destination directory for executable" {
-  local bin="${BATS_TMPDIR}/some-bin"
-  rm -rf "${bin:-'.'}/msu"
+@test "install.sh uses \${BIN} to prefix destination directory for executable" {
+  local bin="${HOME}/bin.${RANDOM}"
+  [ ! -d "${bin}" ]
   BIN="${bin}" ./install.sh
+  [ -d "${bin}" ]
   [ -x "${bin}/msu" ]
 }
 
 
-@test "uses \${MAN} to set destination to manpages" {
-  local man="${BATS_TMPDIR}/some-man"
-  rm -rf "${man:-'.'}/man*"
+@test "install.sh uses \${MAN} to set prefix destination directory for manpages" {
+  local man="${HOME}/man.${RANDOM}"
+  [ ! -d "${man}" ]
   MAN="${man}" ./install.sh
   [ -d "${man}/man1" ]
   [ -d "${man}/man3" ]
@@ -63,52 +63,59 @@ function teardown() {
 }
 
 
-@test "adds \${BIN} to ~/.bashrc if not in \${PATH}" {
-  local bin="${BATS_TMPDIR:-'.'}/another-bin"
+@test "install.sh adds \${BIN} to ~/.bashrc if not in \${PATH}" {
+  local bin="${HOME}/bin.${RANDOM}"
+  ! grep "${bin}" <<< "## ${PATH//:/ ## } ##"
   BIN="${bin}" ./install.sh
-  cat ~/.bashrc | grep "export PATH=\"${bin}\":\${PATH}"
+  cat "${HOME}/.bashrc"
+  source "${HOME}/.bashrc"
+  grep "## ${bin} ##" <<< "## ${PATH//:/ ## } ##"
 }
 
 
-@test "adds \${MAN} to ~/.bashrc if not in \${MANPATH}" {
-  local man="${BATS_TMPDIR:-'.'}/another-man"
+@test "install.sh adds \${MAN} to ~/.bashrc if not in \${MANPATH}" {
+  local man="${HOME}/man.${RANDOM}"
+  ! grep "${man}" <<< "## ${MANPATH//:/ ## } ##"
   MAN="${man}" ./install.sh
-  cat ~/.bashrc | grep "export MANPATH=\"${man}\":\${MANPATH}"
+  source "${HOME}/.bashrc"
+  grep "${man}" <<< "## ${MANPATH//:/ ## } ##"
 }
 
 
-@test "generates metadata" {
+@test "install.sh adds loader string to ~/.bashrc if not found" {
+  [ ! -f "${HOME}/.bashrc" ]
   ./install.sh
-  local data=$(cat ~/lib/msu/metadata.sh)
-  local path_regexp="'.+'"
-  echo "${data}"
-  echo "${data}" | grep -E "MSU_INSTALL_LIB=${path_regexp}"
-  echo "${data}" | grep -E "MSU_INSTALL_BIN=${path_regexp}"
-  echo "${data}" | grep -E "MSU_INSTALL_MAN=${path_regexp}"
-  echo "${data}" | grep -E "MSU_BUILD_HASH='[a-z0-9]+'"
-  echo "${data}" | grep -E "MSU_BUILD_DATE='.+'"
-}
+  source lib/metadata.sh
+  grep "${MSU_INSTALL_LOAD_STRING}" "${HOME}/.bashrc"
 
-
-@test "links executable in path to that in library" {
+  # it should not modify .bashrc again
+  source "${HOME}/.bashrc"
+  cp "${HOME}/.bashrc" "${HOME}/.bashrc.copy"
   ./install.sh
-  local realpath=$(readlink ~/bin/msu)
-  [ -x ~/bin/msu ]
-  [ "${realpath}" == "$(readlink -f ~/lib/msu/msu.sh)" ]
+  [ "${HOME}/.bashrc.copy" -nt "${HOME}/.bashrc" ]
 }
 
 
-@test "adds loader string for loading msu" {
-  local bashrc="${BATS_TMPDIR}/.bashrc"
-  echo > "${bashrc}"
-  BASHRC="${bashrc}" ./install.sh
-  grep -E '^# loading msu$' < "${bashrc}"
-  grep -E '^\[\[ "\$\(command -v msu)" ]] && \. msu require load$' < "${bashrc}"
+@test "install.sh generates metadata" {
+  ./install.sh
+  source "${HOME}/lib/msu/metadata.sh"
+  grep -E "^[a-z0-9]+$" <<< "${MSU_BUILD_HASH}"
+  grep -E "^.+$" <<< "${MSU_BUILD_DATE}"
+  grep "${HOME}/lib" <<< "${MSU_INSTALL_LIB}"
+  grep "${HOME}/bin" <<< "${MSU_INSTALL_BIN}"
+  grep "${HOME}/share/man" <<< "${MSU_INSTALL_MAN}"
 }
 
 
-@test "spits out version information when done" {
-  local version_info=$(./install.sh)
-  local expected=$(msu version)
-  echo "${version_info}" | grep "${expected}"
+@test "install.sh links executable in path to that in library" {
+  ./install.sh
+  [ -x "${HOME}/bin/msu" ]
+  [ "$(readlink -f "${HOME}/bin/msu")" == "${HOME}/lib/msu/msu.sh" ]
+}
+
+
+@test "install.sh spits out version information when done" {
+  run ./install.sh
+  source lib/metadata.sh
+  grep "${MSU_VERSION}" <<< "${output}"
 }

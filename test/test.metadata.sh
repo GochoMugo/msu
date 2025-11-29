@@ -6,5 +6,6 @@
   source lib/metadata.sh
   [ "${MSU_AUTHOR_NAME}" ]
   [ "${MSU_AUTHOR_EMAIL}" ]
-  [ "${MSU_VERSION}" ]
+  [ "${MSU_INSTALL_LOAD_STRING}" ]
+  grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' <<< "${MSU_VERSION}"
 }
