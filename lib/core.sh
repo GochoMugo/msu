@@ -73,8 +73,10 @@ function msu_require() {
   local resolved_paths
   resolved_paths=(
     "$(readlink -f "${MSU_LIB}/${1}.sh")"
-    "$(readlink -f "${MSU_EXTERNAL_LIB}/${1}.sh")"
   )
+  if [ -d "${MSU_EXTERNAL_LIB}" ] ; then
+    resolved_paths+=("$(readlink -f "${MSU_EXTERNAL_LIB}/${1}.sh")")
+  fi
 
   for resolved_path in "${resolved_paths[@]}" ; do
       if grep ":${resolved_path}:" <<< "${MSU_REQUIRE_LOCK}" > /dev/null ; then
