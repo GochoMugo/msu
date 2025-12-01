@@ -1,11 +1,10 @@
 
 # msu
 
-> A small Shell framework that makes writing bash scripts less sucky
+> A minimal Shell framework and CLI tool that makes writing, sharing
+> and using bash scripts easy
 
-[![Terminal Lover](https://img.shields.io/badge/terminal-lover-blue.svg?style=flat-square)](https://github.com/GochoMugo) [![Travis](https://img.shields.io/travis/GochoMugo/msu.svg?style=flat-square)](https://travis-ci.org/GochoMugo/msu)
-
-* Introductory blog posts: [hack with msu](http://www.gmugo.in/musings/hack-with-msu/), [very first post](https://www.gmugo.in/musings/msu-introduction/)
+* Introductory blog posts: [hack with msu](https://mugo.gocho.live/posts/hack-with-msu/), [very first post](https://mugo.gocho.live/posts/msu-introduction/)
 * [Project Principles](#principles)
 * [Showcase of modules using `msu`][showcase]
 * [Documentation](#documentation)
@@ -15,18 +14,18 @@
 
 > **`msu` wishlist**
 
-* [x] [automated/manual installation][installation]
-* [x] [small but comprehensive internal library][api]
+* [x] [easy installation][installation]
+* [x] small but comprehensive internal library
 * [x] support external modules
-* [x] auto-loading aliases modules
-* [x] install module from github/bitbucket
-* [x] [highly tested](https://travis-ci.org/GochoMugo/msu)
+* [x] auto-loading aliases from modules
+* [x] install external modules from git repos
+* [x] highly tested
 * [x] self upgrade
+* [x] manpages
 * [ ] load/unload aliases
 * [ ] error catching/handling
 * [ ] bash completion
 * [ ] compatibility for other shell types e.g. zsh
-* [x] manpages
 
 
 ## installation:
@@ -47,7 +46,6 @@ More documentation is placed in the
 [`docs/`](https://github.com/GochoMugo/msu/tree/master/docs/) directory:
 
 * [installation][installation]
-* [API][api]
 * [showcase][showcase]
 * [hacking on msu][hacking]
 
@@ -68,6 +66,5 @@ Copyright &copy; 2015-2016 GochoMugo <mugo@forfuture.co.ke>
 
 
 [installation]:https://github.com/GochoMugo/msu/tree/master/docs/installation.md "msu installation"
-[api]:https://github.com/GochoMugo/msu/tree/master/docs/api.md "msu API"
-[showcase]:https://github.com/GochoMugo/msu/blob/master/docs/showcase.md "showcase of modules using msu"
+[showcase]:https://github.com/GochoMugo/msu/wiki/Showcase "showcase of modules using msu"
 [hacking]:https://github.com/GochoMugo/msu/blob/master/docs/hack.md "Hacking on msu"

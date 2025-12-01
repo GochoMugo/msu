@@ -8,17 +8,12 @@
 
 We are using:
 
+* [bats](https://github.com/bats-core/bats-core) - test runner
+* [hub](http://hub.github.com/) - GitHub terminal client
+* [pandoc](https://github.com/jgm/pandoc) - markup converter
 * [shellcheck](https://github.com/koalaman/shellcheck) - static analysis
-* [bats](https://github.com/sstephenson/bats) - test runner
-* [a2x](http://linux.die.net/man/1/a2x) - asciidoc converter
-* [hub](http://hub.github.com/) - Github terminal client
 
-To ensure reproducibility, we are using git submodules.
-
-
-## prepare environment:
-
-Installing (some of) the dependencies:
+Installing the dependencies using homebrew:
 
 ```bash
 $ make deps
@@ -27,18 +22,18 @@ $ make deps
 
 ## running tests:
 
-Running tests fully:
+Running all tests:
 
 ```bash
 $ make test
 ```
 
-Some of the different types of tests can be invoked separately.
+Running subset of tests:
 
 ```bash
-$ make test.lint          # run static analysis
-$ make test.unit          # run unit tests
 $ make test.doc           # run tests on documentation
+$ make test.lint          # run linting tests
+$ make test.unit          # run unit tests
 ```
 
 
