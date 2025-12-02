@@ -85,6 +85,7 @@ function msu_require() {
       if [ ! -f "${resolved_path}" ] ; then
           continue
       fi
+      # shellcheck disable=SC1090
       source "${resolved_path}" || {
         echo "error: msu_require: failed to load module '${1}'" > /dev/stderr
         exit 1

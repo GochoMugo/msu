@@ -145,7 +145,7 @@ function install() {
           echo "error: module already installed: ${module_name}" > /dev/stderr
           return 1
         else
-          rm -rf "${MSU_EXTERNAL_LIB}/${module_name}"
+          rm -rf "${MSU_EXTERNAL_LIB:?}/${module_name}"
         fi
       fi
       cp -r "${dir}" "${MSU_EXTERNAL_LIB}" > /dev/null
@@ -229,7 +229,8 @@ function list_modules() {
       continue
     fi
     if [ -z "${is_header_printed}" ] ; then
-      echo -e "${clr_white}external modules${clr_reset}"
+      # shellcheck source=lib/format.sh
+      echo -e "${clr_white:?}external modules${clr_reset:?}"
       is_header_printed=1
     fi
     echo -e "\\t$(basename "${mod}")"
@@ -271,14 +272,15 @@ function show_metadata() {
   local metadata_file
   metadata_file="${MSU_EXTERNAL_LIB}/${1}/metadata.sh"
   if [ ! -f "${metadata_file}" ] ; then
-    error "module metadata not found: "${1}""
+    error "module metadata not found: ${1}"
     return 1
   fi
+  # shellcheck disable=SC1090
   source "${metadata_file}"
-  echo -e " ${clr_white:-''}${1}${clr_reset:-''}"
-  echo -e "    author\\t${clr_white}${author}${clr_reset}"
-  echo -e "    build\\t${clr_white}${build}${clr_reset}"
-  echo -e "    date\\t${clr_white}${date}${clr_reset}"
+  echo -e " ${clr_white}${1}${clr_reset}"
+  echo -e "    author\\t${clr_white}${author:?}${clr_reset}"
+  echo -e "    build\\t${clr_white}${build:?}${clr_reset}"
+  echo -e "    date\\t${clr_white}${date:?}${clr_reset}"
 }
 
 
