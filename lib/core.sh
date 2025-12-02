@@ -113,7 +113,7 @@ function msu_run() {
   for arg in "${@:2}" ; do
       args+=" '${arg}'"
   done
-  echo | bash <<EOF
+  bash <<EOF
   set -e
   MSU_LIB="${MSU_LIB}"
   source "${MSU_LIB}/core.sh"
