@@ -113,6 +113,7 @@ function msu_run() {
       args+=" '${arg}'"
   done
   echo | bash <<EOF
+  set -e
   MSU_LIB="${MSU_LIB}"
   source "${MSU_LIB}/core.sh"
   msu_require "${module}"
