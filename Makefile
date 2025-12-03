@@ -35,13 +35,13 @@ clean.test:
 # Install dependencies
 deps:
 	@echo "**** installing bats using brew"
-	@brew install bats-core@1.11.0
+	@brew install bats-core@1.13.0
 	@echo "**** installing hub using brew"
 	@brew install hub@2.14.2
 	@echo "**** installing pandoc using brew"
-	@brew install pandoc@3.5
+	@brew install pandoc@3.8.3
 	@echo "**** installing shellcheck using brew"
-	@brew install shellcheck@0.10.0
+	@brew install shellcheck@0.11.0
 
 # Generate documentation
 doc: clean.doc
