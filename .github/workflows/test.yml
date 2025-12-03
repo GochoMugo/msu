@@ -3,6 +3,13 @@ name: Tests
 on:
   push:
   pull_request:
+  workflow_dispatch:
+    inputs:
+      reset-cache:
+        description: 'Reset Homebrew cache'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   test:
@@ -29,6 +36,18 @@ jobs:
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
           echo "/home/linuxbrew/.linuxbrew/bin" >> $GITHUB_PATH
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+      - name: Cache Homebrew packages
+        if: inputs.reset-cache != true
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/Library/Caches/Homebrew
+            ~/.cache/Homebrew
+            /home/linuxbrew/.linuxbrew/Cellar
+          key: ${{ runner.os }}-brew-${{ hashFiles('Makefile') }}
+          restore-keys: |
+            ${{ runner.os }}-brew-
 
       - name: Install dependencies
         run: make deps
