@@ -1,0 +1,34 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup SSH key
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          if [ -n "$SSH_PRIVATE_KEY" ]; then
+            mkdir -p ~/.ssh
+            echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa
+            ssh-keyscan github.com >> ~/.ssh/known_hosts
+            eval "$(ssh-agent -s)"
+            ssh-add ~/.ssh/id_rsa
+          else
+            echo "SSH_PRIVATE_KEY secret not set, skipping SSH setup"
+          fi
+
+      - name: Install dependencies
+        run: make deps
+
+      - name: Run tests
+        run: make test

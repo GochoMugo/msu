@@ -1,6 +1,8 @@
 
 # msu
 
+[![Tests](https://github.com/GochoMugo/msu/workflows/Tests/badge.svg)](https://github.com/GochoMugo/msu/actions/workflows/test.yml)
+
 > A minimal Shell framework and CLI tool that makes writing, sharing
 > and using bash scripts easy
 
