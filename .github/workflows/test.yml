@@ -27,9 +27,10 @@ jobs:
       - name: Setup SSH known hosts
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-          ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
-          ssh-keyscan bitbucket.org >> ~/.ssh/known_hosts
+          # Add known hosts for common Git hosting services
+          ssh-keyscan -H github.com >> ~/.ssh/known_hosts 2>/dev/null || true
+          ssh-keyscan -H gitlab.com >> ~/.ssh/known_hosts 2>/dev/null || true
+          ssh-keyscan -H bitbucket.org >> ~/.ssh/known_hosts 2>/dev/null || true
 
       - name: Setup SSH key
         uses: webfactory/ssh-agent@v0.9.0
