@@ -4,6 +4,8 @@
 > A minimal Shell framework and CLI tool that makes writing, sharing
 > and using bash scripts easy
 
+[![Tests](https://github.com/GochoMugo/msu/workflows/Tests/badge.svg)](https://github.com/GochoMugo/msu/actions/workflows/test.yml)
+
 * Introductory blog posts: [hack with msu](https://mugo.gocho.live/posts/hack-with-msu/), [very first post](https://mugo.gocho.live/posts/msu-introduction/)
 * [Project Principles](#principles)
 * [Showcase of modules using `msu`][showcase]
