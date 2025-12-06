@@ -46,7 +46,6 @@ deps:
 # Generate documentation
 doc: clean.doc
 	@echo "**** doc"
-	@echo "a2x --doctype manpage --format manpage"
 	@for file in $$(ls docs/man/**/*.md) ; do \
 		echo " $${file}" ; \
 		mkdir -p "dist/$$(dirname $${file})" ; \
