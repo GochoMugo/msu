@@ -24,7 +24,7 @@ function test_is_module_installed() {
 @test "\`for_each_line_in_file' runs a command for each line in the file" {
   local file="${BATS_TEST_TMPDIR}/file"
   echo -e "first\nsecond" > "${file}"
-  [ "$(wc -l "${file}" | cut -d ' ' -f 1)" == 2 ]
+  [ "$(wc -l "${file}" | sed -e s/^\ *// | cut -d ' ' -f 1)" == 2 ]
   declare -a lines
   function track() {
     lines+=("${1}")

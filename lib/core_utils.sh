@@ -103,9 +103,13 @@ function install() {
       local version
       local url
       tmpdir="/tmp/.msu.clones"
-      shorthand=$(echo "${dir}" | sed --regexp-extended --expression=s/^.+:\([^\#]+\).*/\\1/)
-      version=$(echo "${dir}" | grep '#' | sed --regexp-extended --expression=s/.+\#\(.+\)$/\\1/)
       remote_mark=$(echo "${remote_mark}" | tr '[:upper:]' '[:lower:]')
+      shorthand="${dir##*:}"
+      version="${shorthand##*#}"
+      if [ "${version}" == "${shorthand}" ] ; then
+        version=""
+      fi
+      shorthand="${shorthand%%#*}"
       case "${remote_mark}" in
         "gh" )
           url="https://github.com/${shorthand}.git"
@@ -244,7 +248,7 @@ function nuke() {
   log "you are about to remove the msu executable, internal and external libraries"
   log "this action will change your ~/.bashrc! You may want to back it up in case shit happens!"
   yes_no "I want to nuke msu" || return 1
-  
+
   local nuke_script="/tmp/nuke_msu.${RANDOM}"
   {
     echo "echo - removing load string from ~/.bashrc"
