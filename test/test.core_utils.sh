@@ -275,7 +275,7 @@ function test_is_module_installed() {
 
 
 @test "\`uninstall_from_list' uninstalls from a list in a file" {
-  listpath="${BATS_TMPDIR}/list"
+  listpath="${BATS_TEST_TMPDIR}/list"
   mkdir -p "${MSU_EXTERNAL_LIB}/mod1"
   mkdir -p "${MSU_EXTERNAL_LIB}/mod2"
   echo "mod1" > ${listpath}
