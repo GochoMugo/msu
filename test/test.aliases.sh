@@ -3,6 +3,7 @@
 
 
 function setup() {
+  BATS_TEST_TMPDIR="$(readlink -f "${BATS_TEST_TMPDIR}")"
   MSU_EXTERNAL_LIB="${BATS_TEST_TMPDIR:-/tmp}/aliases"
   # shellcheck disable=SC2015
   mkdir -p "${MSU_EXTERNAL_LIB}"

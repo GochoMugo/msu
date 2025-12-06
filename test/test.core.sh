@@ -5,6 +5,7 @@ bats_require_minimum_version 1.5.0
 
 
 function setup() {
+  BATS_TEST_TMPDIR="$(readlink -f "${BATS_TEST_TMPDIR}")"
   unset MSU_EXTERNAL_LIB
   MSU_LIB="${BATS_TEST_TMPDIR}"
 }

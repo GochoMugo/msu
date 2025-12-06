@@ -3,6 +3,7 @@
 
 
 setup() {
+  BATS_TEST_TMPDIR="$(readlink -f "${BATS_TEST_TMPDIR}")"
   PATH="${BATS_TEST_TMPDIR}/bin:${PATH}"
   HOME="${BATS_TEST_TMPDIR}" ./install.sh
 }

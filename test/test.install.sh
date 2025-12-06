@@ -3,6 +3,7 @@
 
 
 function setup() {
+  BATS_TEST_TMPDIR="$(readlink -f "${BATS_TEST_TMPDIR}")"
   HOME="${BATS_TEST_TMPDIR}"
   PATH="${HOME}/bin:${PATH}"
   mkdir -p "${HOME}/bin"

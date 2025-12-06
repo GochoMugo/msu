@@ -2,6 +2,11 @@
 # tests against lib/metadata.sh
 
 
+setup() {
+  BATS_TEST_TMPDIR="$(readlink -f "${BATS_TEST_TMPDIR}")"
+}
+
+
 @test "metadata contains version & contact information" {
   source lib/metadata.sh
   [ "${MSU_AUTHOR_NAME}" ]

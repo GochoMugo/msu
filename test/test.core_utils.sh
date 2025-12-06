@@ -3,6 +3,7 @@
 
 
 function setup() {
+  BATS_TEST_TMPDIR="$(readlink -f "${BATS_TEST_TMPDIR}")"
   MSU_LIB="${PWD}"/lib
   MSU_EXTERNAL_LIB="${BATS_TEST_TMPDIR}/external-modules"
   source lib/core.sh
@@ -24,7 +25,7 @@ function test_is_module_installed() {
   local file="${BATS_TEST_TMPDIR}/file"
   echo -e "first\nsecond" > "${file}"
   [ "$(wc -l "${file}" | cut -d ' ' -f 1)" == 2 ]
-  declare -a lines 
+  declare -a lines
   function track() {
     lines+=("${1}")
   }
@@ -63,7 +64,7 @@ function test_is_module_installed() {
 
 @test "\`has_command' checks if command is available" {
   has_command "cat"          # I can be almost certain that `cat` is available.
-  ! has_command "dog"        # no dog person here? 
+  ! has_command "dog"        # no dog person here?
 }
 
 
