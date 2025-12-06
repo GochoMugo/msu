@@ -81,7 +81,7 @@ function setup() {
 
   # Test again that it's not loaded at all
   rm "${internal_mod}"
-  msu_require sample_internal # should not error
+  msu_require sample_internal # should not error since it was loaded already
 
   # Test loading external module
   echo "echo baz > "${sample_output}"" > "${external_mod}"
