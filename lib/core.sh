@@ -76,7 +76,7 @@ function msu_require() {
   )
 
   for resolved_path in "${resolved_paths[@]}" ; do
-      if grep ":${resolved_path}:" <<< "${MSU_REQUIRE_LOCK}" > /dev/null ; then
+      if [[ "${MSU_REQUIRE_LOCK}" =~ .*":${resolved_path}:".* ]]  > /dev/null ; then
         return
       fi
       if [ ! -f "${resolved_path}" ] ; then
@@ -104,8 +104,8 @@ function msu_run() {
   local module
   local func
   local args
-  module=$(echo "${1}" | grep -Eo ".*\\." | sed -e s/\.$//)
-  func=$(echo "${1}" | grep -Eo "\\.[^.]+$" | cut -b 2-)
+  module="${1%.*}"
+  func="${1##*.}"
   args=""
   for arg in "${@:2}" ; do
       args+=" '${arg}'"
