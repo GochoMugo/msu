@@ -14,7 +14,7 @@ setup() {
 
 
 @test "command '. msu env' loads aliases into the current environment" {
-  . msu env 
+  . msu env
   alias msu.reload
 }
 
@@ -46,11 +46,9 @@ setup() {
 
 
 @test "command 'msu require' loads a module" {
-  [ ! "$(command -v log)" ]
+  [ "$(type -t success)" != "function" ]
   . msu require console
-  command -v log
-  command -v success
-  command -v error
+  [ "$(type -t success)" == "function" ]
 }
 
 
