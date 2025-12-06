@@ -24,8 +24,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup SSH known hosts
+        run: |
+          mkdir -p ~/.ssh
+          # Add known hosts for common Git hosting services
+          ssh-keyscan -H github.com >> ~/.ssh/known_hosts 2>/dev/null || true
+          ssh-keyscan -H gitlab.com >> ~/.ssh/known_hosts 2>/dev/null || true
+          ssh-keyscan -H bitbucket.org >> ~/.ssh/known_hosts 2>/dev/null || true
+
       - name: Setup SSH key
-        if: secrets.SSH_PRIVATE_KEY != ''
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
