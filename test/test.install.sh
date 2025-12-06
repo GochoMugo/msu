@@ -91,9 +91,9 @@ function setup() {
 
   # it should not modify .bashrc again
   source "${HOME}/.bashrc"
-  cp "${HOME}/.bashrc" "${HOME}/.bashrc.copy"
+  local sha="$(sha256sum "${HOME}/.bashrc")"
   ./install.sh
-  [ "${HOME}/.bashrc.copy" -nt "${HOME}/.bashrc" ]
+  [ "$(sha256sum "${HOME}/.bashrc")" == "${sha}" ]
 }
 
 
