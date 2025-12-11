@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 # making a new release
+set -e
 
 
 # modules
 msu_require "console"
+msu_require "metadata"
 
 
 # module variables
@@ -11,22 +13,13 @@ msu_require "console"
   # shellcheck disable=SC2034
   DEPS="xargs hub"
 }
-RELEASE=""
-
-
-log "prompting for new version number"
-MSU_VERSION=""
-ask "New version number" MSU_VERSION
-
-
-log "mark that we are in RELEASE mode using the version number in \${RELEASE}"
 RELEASE=${MSU_VERSION}
 export RELEASE
 
 
 log "creating directory for releases"
-RELEASE_DIR="releases/v${MSU_VERSION}"
-RELEASE_TARBALL="releases/msu-${MSU_VERSION}.tar.gz"
+RELEASE_DIR="${PWD}/releases/msu-${MSU_VERSION}"
+RELEASE_TARBALL="${PWD}/releases/msu-${MSU_VERSION}.tar.gz"
 rm --force --recursive "${RELEASE_DIR}" "${RELEASE_TARBALL}"
 mkdir --parents "${RELEASE_DIR}"
 
@@ -56,7 +49,8 @@ MSU_BUILD_DATE=$(git show -s --format=%ci "${MSU_BUILD_HASH}")
 
 
 log "creating a tarball of the release"
-tar --create --gzip --file "${RELEASE_TARBALL}" "${RELEASE_DIR}/"
+pushd "$(dirname "${RELEASE_DIR}")" > /dev/null
+tar --create --gzip --file "${RELEASE_TARBALL}" "$(basename "${RELEASE_DIR}")"
 
 
 log "creating a new github release"
