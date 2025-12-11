@@ -1,10 +1,7 @@
 
-# Hacking on `msu`
+# Contributing to `msu`
 
-> You believe in the project, and now you want to make it better, with **code**
-
-
-## dependencies:
+## dependencies
 
 We are using:
 
@@ -20,7 +17,7 @@ $ make deps
 ```
 
 
-## running tests:
+## tests
 
 Running all tests:
 
@@ -37,9 +34,9 @@ $ make test.unit          # run unit tests
 ```
 
 
-## building docs:
+## docs
 
-You can build the manpages using:
+Building the manpages:
 
 ```bash
 $ make doc

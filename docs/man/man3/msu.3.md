@@ -5,87 +5,77 @@
 
 NAME
 ----
+
 msu - Bash interface to msu
 
 
 SYNOPSIS
 --------
-Understanding this documentation is important in designing new modules.
-It documents the internal modules msu(1) ships with.
+
+Understanding this documentation is important in writing new
+modules. It documents the internal modules msu(1) ships with.
 
 Conventions used when documenting symbols:
 
 *`${VARIABLE}`*
 
-   > Represents the variable with the name 'VARIABLE'. This is used for
-   both bash and environment variables, such as `${MSU_EXTERNAL_LIB}`.
+   > Represents an environment variable, such as
+   > `${MSU_EXTERNAL_LIB}`.
 
 *function_name(parameter1...)*
 
-   > Represents the function with the name 'function_name' and formal
-   parameters 'parameter1'.... Do remember that invoking the function
-   is done by 'function_name "parameter 1"'.
+   > Represents a function with the name 'function_name' and
+   > parameters 'parameter1'....
+   > Do remember that invoking the function is done by
+   > 'function_name "parameter 1"'.
 
 
 DESCRIPTION
 -----------
+
 This documentation is on internal msu(3) modules. These modules include:
 
 *core*
 
-   > The most low-level module in charge of getting msu get  off the ground.
-   See *msu-core(3)*.
+   > The most low-level module in charge of getting msu off the
+   > ground. See *msu-core(3)*.
 
 *core_utils*
 
-   > Utilities that make msu more useful and manageable to use. These utilities
-   help build up the msu ecosystem. See *msu-core_utils(3)*.
+   > Utilities that make msu more useful and manageable to use.
+   > These utilities help build up the msu ecosystem.
+   > See *msu-core_utils(3)*.
 
 *console*
 
-   > Reading and writing to console/terminal. Function include logging and
-   prompting user for input. They facilitate interaction between user and msu.
-   See *msu-console(3)*.
+   > Reading and writing to console/terminal. Functions include
+   > logging and prompting user for input. They facilitate
+   > interaction between user and msu. See *msu-console(3)*.
 
 *format*
 
-   > Formatting symbols useful in terminal output. Such symbols include ticks
-   and arrows. See *msu-format(3)*.
+   > Formatting symbols useful in terminal output. Such symbols
+   > include ticks and arrows. See *msu-format(3)*.
 
 
 MODULES
 -------
+
 There are *internal* and *external* modules. Internal modules are
-shipped with `msu`. External modules are those you install on your own.
+shipped with `msu`. External modules are those you install on
+your own.
 
-All internal modules can be found in the 'lib' directory in the source code
-repo. These modules offer the `msu` backbone and useful utilities.
+All internal modules can be found in the 'lib' directory in the
+source code repo. These modules offer the `msu` backbone and useful
+utilities.
 
-Anybody can install their own external modules. On installation, these
-modules are placed at `${MSU_EXTERNAL_LIB}`, which by default is
-`${HOME}/.msu`. You can install external modules, by simple copying the
-module contents to the external library directory (`${MSU_EXTERNAL_LIB}`).
-*msu install* can be used to do this copying in a better way.
-
-    $ msu install my-module
-
-You can also install remote modules from github, using prefix shorthands.
-Available shorthands include:
-
-   > * gh: - for Github
-   * bt: - for Bitbucket
-
-For example if https://github.com/GochoMugo/submarine is a module you want
-to install:
-
-    $ msu install gh:GochoMugo/submarine
-
-**NOTE:** the prefix shorthand, `gh:` part, is case-insensitive.
+Anybody can install their own external modules using *msu install*.
+On installation, these modules are placed at `${MSU_EXTERNAL_LIB}`, which by default is `${HOME}/.msu`. See *msu(1)*.
 
 Internal modules *always* take precedence over external modules.
 
-A valid module can be a single script, say `sample.sh`, or a directory
-with many scripts, say
+A valid module can be a single script, say `sample.sh`, or a
+directory with many scripts, say
 
 ```
 my-module/
@@ -104,52 +94,55 @@ except that preceding the extension.
 Examples:
 
    > * `foobar.sh` - valid
-   * `foo-bar.sh` - valid
-   * `foo_bar.sh` - valid
-   * `foo.bar.sh` - *invalid*
+   > * `foo-bar.sh` - valid
+   > * `foo_bar.sh` - valid
+   > * `foo.bar.sh` - *invalid*
 
 
 DEPENDENCIES
 ------------
+
 If a module defines the `${DEPS}` variable, `msu` will check if the
-dependencies are installed. Note that `msu` will *not error* if one or
-more of the dependencies are missing, it will just give a **warning** to
-the user. This is by design!
+dependencies are installed. Note that `msu` will *not error* if one
+or more of the dependencies are missing, it will just give a
+**warning** to the user. This is by design!
 
 Example:
 
-    DEPS="git node npm"
+   > DEPS="git node npm"
 
 
 ALIASES
 -------
-msu loads aliases into the shell, if sourced during load process. msu
-exports its own aliases, for its internal library functions. These specific
-aliases are documented alongisde the functions.
 
-External modules can also add aliases by having an 'aliases.sh' file in
-the root of the module's directory. The aliases in the file are automatically
-loaded after the internal module ones.
+msu loads aliases into the shell, if sourced in your .bashrc.
+msu exports its own aliases, for its internal library functions.
+These specific aliases are documented alongisde the functions.
 
-A top-most aliases file at `${MSU_EXTERNAL_LIB}/aliases.sh` can be used to
-override any other aliases as it is loaded last.
+External modules can also add aliases by having an 'aliases.sh' file
+in the root of the module's directory. The aliases in the file are
+automatically loaded after the internal module ones.
+
+A top-most aliases file at `${MSU_EXTERNAL_LIB}/aliases.sh` can be
+used to override any other aliases as it is loaded last.
 
 A sample aliases file:
 
-    alias my-alias="msu run my-module.func"
-    alias another-alias="msu run my-module.another_func"
+   > alias my-alias="msu run my-module.func"
+   > alias another-alias="msu run my-module.another_func"
 
-*Conflicts* can happen when, say two modules both try to create an alias with
-the same name. `msu` has no way to detect this. The best way to avoid this
-is to use a short prefix in front of your aliases.
+*Conflicts* can happen when, say two modules both try to create an
+alias with the same name. `msu` has no way to detect this. The best
+way to avoid this is to use a short prefix in front of your aliases.
 
 For example:
 
-    alias pr.dance='msu run prior.module.dance'
+   > alias pr.dance='msu run prior.module.dance'
 
 
 RESOURCES
 ---------
+
 Source code: https://github.com/GochoMugo/msu
 
 Issue tracker: https://github.com/GochoMugo/msu/issues
@@ -157,11 +150,13 @@ Issue tracker: https://github.com/GochoMugo/msu/issues
 
 AUTHOR
 ------
+
 *msu* is developed and maintained by Gocho Mugo.
 
 
 COPYING
 -------
+
 THE MIT LICENSE (MIT)
 
 Copyright \(C) 2015 Gocho Mugo \<mugo@forfuture.co.ke>
