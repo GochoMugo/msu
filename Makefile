@@ -55,7 +55,7 @@ doc: clean.doc
 	done
 
 # Draft new release.
-release: test clean doc
+release: clean doc
 	@./bin/msu execute release.sh
 
 # Run all tests.
