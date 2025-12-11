@@ -54,7 +54,7 @@ tar --create --gzip --file "${RELEASE_TARBALL}" "$(basename "${RELEASE_DIR}")"
 
 
 log "creating a new github release"
-hub release create -a ${RELEASE_TARBALL} "v${MSU_VERSION}"
+hub release create -a "${RELEASE_TARBALL}" "v${MSU_VERSION}"
 
 
 success "New MSU release: v${MSU_VERSION}"
