@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2015-2016 Gocho Mugo <mugo@forfuture.co.ke>
+# Copyright (c) 2015 Gocho Mugo <mugo@forfuture.co.ke>
 # Licensed under the MIT License
 
 # ensure manpages were created

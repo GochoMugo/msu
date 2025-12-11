@@ -64,7 +64,7 @@ More documentation is placed in the
 
 __The MIT License (MIT)__
 
-Copyright &copy; 2015-2016 GochoMugo <mugo@forfuture.co.ke>
+Copyright &copy; 2015 GochoMugo <mugo@forfuture.co.ke>
 
 
 [installation]:https://github.com/GochoMugo/msu/tree/master/docs/installation.md "msu installation"

@@ -90,4 +90,4 @@ COPYING
 -------
 THE MIT LICENSE (MIT)
 
-Copyright \(C) 2015-2016 Gocho Mugo \<mugo@forfuture.co.ke>
+Copyright \(C) 2015 Gocho Mugo \<mugo@forfuture.co.ke>
