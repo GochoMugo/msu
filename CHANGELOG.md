@@ -7,14 +7,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
-Added:
+## [0.4.0][0.4.0] - 11/12/2025
 
-* Support installing modules from GitLab using shorthand
-* Support versions (git tags) when installing remote modules
-
-Fixed:
-
-* Reduce noise during installation
+Revamped after years of neglect!
 
 
 ## [0.3.0][0.3.0] - 19/03/2016
@@ -70,3 +65,4 @@ This is the very first version of `msu`.
 [0.1.0]:https://github.com/GochoMugo/msu/releases/tag/0.1.0
 [0.2.0]:https://github.com/GochoMugo/msu/releases/tag/0.2.0
 [0.3.0]:https://github.com/GochoMugo/msu/releases/tag/0.3.0
+[0.4.0]:https://github.com/GochoMugo/msu/releases/tag/0.4.0
