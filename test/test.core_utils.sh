@@ -37,6 +37,9 @@ function test_is_module_installed() {
 
 
 @test "\`get_latest_version' returns the latest version of msu" {
+  if [ -n "${CI}" ] ; then
+    skip "GitHub API rate limiting causes this test case to fail often"
+  fi
   get_latest_version | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$'
 }
 
