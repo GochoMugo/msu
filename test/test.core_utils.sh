@@ -11,6 +11,16 @@ function setup() {
 }
 
 
+function mock_curl_for_upgrade() {
+  local bin="${BATS_TEST_TMPDIR}/bin"
+  PATH="${bin}:${PATH}"
+  mkdir -p "${bin}"
+  touch "${bin}/curl"
+  chmod +x "${bin}/curl"
+  echo "envsubst '\$TEST_TAG_NAME' < "${PWD}/test/data/upgrade.json" && touch "${BATS_TEST_TMPDIR}/curl_mocked"" > "${bin}/curl"
+}
+
+
 function test_is_module_installed() {
   local status="${1}"
   local output="${2}"
@@ -290,6 +300,43 @@ function test_is_module_installed() {
   grep "${sym_tick} mod2" <<< "${output}"
   [ ! -d "${MSU_EXTERNAL_LIB}/mod1" ]
   [ ! -d "${MSU_EXTERNAL_LIB}/mod2" ]
+}
+
+
+@test "\`update_check' checks for updates" {
+  mock_curl_for_upgrade
+  local timestamp="$(date '+%Y.%m.%d')"
+  rm -f "/tmp/.msu-can-upgrade."*
+
+  # First run runs curl and does not log any output.
+  TEST_TAG_NAME="999.0.0" run update_check
+  [ "${status}" -eq 0 ]
+  ! grep "new msu version" <<< "${output}"
+  [ -f "${BATS_TEST_TMPDIR}/curl_mocked" ]
+  [ -f "/tmp/.msu-can-upgrade.${timestamp}" ]
+  ! [ -f "/tmp/.msu-can-upgrade.${timestamp}.done" ]
+  rm "${BATS_TEST_TMPDIR}/curl_mocked"
+
+  # Second run does not run curl but logs notice.
+  TEST_TAG_NAME="999.0.0" run update_check
+  [ "${status}" -eq 0 ]
+  grep "new msu version (999.0.0)" <<< "${output}"
+  [ -f "/tmp/.msu-can-upgrade.${timestamp}.done" ]
+  ! [ -f "${BATS_TEST_TMPDIR}/curl_mocked" ]
+
+  # Third run does not run curl nor log any output.
+  TEST_TAG_NAME="999.0.0" run update_check
+  [ "${status}" -eq 0 ]
+  ! grep "new msu version" <<< "${output}"
+  ! [ -f "${BATS_TEST_TMPDIR}/curl_mocked" ]
+
+  # Cleans up after itself.
+  rm -f "/tmp/.msu-can-upgrade."*
+  touch "/tmp/.msu-can-upgrade.2025-12-18"
+  touch "/tmp/.msu-can-upgrade.2025-12-18.done"
+  TEST_TAG_NAME="999.0.0" run update_check
+  ! [ -f "/tmp/.msu-can-upgrade.2025-12-18" ]
+  ! [ -f "/tmp/.msu-can-upgrade.2025-12-18.done" ]
 }
 
 

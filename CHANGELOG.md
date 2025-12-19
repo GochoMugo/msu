@@ -7,6 +7,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+* Automatically checks for updates when some msu commands,
+  such as `msu help`, are run.
+
+
 ## [0.4.0][0.4.0] - 11/12/2025
 
 Revamped after years of neglect!

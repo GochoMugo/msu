@@ -46,21 +46,26 @@ case "${1:-''}" in
   ;;
   "i" | "install" )
     msu_run core_utils.install "${@:2}"
+    msu_run core_utils.update_check
   ;;
   "im" | "install-many" )
     msu_run core_utils.install_from_list "${2}"
+    msu_run core_utils.update_check
   ;;
   "u" | "uninstall" )
     msu_run core_utils.uninstall "${@:2}"
+    msu_run core_utils.update_check
   ;;
   "um" | "uninstall-many" )
     msu_run core_utils.uninstall_from_list "${2}"
+    msu_run core_utils.update_check
   ;;
   "up" | "upgrade" )
     msu_run core_utils.upgrade "${2}"
   ;;
   "ls" | "list" )
     msu_run core_utils.list_modules "${2}"
+    msu_run core_utils.update_check
   ;;
   "nk" | "nuke" )
     msu_run core_utils.nuke
@@ -98,6 +103,7 @@ case "${1:-''}" in
     echo " see https://github.com/GochoMugo/msu/issues for bug reporting"
     echo " and feature requests"
     echo
+    msu_run core_utils.update_check
   ;;
   "v" | "version" )
     if [ "${2}" ]
@@ -108,6 +114,7 @@ case "${1:-''}" in
       echo "  build     ${MSU_BUILD_HASH:-?}"
       echo "  date      ${MSU_BUILD_DATE:-?}"
     fi
+    msu_run core_utils.update_check
   ;;
   * )
     # maybe, we are being used in a shebang e.g. #!/usr/bin/env msu

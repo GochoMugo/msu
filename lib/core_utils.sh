@@ -308,6 +308,33 @@ function uninstall_from_list() {
 }
 
 
+function update_check() {
+  local check_file_prefix="/tmp/.msu-can-upgrade."
+  local check_file
+  local done_file
+  check_file="${check_file_prefix}$(date '+%Y.%m.%d')"
+  done_file="${check_file}.done"
+
+  if [ -f "${done_file}" ] ; then
+    return 0
+  elif [ -f "${check_file}" ] ; then
+    local version
+    version="$(cat "${check_file}")"
+
+    if is_semver_gt "${version}" "${MSU_VERSION}" > /dev/null ; then
+      log "A new msu version (${version}) is available!"
+      log "You can upgrade using \`msu upgrade'."
+    fi
+
+    touch "${done_file}"
+    return 0
+  fi
+
+  rm -f "${check_file_prefix}"*
+  get_latest_version > "${check_file}" &
+}
+
+
 # upgrade myself
 function upgrade() {
   log "upgrading myself"
