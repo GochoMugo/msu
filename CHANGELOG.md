@@ -7,6 +7,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+
+## [0.5.0][0.5.0] - 07/01/2025
+
 Added:
 
 * Automatically checks for updates when some msu commands,
@@ -72,3 +75,4 @@ This is the very first version of `msu`.
 [0.2.0]:https://github.com/GochoMugo/msu/releases/tag/0.2.0
 [0.3.0]:https://github.com/GochoMugo/msu/releases/tag/0.3.0
 [0.4.0]:https://github.com/GochoMugo/msu/releases/tag/0.4.0
+[0.5.0]:https://github.com/GochoMugo/msu/releases/tag/0.5.0
