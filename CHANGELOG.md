@@ -7,6 +7,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Fixed:
+
+* `upgrade` command returns an exit code of zero if already at latest version.
+
 
 ## [0.5.0][0.5.0] - 07/01/2025
 

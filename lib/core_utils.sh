@@ -363,7 +363,7 @@ function upgrade() {
 
     if ! is_semver_gt "${version}" "${MSU_VERSION}" > /dev/null ; then
       log "you have the latest version"
-      return 2
+      return
     fi
   }
 
