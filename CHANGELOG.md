@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 Fixed:
 
+* `run` command supports interactive functions.
 * `upgrade` command returns an exit code of zero if already at latest version.
 
 

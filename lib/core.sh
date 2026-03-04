@@ -104,13 +104,14 @@ function msu_run() {
   local module
   local func
   local args
+  local script
   module="${1%.*}"
   func="${1##*.}"
   args=""
   for arg in "${@:2}" ; do
       args+=" '${arg}'"
   done
-  bash <<EOF
+  script=$(cat << EOF
   set -e
   MSU_LIB="${MSU_LIB}"
   source "${MSU_LIB}/core.sh"
@@ -122,6 +123,8 @@ function msu_run() {
     exit 1
   fi
 EOF
+  )
+  bash -c "${script}"
 }
 
 
