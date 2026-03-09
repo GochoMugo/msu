@@ -149,6 +149,17 @@ function test_is_module_installed() {
 }
 
 
+@test "\`install' supports . as local path" {
+  mod="${BATS_TEST_TMPDIR}/mod"
+  mkdir -p "${mod}"
+  pushd "${mod}"
+  run install "."
+  [ "${status}" -eq 0 ]
+  grep "${sym_tick} mod" <<< "${output}"
+  [ -d "${MSU_EXTERNAL_LIB}/mod" ]
+}
+
+
 @test "\`install' supports versions (git tags)" {
   samplemodule="GL:GochoMugo/msu-test#v0.0.0"
   run install "GL:GochoMugo/msu-test#v0.0.0"
