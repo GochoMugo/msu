@@ -46,6 +46,20 @@ function test_is_module_installed() {
 }
 
 
+@test "\`for_each_line_in_file' passes extra args to the command" {
+  local file="${BATS_TEST_TMPDIR}/file"
+  echo -e "first\nsecond" > "${file}"
+  declare -a calls
+  function track_with_extra() {
+    calls+=("${1} ${2}")
+  }
+  for_each_line_in_file track_with_extra --extra "${file}"
+  [ "${#calls[@]}" == 2 ]
+  [ "${calls[0]}" == "--extra first" ]
+  [ "${calls[1]}" == "--extra second" ]
+}
+
+
 @test "\`get_latest_version' returns the latest version of msu" {
   if [ -n "${CI}" ] ; then
     skip "GitHub API rate limiting causes this test case to fail often"
@@ -182,6 +196,33 @@ function test_is_module_installed() {
 }
 
 
+@test "\`install_from_list' supports -f/--force to force reinstall" {
+  mod="${BATS_TEST_TMPDIR}/mod"
+  mkdir -p "${mod}"
+  listpath="${BATS_TEST_TMPDIR}/list"
+  echo "${mod}" > "${listpath}"
+
+  # first install works
+  run install_from_list "${listpath}"
+  [ "${status}" -eq 0 ]
+
+  # install again should fail without force
+  run install_from_list "${listpath}"
+  [ "${status}" -eq 1 ]
+  grep "module already installed: mod" <<< "${output}"
+
+  # --force flag allows reinstall
+  run install_from_list --force "${listpath}"
+  [ "${status}" -eq 0 ]
+  grep "${sym_tick} mod" <<< "${output}"
+
+  # -f flag also allows reinstall
+  run install_from_list -f "${listpath}"
+  [ "${status}" -eq 0 ]
+  grep "${sym_tick} mod" <<< "${output}"
+}
+
+
 @test "\`is_semver_gt' compares 2 versions correctly" {
   [[ $(is_semver_gt 0.0.1 0.0.0) == 0 ]]
   [[ $(is_semver_gt 0.1.0 0.0.0) == 0 ]]
@@ -311,6 +352,23 @@ function test_is_module_installed() {
   grep "${sym_tick} mod2" <<< "${output}"
   [ ! -d "${MSU_EXTERNAL_LIB}/mod1" ]
   [ ! -d "${MSU_EXTERNAL_LIB}/mod2" ]
+}
+
+
+@test "\`uninstall_from_list' accepts -f/--force flag" {
+  listpath="${BATS_TEST_TMPDIR}/list"
+  mkdir -p "${MSU_EXTERNAL_LIB}/mod1"
+  echo "mod1" > "${listpath}"
+
+  run uninstall_from_list --force "${listpath}"
+  [ "${status}" -eq 0 ]
+  grep "${sym_tick} mod1" <<< "${output}"
+  [ ! -d "${MSU_EXTERNAL_LIB}/mod1" ]
+
+  # -f also works (module already uninstalled, just reports it)
+  run uninstall_from_list -f "${listpath}"
+  [ "${status}" -eq 0 ]
+  grep "${sym_tick} mod1 (not installed)" <<< "${output}"
 }
 
 

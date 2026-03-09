@@ -18,22 +18,27 @@ msu_require "metadata"
 
 
 # Executes a command for each line in the specified file.
-# The command is passed the line as the only argument.
-# ${1} - function
-# ${2} - path to file
+# The command is passed any extra args followed by the line as arguments.
+# ${1}        - function
+# ${@:2:$#-2} - extra args to pass to the function (optional)
+# ${@: -1}    - path to file (last argument)
 function for_each_line_in_file() {
+  local func="${1}"
+  local file="${*: -1}"
+  local -a extra_args=("${@:2:$(($#-2))}")
+
   # ensure the file exists, otherwise the `cat` command will hang
-  if [ ! -f "${2}" ]
+  if [ ! -f "${file}" ]
   then
     error "file does NOT exist"
     return 1
   fi
   # read the list into a variable
   local mods
-  mods="$(cat "${2}")"
+  mods="$(cat "${file}")"
   for mod in ${mods}
   do
-    ${1} "${mod}"
+    "${func}" "${extra_args[@]}" "${mod}"
   done
 }
 
@@ -160,8 +165,24 @@ function install() {
 
 
 # install many
+# ${1} - optional -f/--force flag
+# ${2} - path to file  (or ${1} if no flag)
 function install_from_list() {
-  for_each_line_in_file install "${1}"
+  local force_flag=
+  local listfile=
+  for opt in "${@}" ; do
+    case "${opt}" in
+      "-f" | "--force" )
+        force_flag="--force"
+        ;;
+      * )
+        listfile="${opt}"
+        ;;
+    esac
+  done
+  # shellcheck disable=2086
+  # ${force_flag} is intentionally unquoted so that it expands to nothing when empty
+  for_each_line_in_file install ${force_flag} "${listfile}"
 }
 
 
@@ -291,20 +312,43 @@ function show_metadata() {
 # uninstall module(s)
 function uninstall() {
   for dir in "$@" ; do
-    path="${MSU_EXTERNAL_LIB}/${dir}"
-    if [ -e "${path}" ] ; then
-      rm -rf "${path}" > /dev/null
-      tick "${dir}"
-    else
-      tick "${dir} (not installed)"
-    fi
+    case "${dir}" in
+      "-f" | "--force" )
+        # accepted for API compatibility with install; uninstall is always non-destructive
+        ;;
+      * )
+        path="${MSU_EXTERNAL_LIB}/${dir}"
+        if [ -e "${path}" ] ; then
+          rm -rf "${path}" > /dev/null
+          tick "${dir}"
+        else
+          tick "${dir} (not installed)"
+        fi
+        ;;
+    esac
   done
 }
 
 
 # uninstall many
+# ${1} - optional -f/--force flag
+# ${2} - path to file  (or ${1} if no flag)
 function uninstall_from_list() {
-  for_each_line_in_file uninstall "${1}"
+  local force_flag=
+  local listfile=
+  for opt in "${@}" ; do
+    case "${opt}" in
+      "-f" | "--force" )
+        force_flag="--force"
+        ;;
+      * )
+        listfile="${opt}"
+        ;;
+    esac
+  done
+  # shellcheck disable=2086
+  # ${force_flag} is intentionally unquoted so that it expands to nothing when empty
+  for_each_line_in_file uninstall ${force_flag} "${listfile}"
 }
 
 
