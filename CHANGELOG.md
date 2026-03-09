@@ -7,6 +7,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [0.6.0][0.6.0] - 2026-03-09
+
 Added:
 
 * Added `where` sub-command.
@@ -87,3 +89,4 @@ This is the very first version of `msu`.
 [0.3.0]:https://github.com/GochoMugo/msu/releases/tag/0.3.0
 [0.4.0]:https://github.com/GochoMugo/msu/releases/tag/0.4.0
 [0.5.0]:https://github.com/GochoMugo/msu/releases/tag/0.5.0
+[0.6.0]:https://github.com/GochoMugo/msu/releases/tag/0.6.0
