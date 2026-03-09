@@ -19,7 +19,7 @@ Fixed:
 * `upgrade` command returns an exit code of zero if already at latest version.
 
 
-## [0.5.0][0.5.0] - 07/01/2025
+## [0.5.0][0.5.0] - 2026-01-07
 
 Added:
 
@@ -27,12 +27,12 @@ Added:
   such as `msu help`, are run.
 
 
-## [0.4.0][0.4.0] - 11/12/2025
+## [0.4.0][0.4.0] - 2025-12-11
 
 Revamped after years of neglect!
 
 
-## [0.3.0][0.3.0] - 19/03/2016
+## [0.3.0][0.3.0] - 2016-03-19
 
 Added:
 
@@ -43,7 +43,7 @@ Removed:
 * the `fs` and `net` modules are removed, to keep `msu` minimal
 
 
-## [0.2.0][0.2.0] - 26/02/2016
+## [0.2.0][0.2.0] - 2016-02-26
 
 Added:
 
@@ -59,7 +59,7 @@ Fixed:
 * fix listing internal modules i.e. only list the `*.sh` files
 
 
-## [0.1.0][0.1.0] - 13/02/2016
+## [0.1.0][0.1.0] - 2016-02-13
 
 Added:
 
@@ -75,7 +75,7 @@ Fixed:
 * Fix path to executable, if executed directly (not through symlink)
 
 
-## [0.0.0][0.0.0] - 24/01/2016
+## [0.0.0][0.0.0] - 2016-01-24
 
 This is the very first version of `msu`.
 
