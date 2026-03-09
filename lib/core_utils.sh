@@ -95,7 +95,7 @@ function install() {
   for dir in "${modules[@]}" ; do
     local module_name
     local remote_mark
-    remote_mark=$(echo "${dir}" | grep -Eo "[a-zA-Z0-9]+:" | grep -Eo "[^:]*")
+    remote_mark=$(echo "${dir}" | grep -Eo "[a-zA-Z0-9]+:" | grep -Eo "[^:]*" || true)
     if [ "${remote_mark}" ] ; then
       # requires cloning
       local tmpdir
