@@ -82,6 +82,7 @@ case "${1:-''}" in
     echo "    msu upgrade [version]"
     echo "    msu nuke"
     echo "    msu version [mod]"
+    echo "    msu where <mod>"
     echo "    msu help"
     echo
     echo " commands:"
@@ -96,6 +97,7 @@ case "${1:-''}" in
     echo "    um | uninstall-many  uninstall from module-list at path <path>"
     echo "    up | upgrade         upgrade to the latest version"
     echo "    v  | version         show version information of module [mod] or msu itself"
+    echo "    w  | where           show path to an external module"
     echo "    x  | execute         execute file at the path <path>"
     echo
     echo " for more help information, see msu(1)"
@@ -114,6 +116,10 @@ case "${1:-''}" in
       echo "  build     ${MSU_BUILD_HASH:-?}"
       echo "  date      ${MSU_BUILD_DATE:-?}"
     fi
+    msu_run core_utils.update_check
+  ;;
+  "w" | "where" )
+    msu_run core_utils.where "${2}"
     msu_run core_utils.update_check
   ;;
   * )

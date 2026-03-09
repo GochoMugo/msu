@@ -377,3 +377,19 @@ function upgrade() {
   LIB="${LIB}" BIN="${BIN}" MAN="${MAN}" ./install.sh
   popd > /dev/null || return 1
 }
+
+
+function where() {
+  if [ -z "${1}" ] ; then
+    error "module name not specified"
+    return 1
+  fi
+  local module_dir
+  module_dir="${MSU_EXTERNAL_LIB}/${1}"
+  if [ ! -d "${module_dir}" ] ; then
+    error "module not found: ${1}"
+    return 1
+  fi
+  echo "${module_dir}"
+  return
+}

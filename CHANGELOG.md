@@ -7,6 +7,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+* Added `where` sub-command.
+
 Fixed:
 
 * `run` command supports interactive functions.

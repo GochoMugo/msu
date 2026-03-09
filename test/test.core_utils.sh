@@ -354,3 +354,24 @@ function test_is_module_installed() {
 @test "\`upgrade' upgrades to latest version" {
   skip "Upgrading is untested for now"
 }
+
+
+@test "\`where' prints installation path of module" {
+  # installed module
+  mkdir -p "${MSU_EXTERNAL_LIB}/mod"
+  run where mod
+  [ "${status}" -eq 0 ]
+  grep "${MSU_EXTERNAL_LIB}/mod" <<< "${output}"
+
+  # missing module
+  mkdir -p "${MSU_EXTERNAL_LIB}/mod"
+  run where unknown
+  [ "${status}" -eq 1 ]
+  grep "module not found: unknown" <<< "${output}"
+
+  # module not specified
+  mkdir -p "${MSU_EXTERNAL_LIB}/mod"
+  run where
+  [ "${status}" -eq 1 ]
+  grep "module name not specified" <<< "${output}"
+}

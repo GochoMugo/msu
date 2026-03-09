@@ -24,6 +24,8 @@ SYNOPSIS
 
 *msu* version ['MODULE']
 
+*msu* where 'MODULE'
+
 *msu* help
 
 
@@ -128,6 +130,11 @@ COMMANDS
 
    > Shows version information for the module 'MODULE', if passed.
    > Otherwise, shows version information for msu itself.
+
+*w, where* 'MODULE'
+
+   > Prints the installation path of the external module 'MODULE'.
+   > Exits with an error if module not installed.
 
 *x, execute* 'PATH'
 

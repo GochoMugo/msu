@@ -72,6 +72,11 @@ DESCRIPTION
 
    > List installed external modules.
 
+*where('MODULE')*
+
+   > Echoes the installation path of the external module 'MODULE'.
+   > Returns 1 if module not installed.
+
 
 RESOURCES
 ---------
