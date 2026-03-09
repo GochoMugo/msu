@@ -108,7 +108,7 @@ function test_is_module_installed() {
   # install again should fail
   run install "${mod}"
   [ "${status}" -eq 1 ]
-  grep "error: module already installed: mod" <<< "${output}"
+  grep "module already installed: mod" <<< "${output}"
 
   # install can be forced
   run install "${mod}" --force

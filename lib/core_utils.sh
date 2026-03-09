@@ -146,7 +146,7 @@ function install() {
       module_name="$(basename "${dir}")"
       if [ -e "${MSU_EXTERNAL_LIB}/${module_name}" ] ; then
         if [ -z "${do_force}" ] ; then
-          echo "error: module already installed: ${module_name}" > /dev/stderr
+          error "module already installed: ${module_name}"
           return 1
         else
           rm -rf "${MSU_EXTERNAL_LIB:?}/${module_name}"

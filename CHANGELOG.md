@@ -14,6 +14,7 @@ Added:
 Fixed:
 
 * `install` command does not fail if installing from local path.
+* `install` outputs error properly.
 * `run` command supports interactive functions.
 * `upgrade` command returns an exit code of zero if already at latest version.
 
