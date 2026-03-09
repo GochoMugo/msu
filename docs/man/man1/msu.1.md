@@ -48,7 +48,7 @@ COMMANDS
    > Installs the module 'MODULE' into the directory at
    > `${MSU_EXTERNAL_LIB}`. The module can be located either locally
    > or remotely.
-   
+
    > If remote, a prefix shorthand is required to determine where to
    > fetch the module from. Available case-insensitive shorthands
    > include:
@@ -142,7 +142,7 @@ COMMANDS
    > through bash, with the core library loaded before-hand. This
    > emulates the action of running a function with its body being
    > the contents of the file. This command should be considered
-   > DANGEROUS as it is able to execute commands in a file without 
+   > DANGEROUS as it is able to execute commands in a file without
    > the execution bit set.
 
 
@@ -152,7 +152,7 @@ ENVIRONMENT VARIABLES
 *`${MSU_EXTERNAL_LIB}`*
 
    > Set to the path to the directory holding the external modules.
-   > It is where modules are installed to, with the *install* 
+   > It is where modules are installed to, with the *install*
    > and *install-many* sub-commands. It defaults to
    > `${HOME}/.msu`.
 
