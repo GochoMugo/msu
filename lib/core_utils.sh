@@ -301,6 +301,37 @@ function process_install_list() {
 }
 
 
+# show help for an installed module using DOC comments in its aliases.sh
+# ${1} - module name
+function show_help() {
+  if [ -z "${1}" ] ; then
+    error "module name not specified"
+    return 1
+  fi
+  local aliases_file
+  aliases_file="${MSU_EXTERNAL_LIB}/${1}/aliases.sh"
+  if [ ! -f "${aliases_file}" ] ; then
+    error "module aliases not found: ${1}"
+    return 1
+  fi
+  awk '
+      /^[[:space:]]*$/  { doc = ""; next }
+      /^# DOC: /        { doc = substr($0, 8); next }
+      /^# /             { if (doc != "") doc = doc " " substr($0, 3); next }
+      /^alias / {
+          if (doc != "") {
+              name = $2
+              sub(/=.*$/, "", name)
+              printf "  %-12s %s\n", name, doc
+          }
+          doc = ""
+          next
+      }
+      { doc = "" }
+  ' "${aliases_file}"
+}
+
+
 # show metadata for an installed module
 function show_metadata() {
   local metadata_file

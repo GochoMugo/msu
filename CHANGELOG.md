@@ -9,8 +9,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 Added:
 
+* `help` sub-command can show documentation of aliases
+  in an external module.
 * `install-many`, `uninstall` and `uninstall-many`
-  commands support the `--force` flag.
+  sub-commands support the `--force` flag.
 
 Changed:
 

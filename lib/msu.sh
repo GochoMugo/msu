@@ -71,41 +71,47 @@ case "${1:-''}" in
     msu_run core_utils.nuke
   ;;
   "h" | "help" )
-    echo
-    echo " msu by ${MSU_AUTHOR_NAME} <${MSU_AUTHOR_EMAIL}>"
-    echo
-    echo " usage:"
-    echo "    msu require|install|uninstall <mod>..."
-    echo "    msu execute|install-many|uninstall-many <path>"
-    echo "    msu run <mod>.<func>"
-    echo "    msu list"
-    echo "    msu upgrade [version]"
-    echo "    msu nuke"
-    echo "    msu version [mod]"
-    echo "    msu where <mod>"
-    echo "    msu help"
-    echo
-    echo " commands:"
-    echo "    h  | help            show this help information"
-    echo "    i  | install         install the module(s) <mod>..."
-    echo "    im | install-many    install from module-list at path <path>"
-    echo "    ls | list            list installed modules"
-    echo "    nk | nuke            nuke msu entirely"
-    echo "    r  | run             run the function <func> in module <mod>"
-    echo "    re | require         require the library module <mod>"
-    echo "    u  | uninstall       uninstall the module(s) <mod>..."
-    echo "    um | uninstall-many  uninstall from module-list at path <path>"
-    echo "    up | upgrade         upgrade to the latest version"
-    echo "    v  | version         show version information of module [mod] or msu itself"
-    echo "    w  | where           show path to an external module"
-    echo "    x  | execute         execute file at the path <path>"
-    echo
-    echo " for more help information, see msu(1)"
-    echo
-    echo " see https://github.com/GochoMugo/msu/issues for bug reporting"
-    echo " and feature requests"
-    echo
-    msu_run core_utils.update_check
+    if [ "${2}" ]
+    then
+      msu_run core_utils.show_help "${2}"
+      msu_run core_utils.update_check
+    else
+      echo
+      echo " msu by ${MSU_AUTHOR_NAME} <${MSU_AUTHOR_EMAIL}>"
+      echo
+      echo " usage:"
+      echo "    msu require|install|uninstall <mod>..."
+      echo "    msu execute|install-many|uninstall-many <path>"
+      echo "    msu run <mod>.<func>"
+      echo "    msu list"
+      echo "    msu upgrade [version]"
+      echo "    msu nuke"
+      echo "    msu version [mod]"
+      echo "    msu where <mod>"
+      echo "    msu help [mod]"
+      echo
+      echo " commands:"
+      echo "    h  | help            show help information of module [mod] or this help info"
+      echo "    i  | install         install the module(s) <mod>..."
+      echo "    im | install-many    install from module-list at path <path>"
+      echo "    ls | list            list installed modules"
+      echo "    nk | nuke            nuke msu entirely"
+      echo "    r  | run             run the function <func> in module <mod>"
+      echo "    re | require         require the library module <mod>"
+      echo "    u  | uninstall       uninstall the module(s) <mod>..."
+      echo "    um | uninstall-many  uninstall from module-list at path <path>"
+      echo "    up | upgrade         upgrade to the latest version"
+      echo "    v  | version         show version information of module [mod] or msu itself"
+      echo "    w  | where           show path to an external module"
+      echo "    x  | execute         execute file at the path <path>"
+      echo
+      echo " for more help information, see msu(1)"
+      echo
+      echo " see https://github.com/GochoMugo/msu/issues for bug reporting"
+      echo " and feature requests"
+      echo
+      msu_run core_utils.update_check
+    fi
   ;;
   "v" | "version" )
     if [ "${2}" ]

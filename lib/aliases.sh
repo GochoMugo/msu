@@ -10,10 +10,10 @@ MSU_EXTERNAL_LIB="${MSU_EXTERNAL_LIB:-${HOME}/.msu}"
 
 # general
 
-# help: msu run
+# DOC: msu run
 alias x="msu run"
 
-# help: reload msu into environment
+# DOC: reload msu into environment
 alias msu.reload=". msu env"
 
 
