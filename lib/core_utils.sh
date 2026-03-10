@@ -18,23 +18,20 @@ msu_require "metadata"
 
 
 # Executes a command for each line in the specified file.
-# The command is passed the line as the only argument.
-# ${1} - function
-# ${2} - path to file
+# ${1}    - path to file
+# ${2}    - function to call for each line
+# ${@:3}  - extra args to pass to the function before the line (optional)
 function for_each_line_in_file() {
-  # ensure the file exists, otherwise the `cat` command will hang
-  if [ ! -f "${2}" ]
-  then
+  local file="${1}"
+  local func="${2}"
+  local -a extra_args=("${@:3}")
+  if [ ! -f "${file}" ] ; then
     error "file does NOT exist"
     return 1
   fi
-  # read the list into a variable
-  local mods
-  mods="$(cat "${2}")"
-  for mod in ${mods}
-  do
-    ${1} "${mod}"
-  done
+  while read -r line ; do
+    "${func}" "${extra_args[@]}" "${line}"
+  done < "${file}"
 }
 
 
@@ -78,7 +75,7 @@ function has_command() {
 # ${*} - module names
 function install() {
   local do_force=
-  declare -a modules
+  local -a modules=()
 
   for opt in "${@}" ; do
     case "${opt}" in
@@ -160,8 +157,9 @@ function install() {
 
 
 # install many
+# ${*} - optional -f/--force flag followed by one or more file paths
 function install_from_list() {
-  for_each_line_in_file install "${1}"
+  process_install_list install "${@}"
 }
 
 
@@ -271,6 +269,38 @@ function nuke() {
 }
 
 
+# Process a list of files, calling a function for each line.
+# ${1}    - function name (e.g. install or uninstall)
+# ${@:2}  - optional -f/--force flag followed by one or more file paths
+function process_install_list() {
+  local func="${1}"
+  local force_flag=
+  local -a listfiles=()
+
+  shift
+  for opt in "${@}" ; do
+    case "${opt}" in
+      "-f" | "--force" )
+        force_flag="--force"
+        ;;
+      * )
+        listfiles+=("${opt}")
+        ;;
+    esac
+  done
+  if [ "${#listfiles[@]}" -eq 0 ] ; then
+    error "no file path provided"
+    return 1
+  fi
+
+  for listfile in "${listfiles[@]}" ; do
+    # shellcheck disable=2086
+    # ${force_flag} is intentionally unquoted so that it expands to nothing when empty
+    for_each_line_in_file "${listfile}" "${func}" ${force_flag}
+  done
+}
+
+
 # show metadata for an installed module
 function show_metadata() {
   local metadata_file
@@ -290,21 +320,40 @@ function show_metadata() {
 
 # uninstall module(s)
 function uninstall() {
-  for dir in "$@" ; do
+  local do_force=
+  local -a modules=()
+
+  for opt in "${@}" ; do
+    case "${opt}" in
+      "-f" | "--force" )
+        do_force=1
+        ;;
+      * )
+        modules+=("${opt}")
+        ;;
+    esac
+  done
+
+  local path
+  for dir in "${modules[@]}" ; do
     path="${MSU_EXTERNAL_LIB}/${dir}"
     if [ -e "${path}" ] ; then
       rm -rf "${path}" > /dev/null
       tick "${dir}"
-    else
+    elif [ -n "${do_force}" ] ; then
       tick "${dir} (not installed)"
+    else
+      error "module not installed: ${dir}"
+      return 1
     fi
   done
 }
 
 
 # uninstall many
+# ${*} - optional -f/--force flag followed by one or more file paths
 function uninstall_from_list() {
-  for_each_line_in_file uninstall "${1}"
+  process_install_list uninstall "${@}"
 }
 
 

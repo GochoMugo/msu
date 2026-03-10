@@ -7,6 +7,17 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Added:
+
+* `install-many`, `uninstall` and `uninstall-many`
+  commands support the `--force` flag.
+
+Changed:
+
+* `uninstall` fails if module does not exist, unless
+  `--force` flag is used.
+
+
 ## [0.6.0][0.6.0] - 2026-03-09
 
 Added:
