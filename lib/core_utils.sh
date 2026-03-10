@@ -326,25 +326,31 @@ function show_metadata() {
 # uninstall module(s)
 function uninstall() {
   local do_force=
-  local path
-  for dir in "$@" ; do
-    case "${dir}" in
+  declare -a modules
+
+  for opt in "${@}" ; do
+    case "${opt}" in
       "-f" | "--force" )
         do_force=1
         ;;
       * )
-        path="${MSU_EXTERNAL_LIB}/${dir}"
-        if [ -e "${path}" ] ; then
-          rm -rf "${path}" > /dev/null
-          tick "${dir}"
-        elif [ -n "${do_force}" ] ; then
-          tick "${dir} (not installed)"
-        else
-          error "module not installed: ${dir}"
-          return 1
-        fi
+        modules+=("${opt}")
         ;;
     esac
+  done
+
+  local path
+  for dir in "${modules[@]}" ; do
+    path="${MSU_EXTERNAL_LIB}/${dir}"
+    if [ -e "${path}" ] ; then
+      rm -rf "${path}" > /dev/null
+      tick "${dir}"
+    elif [ -n "${do_force}" ] ; then
+      tick "${dir} (not installed)"
+    else
+      error "module not installed: ${dir}"
+      return 1
+    fi
   done
 }
 

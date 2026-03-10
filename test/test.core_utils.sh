@@ -372,11 +372,10 @@ function test_is_module_installed() {
   [ "${status}" -eq 0 ]
   grep "${sym_tick} mod1 (not installed)" <<< "${output}"
 
-  # --force after a non-existent module name does NOT suppress the error
-  # because flag parsing is sequential: the module is processed before --force is seen
+  # --force after a non-existent module name also works (options are parsed before modules)
   run uninstall mod1 --force
-  [ "${status}" -eq 1 ]
-  grep "module not installed: mod1" <<< "${output}"
+  [ "${status}" -eq 0 ]
+  grep "${sym_tick} mod1 (not installed)" <<< "${output}"
 }
 
 
