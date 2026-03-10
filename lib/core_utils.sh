@@ -163,9 +163,12 @@ function install() {
 }
 
 
-# install many
-# ${*} - optional -f/--force flag followed by one or more file paths
-function install_from_list() {
+# Process a list of files, calling a function for each line.
+# ${1}    - function name (e.g. install or uninstall)
+# ${@:2}  - optional -f/--force flag followed by one or more file paths
+function process_install_list() {
+  local func="${1}"
+  shift
   local force_flag=
   local -a listfiles=()
   for opt in "${@}" ; do
@@ -185,8 +188,15 @@ function install_from_list() {
   for listfile in "${listfiles[@]}" ; do
     # shellcheck disable=2086
     # ${force_flag} is intentionally unquoted so that it expands to nothing when empty
-    for_each_line_in_file "${listfile}" install ${force_flag}
+    for_each_line_in_file "${listfile}" "${func}" ${force_flag}
   done
+}
+
+
+# install many
+# ${*} - optional -f/--force flag followed by one or more file paths
+function install_from_list() {
+  process_install_list install "${@}"
 }
 
 
@@ -342,27 +352,7 @@ function uninstall() {
 # uninstall many
 # ${*} - optional -f/--force flag followed by one or more file paths
 function uninstall_from_list() {
-  local force_flag=
-  local -a listfiles=()
-  for opt in "${@}" ; do
-    case "${opt}" in
-      "-f" | "--force" )
-        force_flag="--force"
-        ;;
-      * )
-        listfiles+=("${opt}")
-        ;;
-    esac
-  done
-  if [ "${#listfiles[@]}" -eq 0 ] ; then
-    error "no file path provided"
-    return 1
-  fi
-  for listfile in "${listfiles[@]}" ; do
-    # shellcheck disable=2086
-    # ${force_flag} is intentionally unquoted so that it expands to nothing when empty
-    for_each_line_in_file "${listfile}" uninstall ${force_flag}
-  done
+  process_install_list uninstall "${@}"
 }
 
 
