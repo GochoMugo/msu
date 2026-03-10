@@ -88,10 +88,10 @@ case "${1:-''}" in
       echo "    msu nuke"
       echo "    msu version [mod]"
       echo "    msu where <mod>"
-      echo "    msu help"
+      echo "    msu help [mod]"
       echo
       echo " commands:"
-      echo "    h  | help            show this help information"
+      echo "    h  | help            show help information of module [mod] or this help info"
       echo "    i  | install         install the module(s) <mod>..."
       echo "    im | install-many    install from module-list at path <path>"
       echo "    ls | list            list installed modules"

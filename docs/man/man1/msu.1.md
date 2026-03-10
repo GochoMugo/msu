@@ -26,7 +26,7 @@ SYNOPSIS
 
 *msu* where 'MODULE'
 
-*msu* help
+*msu* help ['MODULE']
 
 
 DESCRIPTION
@@ -39,9 +39,11 @@ The msu(1) command adds useful utilities for use in your shell.
 COMMANDS
 --------
 
-*h, help*
+*h, help* ['MODULE']
 
-   > Shows basic help information, shortened for easier recap.
+   > Shows documentation of aliases of the specified module 'MODULE'.
+   > If no module is specified, shows basic help information, shortened
+   > for easier recap.
 
 *i, install* 'MODULE'...
 
