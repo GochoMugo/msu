@@ -316,13 +316,13 @@ function show_metadata() {
 # uninstall module(s)
 function uninstall() {
   local do_force=
+  local path
   for dir in "$@" ; do
     case "${dir}" in
       "-f" | "--force" )
         do_force=1
         ;;
       * )
-        local path
         path="${MSU_EXTERNAL_LIB}/${dir}"
         if [ -e "${path}" ] ; then
           rm -rf "${path}" > /dev/null
