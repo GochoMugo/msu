@@ -39,7 +39,7 @@ function test_is_module_installed() {
   function track() {
     lines+=("${1}")
   }
-  for_each_line_in_file track "${file}"
+  for_each_line_in_file "${file}" track
   [ "${#lines[@]}" == 2 ]
   [ "${lines[0]}" == "first" ]
   [ "${lines[1]}" == "second" ]
@@ -53,7 +53,7 @@ function test_is_module_installed() {
   function track_with_extra() {
     calls+=("${1} ${2}")
   }
-  for_each_line_in_file track_with_extra --extra "${file}"
+  for_each_line_in_file "${file}" track_with_extra --extra
   [ "${#calls[@]}" == 2 ]
   [ "${calls[0]}" == "--extra first" ]
   [ "${calls[1]}" == "--extra second" ]
@@ -196,6 +196,30 @@ function test_is_module_installed() {
 }
 
 
+@test "\`install_from_list' installs from multiple list files" {
+  mod1="${BATS_TEST_TMPDIR}/mod1"
+  mod2="${BATS_TEST_TMPDIR}/mod2"
+  mkdir -p "${mod1}" "${mod2}"
+  list1="${BATS_TEST_TMPDIR}/list1"
+  list2="${BATS_TEST_TMPDIR}/list2"
+  echo "${mod1}" > "${list1}"
+  echo "${mod2}" > "${list2}"
+  run install_from_list "${list1}" "${list2}"
+  [ "${status}" -eq 0 ]
+  grep "${sym_tick} mod1" <<< "${output}"
+  grep "${sym_tick} mod2" <<< "${output}"
+  [ -d "${MSU_EXTERNAL_LIB}/mod1" ]
+  [ -d "${MSU_EXTERNAL_LIB}/mod2" ]
+}
+
+
+@test "\`install_from_list' shows error when no file path is provided" {
+  run install_from_list
+  [ "${status}" -eq 1 ]
+  grep "no file path provided" <<< "${output}"
+}
+
+
 @test "\`install_from_list' supports -f/--force to force reinstall" {
   mod="${BATS_TEST_TMPDIR}/mod"
   mkdir -p "${mod}"
@@ -333,8 +357,18 @@ function test_is_module_installed() {
     [ ! -d "${MSU_EXTERNAL_LIB}/${mod}" ]
   done
 
-  # uninstall reports if module not installed
+  # uninstall errors if module not installed (without --force)
   run uninstall mod1
+  [ "${status}" -eq 1 ]
+  grep "module not installed: mod1" <<< "${output}"
+
+  # uninstall with --force silently ticks if module not installed
+  run uninstall --force mod1
+  [ "${status}" -eq 0 ]
+  grep "${sym_tick} mod1 (not installed)" <<< "${output}"
+
+  # uninstall with -f also works
+  run uninstall -f mod1
   [ "${status}" -eq 0 ]
   grep "${sym_tick} mod1 (not installed)" <<< "${output}"
 }
@@ -344,14 +378,36 @@ function test_is_module_installed() {
   listpath="${BATS_TEST_TMPDIR}/list"
   mkdir -p "${MSU_EXTERNAL_LIB}/mod1"
   mkdir -p "${MSU_EXTERNAL_LIB}/mod2"
-  echo "mod1" > ${listpath}
-  echo "mod2" >> ${listpath}
-  run uninstall_from_list ${listpath}
+  echo "mod1" > "${listpath}"
+  echo "mod2" >> "${listpath}"
+  run uninstall_from_list "${listpath}"
   [ "${status}" -eq 0 ]
   grep "${sym_tick} mod1" <<< "${output}"
   grep "${sym_tick} mod2" <<< "${output}"
   [ ! -d "${MSU_EXTERNAL_LIB}/mod1" ]
   [ ! -d "${MSU_EXTERNAL_LIB}/mod2" ]
+}
+
+
+@test "\`uninstall_from_list' uninstalls from multiple list files" {
+  list1="${BATS_TEST_TMPDIR}/list1"
+  list2="${BATS_TEST_TMPDIR}/list2"
+  mkdir -p "${MSU_EXTERNAL_LIB}/mod1" "${MSU_EXTERNAL_LIB}/mod2"
+  echo "mod1" > "${list1}"
+  echo "mod2" > "${list2}"
+  run uninstall_from_list "${list1}" "${list2}"
+  [ "${status}" -eq 0 ]
+  grep "${sym_tick} mod1" <<< "${output}"
+  grep "${sym_tick} mod2" <<< "${output}"
+  [ ! -d "${MSU_EXTERNAL_LIB}/mod1" ]
+  [ ! -d "${MSU_EXTERNAL_LIB}/mod2" ]
+}
+
+
+@test "\`uninstall_from_list' shows error when no file path is provided" {
+  run uninstall_from_list
+  [ "${status}" -eq 1 ]
+  grep "no file path provided" <<< "${output}"
 }
 
 
@@ -365,7 +421,12 @@ function test_is_module_installed() {
   grep "${sym_tick} mod1" <<< "${output}"
   [ ! -d "${MSU_EXTERNAL_LIB}/mod1" ]
 
-  # -f also works (module already uninstalled, just reports it)
+  # without --force, uninstalling a missing module errors
+  run uninstall_from_list "${listpath}"
+  [ "${status}" -eq 1 ]
+  grep "module not installed: mod1" <<< "${output}"
+
+  # -f also works; missing module is silently ticked
   run uninstall_from_list -f "${listpath}"
   [ "${status}" -eq 0 ]
   grep "${sym_tick} mod1 (not installed)" <<< "${output}"

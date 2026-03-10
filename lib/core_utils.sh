@@ -18,14 +18,13 @@ msu_require "metadata"
 
 
 # Executes a command for each line in the specified file.
-# The command is passed any extra args followed by the line as arguments.
-# ${1}        - function
-# ${@:2:$#-2} - extra args to pass to the function (optional)
-# ${@: -1}    - path to file (last argument)
+# ${1}    - path to file
+# ${2}    - function to call for each line
+# ${@:3}  - extra args to pass to the function before the line (optional)
 function for_each_line_in_file() {
-  local func="${1}"
-  local file="${*: -1}"
-  local -a extra_args=("${@:2:$(($#-2))}")
+  local file="${1}"
+  local func="${2}"
+  local -a extra_args=("${@:3}")
 
   # ensure the file exists, otherwise the `cat` command will hang
   if [ ! -f "${file}" ]
@@ -165,24 +164,29 @@ function install() {
 
 
 # install many
-# ${1} - optional -f/--force flag
-# ${2} - path to file  (or ${1} if no flag)
+# ${*} - optional -f/--force flag followed by one or more file paths
 function install_from_list() {
   local force_flag=
-  local listfile=
+  local -a listfiles=()
   for opt in "${@}" ; do
     case "${opt}" in
       "-f" | "--force" )
         force_flag="--force"
         ;;
       * )
-        listfile="${opt}"
+        listfiles+=("${opt}")
         ;;
     esac
   done
-  # shellcheck disable=2086
-  # ${force_flag} is intentionally unquoted so that it expands to nothing when empty
-  for_each_line_in_file install ${force_flag} "${listfile}"
+  if [ "${#listfiles[@]}" -eq 0 ] ; then
+    error "no file path provided"
+    return 1
+  fi
+  for listfile in "${listfiles[@]}" ; do
+    # shellcheck disable=2086
+    # ${force_flag} is intentionally unquoted so that it expands to nothing when empty
+    for_each_line_in_file "${listfile}" install ${force_flag}
+  done
 }
 
 
@@ -311,18 +315,23 @@ function show_metadata() {
 
 # uninstall module(s)
 function uninstall() {
+  local do_force=
   for dir in "$@" ; do
     case "${dir}" in
       "-f" | "--force" )
-        # accepted for API compatibility with install; uninstall is always non-destructive
+        do_force=1
         ;;
       * )
+        local path
         path="${MSU_EXTERNAL_LIB}/${dir}"
         if [ -e "${path}" ] ; then
           rm -rf "${path}" > /dev/null
           tick "${dir}"
-        else
+        elif [ -n "${do_force}" ] ; then
           tick "${dir} (not installed)"
+        else
+          error "module not installed: ${dir}"
+          return 1
         fi
         ;;
     esac
@@ -331,24 +340,29 @@ function uninstall() {
 
 
 # uninstall many
-# ${1} - optional -f/--force flag
-# ${2} - path to file  (or ${1} if no flag)
+# ${*} - optional -f/--force flag followed by one or more file paths
 function uninstall_from_list() {
   local force_flag=
-  local listfile=
+  local -a listfiles=()
   for opt in "${@}" ; do
     case "${opt}" in
       "-f" | "--force" )
         force_flag="--force"
         ;;
       * )
-        listfile="${opt}"
+        listfiles+=("${opt}")
         ;;
     esac
   done
-  # shellcheck disable=2086
-  # ${force_flag} is intentionally unquoted so that it expands to nothing when empty
-  for_each_line_in_file uninstall ${force_flag} "${listfile}"
+  if [ "${#listfiles[@]}" -eq 0 ] ; then
+    error "no file path provided"
+    return 1
+  fi
+  for listfile in "${listfiles[@]}" ; do
+    # shellcheck disable=2086
+    # ${force_flag} is intentionally unquoted so that it expands to nothing when empty
+    for_each_line_in_file "${listfile}" uninstall ${force_flag}
+  done
 }
 
 
