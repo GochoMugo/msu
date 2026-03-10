@@ -347,22 +347,6 @@ function test_is_module_installed() {
 }
 
 
-@test "\`show_metadata' shows module metadata" {
-  local sample_module="${MSU_EXTERNAL_LIB}/mod"
-  mkdir -p "${sample_module}"
-  {
-    echo "author=john@example.com"
-    echo "build=abc123"
-    echo "date=2025-12-02"
-  } > "${sample_module}/metadata.sh"
-  run show_metadata "mod"
-  [ "${status}" -eq 0 ]
-  echo "${output}" | grep "author" | grep "john@example.com"
-  echo "${output}" | grep "build" | grep "abc123"
-  echo "${output}" | grep "date" | grep "2025-12-02"
-}
-
-
 @test "\`show_help' shows help for a module" {
   local sample_module="${MSU_EXTERNAL_LIB}/mod"
   mkdir -p "${sample_module}"
@@ -405,6 +389,22 @@ function test_is_module_installed() {
   run show_help "unknown"
   [ "${status}" -eq 1 ]
   grep "module aliases not found: unknown" <<< "${output}"
+}
+
+
+@test "\`show_metadata' shows module metadata" {
+  local sample_module="${MSU_EXTERNAL_LIB}/mod"
+  mkdir -p "${sample_module}"
+  {
+    echo "author=john@example.com"
+    echo "build=abc123"
+    echo "date=2025-12-02"
+  } > "${sample_module}/metadata.sh"
+  run show_metadata "mod"
+  [ "${status}" -eq 0 ]
+  echo "${output}" | grep "author" | grep "john@example.com"
+  echo "${output}" | grep "build" | grep "abc123"
+  echo "${output}" | grep "date" | grep "2025-12-02"
 }
 
 
