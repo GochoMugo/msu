@@ -363,6 +363,51 @@ function test_is_module_installed() {
 }
 
 
+@test "\`show_help' shows help for a module" {
+  local sample_module="${MSU_EXTERNAL_LIB}/mod"
+  mkdir -p "${sample_module}"
+  {
+    echo "# DOC: does something useful"
+    echo "alias foo='bar'"
+    echo ""
+    echo "# DOC: does something else"
+    echo "alias baz='qux'"
+  } > "${sample_module}/aliases.sh"
+  run show_help "mod"
+  [ "${status}" -eq 0 ]
+  echo "${output}" | grep "foo" | grep "does something useful"
+  echo "${output}" | grep "baz" | grep "does something else"
+}
+
+
+@test "\`show_help' supports multi-line DOC comments" {
+  local sample_module="${MSU_EXTERNAL_LIB}/mod"
+  mkdir -p "${sample_module}"
+  {
+    echo "# DOC: first line"
+    echo "# second line"
+    echo "alias foo='bar'"
+  } > "${sample_module}/aliases.sh"
+  run show_help "mod"
+  [ "${status}" -eq 0 ]
+  echo "${output}" | grep "foo" | grep "first line second line"
+}
+
+
+@test "\`show_help' errors if module not specified" {
+  run show_help
+  [ "${status}" -eq 1 ]
+  grep "module name not specified" <<< "${output}"
+}
+
+
+@test "\`show_help' errors if module aliases not found" {
+  run show_help "unknown"
+  [ "${status}" -eq 1 ]
+  grep "module aliases not found: unknown" <<< "${output}"
+}
+
+
 @test "\`uninstall' uninstalls modules" {
   mkdir -p "${MSU_EXTERNAL_LIB}/mod1" "${MSU_EXTERNAL_LIB}/mod2"
   run uninstall mod1 mod2
