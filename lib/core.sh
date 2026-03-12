@@ -42,7 +42,7 @@ function msu__load() {
   msu_require aliases
 
   # loading bash completion
-  msu_require bash_completion
+  msu_require completion
 
   # clean up environment
   # Added by msu.sh
