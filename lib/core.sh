@@ -41,6 +41,9 @@ function msu__load() {
   # loading aliases
   msu_require aliases
 
+  # loading bash completion
+  msu_require completion
+
   # clean up environment
   # Added by msu.sh
   unset MSU_EXE

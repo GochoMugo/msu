@@ -13,6 +13,7 @@ Added:
   in an external module.
 * `install-many`, `uninstall` and `uninstall-many`
   sub-commands support the `--force` flag.
+* Added bash completion.
 
 Changed:
 
