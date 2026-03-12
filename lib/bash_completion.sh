@@ -3,15 +3,6 @@
 #
 # Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
 
-# Returns the names of installed external modules.
-msu__installed_modules() {
-  local external_lib="${MSU_EXTERNAL_LIB:-${HOME}/.msu}"
-  local mod
-  [ -d "${external_lib}" ] || return 0
-  for mod in "${external_lib}"/*; do
-    [ -d "${mod}" ] && basename "${mod}"
-  done
-}
 
 # Completion function for the msu command.
 msu__complete() {
@@ -21,7 +12,7 @@ msu__complete() {
   # Complete the sub-command when at the first argument position.
   # Keep this list in sync with the case statement in lib/msu.sh.
   if [ "${COMP_CWORD}" -eq 1 ]; then
-    local subcommands="re require r run x execute i install im install-many u uninstall um uninstall-many up upgrade ls list nk nuke h help v version w where"
+    local subcommands="execute h help i im install install-many list ls nk nuke r re require run u um uninstall uninstall-many up upgrade v version w where x"
     # shellcheck disable=SC2207
     COMPREPLY=( $(compgen -W "${subcommands}" -- "${cur}") )
     return 0
@@ -64,6 +55,18 @@ msu__complete() {
       ;;
   esac
 }
+
+
+# Returns the names of installed external modules.
+msu__installed_modules() {
+  local external_lib="${MSU_EXTERNAL_LIB:-${HOME}/.msu}"
+  local mod
+  [ -d "${external_lib}" ] || return 0
+  for mod in "${external_lib}"/*; do
+    [ -d "${mod}" ] && basename "${mod}"
+  done
+}
+
 
 # Register the completion function for the msu command.
 complete -F msu__complete msu
