@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # useful utilities
+#
+# Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
 
 # shellcheck disable=2181
 

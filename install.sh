@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # Installs msu
+#
+# Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
 
 
 set -o errexit

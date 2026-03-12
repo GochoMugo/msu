@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 # making a new release
+#
+# Copyright (c) 2015 GochoMugo <mugo@forfuture.co.ke>
+
 set -e
 
 
