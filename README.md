@@ -28,9 +28,9 @@
 * [x] supports external modules
 * [x] auto-loading aliases from modules
 * [x] manpages
+* [x] bash completion
 * [ ] load/unload aliases
 * [ ] error catching/handling
-* [ ] bash completion
 * [ ] compatibility for other shell types e.g. zsh
 
 
