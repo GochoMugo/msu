@@ -5,7 +5,7 @@
 
 
 # Completion function for the msu command.
-msu__complete() {
+function msu__complete() {
   # COMP_WORDS, COMP_CWORD, and COMPREPLY are set by bash for completion.
   local cur="${COMP_WORDS[COMP_CWORD]}"
 
@@ -58,7 +58,7 @@ msu__complete() {
 
 
 # Returns the names of installed external modules.
-msu__installed_modules() {
+function msu__installed_modules() {
   local external_lib="${MSU_EXTERNAL_LIB:-${HOME}/.msu}"
   local mod
   [ -d "${external_lib}" ] || return 0
