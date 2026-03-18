@@ -319,9 +319,16 @@ function show_help() {
   awk '
       /^[[:space:]]*$/  { doc = ""; next }
       /^# DOC: /        { doc = substr($0, 8); next }
+      /^# HELP: /       { help_lines[++help_count] = substr($0, 9); next }
       /^# /             { if (doc != "") doc = doc " " substr($0, 3); next }
       /^alias / {
           if (doc != "") {
+              if (!aliases_header_printed) {
+                  print ""
+                  print "Aliases:"
+                  print ""
+                  aliases_header_printed = 1
+              }
               name = $2
               sub(/=.*$/, "", name)
               printf "  %-12s %s\n", name, doc
@@ -330,6 +337,16 @@ function show_help() {
           next
       }
       { doc = "" }
+      END {
+          if (help_count > 0) {
+              print ""
+              print "More information:"
+              print ""
+              for (i = 1; i <= help_count; i++) {
+                  printf "  - %s\n", help_lines[i]
+              }
+          }
+      }
   ' "${aliases_file}"
 }
 
