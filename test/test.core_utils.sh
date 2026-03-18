@@ -383,6 +383,19 @@ function test_is_module_installed() {
 }
 
 
+@test "\`show_help' supports multi-line HELP comments" {
+  local sample_module="${MSU_EXTERNAL_LIB}/mod"
+  mkdir -p "${sample_module}"
+  {
+    echo "# HELP: first line"
+    echo "# second line"
+  } > "${sample_module}/aliases.sh"
+  run show_help "mod"
+  [ "${status}" -eq 0 ]
+  echo "${output}" | grep "first line second line"
+}
+
+
 @test "\`show_help' supports multi-line DOC comments" {
   local sample_module="${MSU_EXTERNAL_LIB}/mod"
   mkdir -p "${sample_module}"
