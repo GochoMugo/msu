@@ -27,6 +27,7 @@ function check_dep() {
 
 
 function check_deps() {
+  check_dep "awk" "processing help information"
   check_dep "bash" "runtime"
   check_dep "cat" "file reading, stream concat"
   check_dep "command" "command lookup/execution"
