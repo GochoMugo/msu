@@ -351,16 +351,48 @@ function test_is_module_installed() {
   local sample_module="${MSU_EXTERNAL_LIB}/mod"
   mkdir -p "${sample_module}"
   {
+    echo "# HELP: See the project README at https://example.com"
+    echo "# HELP: Requires foobar >= 2.0 to be installed"
+    echo
     echo "# DOC: does something useful"
     echo "alias foo='bar'"
-    echo ""
+    echo
     echo "# DOC: does something else"
     echo "alias baz='qux'"
+    echo
+    echo "# HELP: Set some option"
   } > "${sample_module}/aliases.sh"
   run show_help "mod"
   [ "${status}" -eq 0 ]
-  echo "${output}" | grep "foo" | grep "does something useful"
-  echo "${output}" | grep "baz" | grep "does something else"
+  local expected_output=$(cat << EOF
+
+Aliases:
+
+  foo          does something useful
+  baz          does something else
+
+More information:
+
+  - See the project README at https://example.com
+  - Requires foobar >= 2.0 to be installed
+  - Set some option
+EOF
+  )
+  [ "${output}" == "${expected_output}" ]
+}
+
+
+@test "\`show_help' supports multi-line HELP comments" {
+  local sample_module="${MSU_EXTERNAL_LIB}/mod"
+  mkdir -p "${sample_module}"
+  {
+    echo "# HELP: first line"
+    echo "# second line"
+  } > "${sample_module}/aliases.sh"
+  run show_help "mod"
+  [ "${status}" -eq 0 ]
+  echo "${output}" | grep "first line second line"
+  ! grep "Aliases:" <<< "${output}"
 }
 
 
@@ -375,6 +407,7 @@ function test_is_module_installed() {
   run show_help "mod"
   [ "${status}" -eq 0 ]
   echo "${output}" | grep "foo" | grep "first line second line"
+  ! grep "More information:" <<< "${output}"
 }
 
 

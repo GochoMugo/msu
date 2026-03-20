@@ -7,6 +7,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Changed:
+
+* `help` sub-command shows more information from
+  external module.
+
 
 ## [0.7.0][0.7.0] - 2026-03-15
 
