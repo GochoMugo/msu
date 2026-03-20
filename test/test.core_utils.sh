@@ -351,35 +351,34 @@ function test_is_module_installed() {
   local sample_module="${MSU_EXTERNAL_LIB}/mod"
   mkdir -p "${sample_module}"
   {
-    echo "# DOC: does something useful"
-    echo "alias foo='bar'"
-    echo ""
-    echo "# DOC: does something else"
-    echo "alias baz='qux'"
-  } > "${sample_module}/aliases.sh"
-  run show_help "mod"
-  [ "${status}" -eq 0 ]
-  echo "${output}" | grep "foo" | grep "does something useful"
-  echo "${output}" | grep "baz" | grep "does something else"
-  echo "${output}" | grep "Aliases:"
-}
-
-
-@test "\`show_help' shows HELP lines in More information section" {
-  local sample_module="${MSU_EXTERNAL_LIB}/mod"
-  mkdir -p "${sample_module}"
-  {
     echo "# HELP: See the project README at https://example.com"
     echo "# HELP: Requires foobar >= 2.0 to be installed"
-    echo ""
-    echo "# DOC: run the foo command"
+    echo
+    echo "# DOC: does something useful"
     echo "alias foo='bar'"
+    echo
+    echo "# DOC: does something else"
+    echo "alias baz='qux'"
+    echo
+    echo "# HELP: Set some option"
   } > "${sample_module}/aliases.sh"
   run show_help "mod"
   [ "${status}" -eq 0 ]
-  echo "${output}" | grep "More information:"
-  echo "${output}" | grep "\- See the project README at https://example.com"
-  echo "${output}" | grep "\- Requires foobar >= 2.0 to be installed"
+  local expected_output=$(cat << EOF
+
+Aliases:
+
+  foo          does something useful
+  baz          does something else
+
+More information:
+
+  - See the project README at https://example.com
+  - Requires foobar >= 2.0 to be installed
+  - Set some option
+EOF
+  )
+  [ "${output}" == "${expected_output}" ]
 }
 
 
@@ -393,6 +392,7 @@ function test_is_module_installed() {
   run show_help "mod"
   [ "${status}" -eq 0 ]
   echo "${output}" | grep "first line second line"
+  ! grep "Aliases:" <<< "${output}"
 }
 
 
@@ -407,6 +407,7 @@ function test_is_module_installed() {
   run show_help "mod"
   [ "${status}" -eq 0 ]
   echo "${output}" | grep "foo" | grep "first line second line"
+  ! grep "More information:" <<< "${output}"
 }
 
 

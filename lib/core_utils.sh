@@ -317,20 +317,21 @@ function show_help() {
     return 1
   fi
   awk '
-      /^[[:space:]]*$/ {
-          doc = ""
-          if (help != "") { help_lines[++help_count] = help; help = "" }
+      /^# DOC: / {
+          doc = substr($0, 8);
           next
       }
-      /^# DOC: /        { doc = substr($0, 8); next }
-      /^# HELP: /       { if (help != "") help_lines[++help_count] = help; help = substr($0, 9); next }
+      /^# HELP: / {
+          if (help != "") help_lines[++help_count] = help;
+          help = substr($0, 9);
+          next
+      }
       /^# / {
           if (doc != "") doc = doc " " substr($0, 3)
           else if (help != "") help = help " " substr($0, 3)
           next
       }
       /^alias / {
-          if (help != "") { help_lines[++help_count] = help; help = "" }
           if (doc != "") {
               if (!aliases_header_printed) {
                   print ""
@@ -342,12 +343,19 @@ function show_help() {
               sub(/=.*$/, "", name)
               printf "  %-12s %s\n", name, doc
           }
+          if (help != "") {
+              help_lines[++help_count] = help;
+              help = ""
+          }
           doc = ""
           next
       }
       {
-          if (help != "") { help_lines[++help_count] = help; help = "" }
           doc = ""
+          if (help != "") {
+              help_lines[++help_count] = help;
+              help = ""
+          }
       }
       END {
           if (help != "") help_lines[++help_count] = help
