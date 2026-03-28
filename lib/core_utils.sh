@@ -94,6 +94,7 @@ function install() {
   for dir in "${modules[@]}" ; do
     local module_name
     local remote_mark
+
     remote_mark=$(echo "${dir}" | grep -Eo "[a-zA-Z0-9]+:" | grep -Eo "[^:]*" || true)
     if [ "${remote_mark}" ] ; then
       # requires cloning
@@ -138,22 +139,22 @@ function install() {
         cross "${shorthand}"
         continue
       fi
-      install "$(ls)"
+      dir="${tmpdir}/$(ls)"
       popd > /dev/null || return 1
-    else
-      dir="$(readlink -f "${dir}")"
-      module_name="$(basename "${dir}")"
-      if [ -e "${MSU_EXTERNAL_LIB}/${module_name}" ] ; then
-        if [ -z "${do_force}" ] ; then
-          error "module already installed: ${module_name}"
-          return 1
-        else
-          rm -rf "${MSU_EXTERNAL_LIB:?}/${module_name}"
-        fi
-      fi
-      cp -r "${dir}" "${MSU_EXTERNAL_LIB}" > /dev/null
-      tick "${module_name}"
     fi
+
+    dir="$(readlink -f "${dir}")"
+    module_name="$(basename "${dir}")"
+    if [ -e "${MSU_EXTERNAL_LIB}/${module_name}" ] ; then
+      if [ -z "${do_force}" ] ; then
+        error "module already installed: ${module_name}"
+        return 1
+      else
+        rm -rf "${MSU_EXTERNAL_LIB:?}/${module_name}"
+      fi
+    fi
+    cp -r "${dir}" "${MSU_EXTERNAL_LIB}" > /dev/null
+    tick "${module_name}"
   done
 }
 
