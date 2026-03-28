@@ -263,6 +263,36 @@ function test_is_module_installed() {
 }
 
 
+@test "\`install_from_list' supports -f/--force to force reinstall (git url)" {
+  local listpath="${BATS_TEST_TMPDIR}/list"
+  echo "GL:GochoMugo/msu-test#v0.0.0" > "${listpath}"
+
+  # first install works
+  run install_from_list "${listpath}"
+  [ "${status}" -eq 0 ]
+
+  # install again should fail without force
+  run install_from_list "${listpath}"
+  [ "${status}" -eq 1 ]
+  grep "module already installed: msu-test" <<< "${output}"
+
+  # --force flag allows reinstall
+  run install_from_list --force "${listpath}"
+  [ "${status}" -eq 0 ]
+  grep "${sym_tick} msu-test" <<< "${output}"
+
+  # -f flag also allows reinstall
+  run install_from_list -f "${listpath}"
+  [ "${status}" -eq 0 ]
+  grep "${sym_tick} msu-test" <<< "${output}"
+
+  # --force after file path also works (options are parsed before modules)
+  run install_from_list "${listpath}" --force
+  [ "${status}" -eq 0 ]
+  grep "${sym_tick} msu-test" <<< "${output}"
+}
+
+
 @test "\`is_semver_gt' compares 2 versions correctly" {
   [[ $(is_semver_gt 0.0.1 0.0.0) == 0 ]]
   [[ $(is_semver_gt 0.1.0 0.0.0) == 0 ]]
