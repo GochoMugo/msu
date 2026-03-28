@@ -7,6 +7,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+Fixed:
+
+* Fix passing multiple arguments to `install-many` and `uninstall-many`
+  sub-commands.
+
 
 ## [0.8.0][0.8.0] - 2026-03-28
 

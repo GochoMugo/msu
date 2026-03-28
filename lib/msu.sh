@@ -49,7 +49,7 @@ case "${1:-''}" in
     msu_run core_utils.update_check
   ;;
   "im" | "install-many" )
-    msu_run core_utils.install_from_list "${2}"
+    msu_run core_utils.install_from_list "${@:2}"
     msu_run core_utils.update_check
   ;;
   "u" | "uninstall" )
@@ -57,7 +57,7 @@ case "${1:-''}" in
     msu_run core_utils.update_check
   ;;
   "um" | "uninstall-many" )
-    msu_run core_utils.uninstall_from_list "${2}"
+    msu_run core_utils.uninstall_from_list "${@:2}"
     msu_run core_utils.update_check
   ;;
   "up" | "upgrade" )
