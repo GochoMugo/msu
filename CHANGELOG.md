@@ -7,6 +7,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+
+## [0.8.1][0.8.1] - 2026-04-04
+
 Fixed:
 
 * Fix passing multiple arguments to `install-many` and `uninstall-many`
@@ -122,3 +125,4 @@ This is the very first version of `msu`.
 [0.6.0]:https://github.com/GochoMugo/msu/releases/tag/0.6.0
 [0.7.0]:https://github.com/GochoMugo/msu/releases/tag/0.7.0
 [0.8.0]:https://github.com/GochoMugo/msu/releases/tag/0.8.0
+[0.8.1]:https://github.com/GochoMugo/msu/releases/tag/0.8.1
