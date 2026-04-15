@@ -9,9 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 Changed:
 
-* Replace `wget` with `curl` for downloading files.
-* Use long option names for `curl` command for clarity.
-* Keep `check_dep` calls alphabetically ordered in `install.sh`.
+* Replaced `wget` with `curl` for self upgrade.
 
 
 ## [0.8.1][0.8.1] - 2026-04-04
