@@ -489,7 +489,7 @@ function upgrade() {
   }
 
   pushd /tmp > /dev/null || return 1
-  curl -sL "https://github.com/GochoMugo/msu/releases/download/${version}/msu-${version}.tar.gz" -o "msu-${version}.tar.gz"
+  curl --silent --location "https://github.com/GochoMugo/msu/releases/download/${version}/msu-${version}.tar.gz" --output "msu-${version}.tar.gz"
   tar xvf "msu-${version}.tar.gz" > /dev/null 2>&1
   cd "msu-${version}" || {
     error "could not \`cd' into directory with extracted contents"
