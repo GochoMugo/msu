@@ -48,7 +48,7 @@ function check_deps() {
   check_dep "tar" "self-upgrade"
   check_dep "tput" "formatting styles"
   check_dep "tr" "character translation"
-  check_dep "wget" "self-upgrade"
+  check_dep "curl" "self-upgrade"
 }
 
 
