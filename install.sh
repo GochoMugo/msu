@@ -32,6 +32,7 @@ function check_deps() {
   check_dep "cat" "file reading, stream concat"
   check_dep "command" "command lookup/execution"
   check_dep "cp" "file copying"
+  check_dep "curl" "self-upgrade"
   check_dep "cut" "stream cutting"
   check_dep "dirname" "path manipulation"
   check_dep "echo" "line printing"
@@ -48,7 +49,6 @@ function check_deps() {
   check_dep "tar" "self-upgrade"
   check_dep "tput" "formatting styles"
   check_dep "tr" "character translation"
-  check_dep "wget" "self-upgrade"
 }
 
 
