@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 Changed:
 
 * Replaced `wget` with `curl` for self upgrade.
+* Notification of new version (for upgrade) via stderr.
 
 
 ## [0.8.1][0.8.1] - 2026-04-04

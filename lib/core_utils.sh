@@ -443,8 +443,8 @@ function update_check() {
     version="$(cat "${check_file}")"
 
     if is_semver_gt "${version}" "${MSU_VERSION}" > /dev/null ; then
-      log "A new msu version (${version}) is available!"
-      log "You can upgrade using \`msu upgrade'."
+      write_text "notice" "A new msu version (${version}) is available!" 0 /dev/stderr
+      write_text "notice" "You can upgrade using \`msu upgrade'." 0 /dev/stderr
     fi
 
     touch "${done_file}"
