@@ -10,7 +10,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 Changed:
 
 * Replaced `wget` with `curl` for self upgrade.
-* Notification of new version (for upgrade) via stderr.
+
+Fixed:
+
+* Notify user of new version (for upgrade) via stderr.
+  This prevents cloberring of output when msu is used in a sub-shell.
 
 
 ## [0.8.1][0.8.1] - 2026-04-04
